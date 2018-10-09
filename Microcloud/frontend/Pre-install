@@ -1,0 +1,23 @@
+#!/bin/bash -xe
+
+#
+# Installation of MicroScope web frontend.
+# The frontend is based on Apache2, PHP7.1 and phpMyAdmin.
+# The component is copied from SlipStream LAMP deployment but heavily modified since we use IFB CentOS 7 image as parent.
+# The installation is two-fold: first we need to setup the Apache2, PHP7.1 and phpMyAdmin and after to setup MicroScope.
+#
+# For the first part, we adapted the procedure described here: https://www.howtoforge.com/tutorial/centos-lamp-server-apache-mysql-php/
+# (based on remi repository).
+# The epel repository is already installed on parent.
+# We also need to install Tcl/TK for password generation.
+#
+# MicroScope installation is not done yet.
+#
+
+# To ease deployment, disable selinux.
+# This should be changed in the future.
+setenforce 0
+
+# Install and enable remi repository for PHP 7.1
+rpm -Uvh http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+yum-config-manager --enable remi-php71

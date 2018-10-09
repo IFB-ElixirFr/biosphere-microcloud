@@ -1,0 +1,10 @@
+#!/bin/bash -xe
+
+# Start Docker :
+systemctl start docker
+
+# Pull mysql image
+docker pull mysql
+
+# Run mysql container and expose port
+docker run --detach --name=mysql01 --env="MYSQL_ROOT_PASSWORD=mypassword" -p 3306:3306 mysql
