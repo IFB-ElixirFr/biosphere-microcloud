@@ -58,7 +58,7 @@ echo "MySQL server started"
 ss-display "Starting installation of MicroScope UDF"
 docker exec ${CONTAINER_NAME} sh -c "\
 cd lib_mysqludf_sequtils-${MIC_UDF_VERSION}/ && \
-./configure && MYSQL_USER=root MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD} make install
+./configure && make install && MYSQL_USER=root MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD} make installdb
 "
 # Remove file and folder
 docker exec ${CONTAINER_NAME} rm -rf lib_mysqludf_sequtils-${MIC_UDF_VERSION}.tar.gz lib_mysqludf_sequtils-${MIC_UDF_VERSION}
