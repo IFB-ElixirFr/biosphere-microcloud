@@ -26,7 +26,7 @@ MIC_UDF_PACKAGES="build-essential procps libmysqlclient-dev"
 docker exec ${CONTAINER_NAME} sh -c "apt-get update && apt-get -y install ${MIC_UDF_PACKAGES}"
 
 # Download, copy the files and uncompress the sources
-curl -o lib_mysqludf_sequtils-${MIC_UDF_VERSION}.tar.gz https://www.genoscope.cns.fr/agc/ftp/lib_mysqludf_sequtils-${MIC_UDF_VERSION}.tar.gz
+curl -o lib_mysqludf_sequtils-${MIC_UDF_VERSION}.tar.gz https://www.genoscope.cns.fr/agc/ftp/lib_mysqludf_sequtils/lib_mysqludf_sequtils-${MIC_UDF_VERSION}.tar.gz
 docker cp lib_mysqludf_sequtils-${MIC_UDF_VERSION}.tar.gz ${CONTAINER_NAME}:/
 docker exec ${CONTAINER_NAME} tar -xzf lib_mysqludf_sequtils-${MIC_UDF_VERSION}.tar.gz
 
