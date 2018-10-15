@@ -4,6 +4,8 @@
 # Start mysql docker #
 ######################
 
+ss-display "Installing MySQL docker"
+
 # Run mysql container and expose port
 # We generate the password with the same command than the docker container
 CONTAINER_NAME=mysql01
@@ -21,6 +23,8 @@ ss-set mysqlRootPassword ${MYSQL_ROOT_PASSWORD}
 MIC_UDF_VERSION=0.4.7
 # Packages needed (inside the container)
 MIC_UDF_PACKAGES="build-essential procps libmysqlclient-dev"
+
+ss-display "Preparing installation of MicroScope UDF"
 
 # Install some packages inside the container
 docker exec ${CONTAINER_NAME} sh -c "apt-get update && apt-get -y install ${MIC_UDF_PACKAGES}"
