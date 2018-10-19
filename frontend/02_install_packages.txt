@@ -1,8 +1,9 @@
 # This file is just used to keep track of the packages to install
 httpd	
 mod_ssl	
-php	
+php71	
 php-opcache	
 phpMyAdmin	
 tcl	
 tk
+yum-utils

@@ -1,5 +1,12 @@
 #!/bin/sh -xe
 
+# Create mount point
+ss-display "Creating mount point"
+IPlocal=`ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1`
+ss-set ip_local $IPlocal
+ipserver=`ss-get --timeout 800 ip_nfs`
+mount $ipserver:/var/nfsshare /data
+
 #######################
 # Configure softwares #
 #######################
@@ -37,7 +44,7 @@ mv ${phpmyadmin_config_file} ${phpmyadmin_config_file}.orig
 # Modify configuration file in PHP ('cause we are nuts)
 # Shell variables inside '${var}' are expanded
 # PHP variables must start with \$ 
-cat <<EOF | php > ${phpmyadmin_config_file}
+cat <<EOF | php71 > ${phpmyadmin_config_file}
 <?php
 # Load configuration
 require_once('${phpmyadmin_config_file}.orig');
@@ -87,4 +94,3 @@ ss-set url.service ${new_url_service}
 # We are ready
 ss-set frontendReady true
 ss-display "Frontend ready"
-
