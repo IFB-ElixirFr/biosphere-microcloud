@@ -44,7 +44,7 @@ mv ${phpmyadmin_config_file} ${phpmyadmin_config_file}.orig
 # Modify configuration file in PHP ('cause we are nuts)
 # Shell variables inside '${var}' are expanded
 # PHP variables must start with \$ 
-cat <<EOF | php71 > ${phpmyadmin_config_file}
+cat <<EOF | php > ${phpmyadmin_config_file}
 <?php
 # Load configuration
 require_once('${phpmyadmin_config_file}.orig');
@@ -94,3 +94,4 @@ ss-set url.service ${new_url_service}
 # We are ready
 ss-set frontendReady true
 ss-display "Frontend ready"
+

@@ -1,7 +1,7 @@
 # This file is just used to keep track of the packages to install
 httpd
 mod_ssl
-php71
+php
 php-opcache
 phpMyAdmin
 tcl
