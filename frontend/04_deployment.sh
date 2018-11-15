@@ -74,7 +74,28 @@ sed -i '16iRequire all granted' $phpmyadmin_apache_file
 ss-display "Mounting volumes"
 
 # Wait for the NFS server
-ss-get nfs_is_ready
+ss-display "Waiting NFS server to start"
+MAX=60   # Max number of tests
+SLEEP=10 # Period between pings
+i=1      # Number of tests already done
+until false
+do
+  echo "Waiting NFS server ("$i"/"$MAX")"
+  ready=`ss-get nfs_is_ready`
+  if [ $ready = true ]
+  then
+    break
+  fi
+  i=$(( i + 1))
+  if [ $i -gt $MAX ]
+  then
+    echo "NFS server took too long to start"
+    exit 1
+  fi
+  echo "Waiting NFS server"
+  sleep ${SLEEP}
+done
+echo "NFS server started"
 
 # Get NFS server adress
 ipserver=`ss-get --timeout 800 ip_nfs`
