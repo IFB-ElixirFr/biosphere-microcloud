@@ -1,11 +1,8 @@
 #!/bin/sh -xe
 
-# Create mount point
-ss-display "Creating mount point"
+# Export our local IP adress to not block the backendNFS component
 IPlocal=`ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1`
 ss-set ip_local $IPlocal
-ipserver=`ss-get --timeout 800 ip_nfs`
-mount $ipserver:/var/nfsshare /data
 
 #######################
 # Configure softwares #
@@ -69,6 +66,21 @@ cp -p ${phpmyadmin_apache_file} ${phpmyadmin_apache_file}.orig
 # Change Apache configuration file for phpMyAdmin
 sed -i '16,19d' $phpmyadmin_apache_file
 sed -i '16iRequire all granted' $phpmyadmin_apache_file
+
+##############################################
+# Mount volumes (we do it here to wait less) #
+##############################################
+
+ss-display "Mounting volumes"
+
+# Wait for the NFS server
+ss-get nfs_ready
+
+# Get NFS server adress
+ipserver=`ss-get --timeout 800 ip_nfs`
+
+# Mount the volume
+mount $ipserver:/var/nfsshare /data
 
 ##########################
 # Configuration finished #
