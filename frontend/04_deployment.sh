@@ -74,7 +74,7 @@ sed -i '16iRequire all granted' $phpmyadmin_apache_file
 ss-display "Mounting volumes"
 
 # Wait for the NFS server
-ss-get nfs_ready
+ss-get nfs_is_ready
 
 # Get NFS server adress
 ipserver=`ss-get --timeout 800 ip_nfs`
