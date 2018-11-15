@@ -5,7 +5,6 @@
 ########################
 
 # Add docker group and add ourselves and centos in
-groupadd docker
 usermod -aG docker root
 usermod -aG docker centos
 
