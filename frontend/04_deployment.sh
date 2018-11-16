@@ -32,7 +32,7 @@ EOF
 ss-display "Configuring phpMyAdmin"
 
 # Get IP adress of MySQL server
-mysql_hostname=$(ss-get mysqlHostname)
+mysql_hostname=$(ss-get mysql_hostname)
 
 # Backup configuration file
 phpmyadmin_config_file=/etc/phpMyAdmin/config.inc.php
