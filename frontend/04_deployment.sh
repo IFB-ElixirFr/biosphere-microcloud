@@ -104,6 +104,6 @@ new_url_service=${old_url_service},http://${URL},https://${URL}
 ss-set url.service ${new_url_service}
 
 # We are ready
-ss-set frontendReady true
+ss-set is_ready true
 ss-display "Frontend ready"
 
