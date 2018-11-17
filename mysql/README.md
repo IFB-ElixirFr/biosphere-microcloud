@@ -7,6 +7,12 @@ This component is the MySQL server for MicroScope.
 The installation of the MySQL server is based is based on official docker images for MySQL.
 See [1] and [2] for some documentation.
 
+## Parameters
+
+Outputs:
+  - `mysql_root_password`: MySQL root password generated (see below)
+  - `is_ready`: indicates when this component is ready
+
 ## Technical notes
 
 The MySQL docker is based on `debian:stretch-slim` image (see [2]).

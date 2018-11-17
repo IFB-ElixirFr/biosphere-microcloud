@@ -14,6 +14,17 @@ We also need to install Tcl/TK for password generation.
 
 MicroScope installation is not done yet.
 
+## Parameters
+
+Inputs:
+  - `mysql_hostname`: IP adress of the `mysql` component (connected to `mysql:hostname`)
+  - `nfsserver_hostname`: IP address of the `nfsserver` component (connected to `nfsserver:hostname`)
+  - `nfsserver_is_ready`: used to wait for the `nfsserver` component is ready (connected to `nfsserver:is_ready`)
+
+Outputs:
+  - `ip_local`: the local IP address of this component
+  - `is_ready`: indicate when this component is ready
+
 ## Technical notes
 
 ### Installation of phpMyAdmin (04_deployment.sh)
@@ -26,6 +37,16 @@ The trick is to do it in PHP with an HERE document:
 * we output a PHP file (with standard open tags) redirected in the new file
 
 Care must be taken to not mix PHP and bash strings and variables.
+
+## Connection to NFS server (04_deployment.sh)
+
+`nfsserver` needs the private IP address of this component to add it to the NFS configuration.
+It waits on `ip_local`.
+In return, we need to wait for `nfssserver` to mount the `data` volume.
+It waits on `nfsserver_is_ready`.
+
+We set `ip_local` at the very beginning of `04_deployment.sh` to give time to `nfsserver`.
+We wait on `nfsserver_is_ready` after having done almost all configuration.
 
 ## TODO
 
@@ -40,4 +61,3 @@ Security:
 Things to consider:
 * Better generation of certificates
 * Installation with SELinux
-
