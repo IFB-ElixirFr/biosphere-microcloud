@@ -1,9 +1,5 @@
 #!/bin/sh -xe
 
-# Export our local IP adress to not block the backendNFS component
-IPlocal=`ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1`
-ss-set ip_local $IPlocal
-
 #######################
 # Configure softwares #
 #######################
