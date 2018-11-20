@@ -9,7 +9,7 @@ The installation is two-fold:
 * after we setup MicroScope.
 
 For the first part, we adapted the procedure described [here](https://www.howtoforge.com/tutorial/centos-lamp-server-apache-mysql-php/) (based on remi repository).
-The epel repository is already installed on parent.
+The [epel repository](https://fedoraproject.org/wiki/EPEL) is already installed on parent image.
 We also need to install Tcl/TK for password generation.
 
 MicroScope installation is not done yet.
@@ -17,13 +17,22 @@ MicroScope installation is not done yet.
 ## Parameters
 
 Inputs:
-  - `mysql_hostname`: IP adress of the `mysql` component (connected to `mysql:hostname`)
+  - `mysql_hostname`: IP address of the `mysql` component (connected to `mysql:hostname`)
   - `nfsserver_hostname`: IP address of the `nfsserver` component (connected to `nfsserver:hostname`)
   - `nfsserver_is_ready`: used to wait for the `nfsserver` component is ready (connected to `nfsserver:is_ready`)
 
 Outputs:
-  - `ip_local`: the local IP address of this component
+  - `private_ip`: the local IP address of this component; this output is set in the parent image
+    (due to to a bug in slipstream, we have to declare it in `frontend`)
   - `is_ready`: indicate when this component is ready
+
+## Service URL
+
+The following service URL are defined:
+
+  - `ssh://centos@<IP>`: SSH access
+  - `http[s]://<IP>`: start page
+  - `http[s]://<IP>/phpMyAdmin` (or `phpmyadmin`): phpMyAdmin
 
 ## Technical notes
 
@@ -37,6 +46,13 @@ The trick is to do it in PHP with an HERE document:
 * we output a PHP file (with standard open tags) redirected in the new file
 
 Care must be taken to not mix PHP and bash strings and variables.
+
+## Aliases to `mysql` component
+
+Some scripts might assume that the DB server is `mysqlagcdb[.genoscope.cns.fr]`.
+To ease the deployment of a first version, we modify `/etc/hosts` so that `mysqlagcdb[.genoscope.cns.fr]` leads to `mysql_hostname`.
+
+This is a bad practice as such programs should be fixed.
 
 ## Connection to NFS server (04_deployment.sh)
 
@@ -59,5 +75,6 @@ Security:
 * Use a non-root mysql user
 
 Things to consider:
+* Remove the alias to `mysql` component
 * Better generation of certificates
 * Installation with SELinux
