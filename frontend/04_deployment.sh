@@ -1,8 +1,8 @@
 #!/bin/sh -xe
 
-#######################
-# Configure softwares #
-#######################
+####################
+# Configure Apache #
+####################
 
 ss-display "Configuring Apache"
 
@@ -25,10 +25,21 @@ cat << EOF > /var/www/html/index.php
 <?php phpinfo() ?>
 EOF
 
-ss-display "Configuring phpMyAdmin"
+###########################
+# Wait for mysql_hostname #
+###########################
+
+ss-display "Waiting SQL server to start"
 
 # Get IP adress of MySQL server
 mysql_hostname=$(ss-get mysql_hostname)
+
+#########################
+# Configure phpMyAdmin  #
+# (uses mysql_hostname) #
+#########################
+
+ss-display "Configuring phpMyAdmin"
 
 # Backup configuration file
 phpmyadmin_config_file=/etc/phpMyAdmin/config.inc.php
