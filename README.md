@@ -14,24 +14,26 @@ There are currently 3 components on the project:
   - `frontend`: this is the web server; the code is in `frontend` (see notes here); phpMyAdmin is installed on it
 
 The `MicroCloud` application instantiates 1 instance of each component (so we sometime speak of VM).
+The components are based on [IFB CentOS 7 image](https://nuv.la/module/ifb/examples/images/centos-7-ifb).
 
 By nature, the frontend is connected to the MySQL server and the NFS server.
 
-                     ____________
-                    |            | ip_local
-             ------>|  frontend  |--------
-             |      |____________|<---   |
-             |                       |   |
-    hostname |               is_ready|   |
-      _______|_____                __|___V______
-     |             |              |             |
-     |    mysql    |              |  nfsserver  |
-     |_____________|              |_____________|
+                       ____________
+                      |            | private_ip
+               ------>|  frontend  |--------
+               |      |____________|<---   |
+               |                       |   |         public network
+     ----------|-----------------------|---|-------------
+      hostname |              is_ready |   |         private network
+        _______|_____                __|___V______
+       |             |              |             |
+       |    mysql    |              |  nfsserver  |
+       |_____________|              |_____________|
 
 
   - `nfsserver` needs the private IP address of this component to add it to the NFS configuration
   - `frontend` needs to wait for `nfsserver` to be ready to mount the share
-  - `frontend` needs the IP adress of `mysql` to configure phpMyAdmin
+  - `frontend` needs the IP address of `mysql` to configure phpMyAdmin and to set up aliases
 
 # Technical notes
 
@@ -58,3 +60,4 @@ Outputs:
 # TODO
 
   - add some documentation about `nfssserver`
+  - how are declared service URL from the `MicroCloud` application ?
