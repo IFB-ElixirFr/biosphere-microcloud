@@ -74,6 +74,24 @@ cp -p ${phpmyadmin_apache_file} ${phpmyadmin_apache_file}.orig
 sed -i '16,19d' $phpmyadmin_apache_file
 sed -i '16iRequire all granted' $phpmyadmin_apache_file
 
+########################################
+# Configure aliases to mysql component #
+# (uses mysql_hostname)                #
+########################################
+
+ss-display "Adding aliases to mysql component"
+
+HOSTS_FILE=/etc/hosts
+
+# Save /etc/hosts
+if [ -e ${HOSTS_FILE} ]
+then
+  cp -p ${HOSTS_FILE} ${HOSTS_FILE}.orig
+fi
+
+# Add mysql_hostname to /etc/hosts
+echo "${mysql_hostname} mysqlagcdb.genoscope.cns.fr mysqlagcdb" >> ${HOSTS_FILE}
+
 ##############################################
 # Mount volumes (we do it here to wait less) #
 ##############################################
