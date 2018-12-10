@@ -7,3 +7,4 @@ phpMyAdmin
 tcl
 tk
 yum-utils
+mysql
