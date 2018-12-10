@@ -4,7 +4,7 @@
 
 This component is the MySQL server for MicroScope.
 
-The installation of the MySQL server is based is based on official docker images for MySQL.
+The installation of the MySQL server is based on official docker images for MySQL.
 See [1] and [2] for some documentation.
 
 ## Parameters
