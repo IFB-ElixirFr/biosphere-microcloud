@@ -7,5 +7,4 @@ setenforce 0
 # Install and enable remi repository for PHP 7.1
 rpm -Uvh http://rpms.remirepo.net/enterprise/remi-release-7.rpm
 yum-config-manager --enable remi-php71
-# Disable ius repository because it creates conflicts for PHP and mysql
-yum-config-manager --disable ius
+

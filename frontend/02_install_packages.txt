@@ -3,8 +3,6 @@ httpd
 mod_ssl
 php
 php-opcache
-phpMyAdmin
 tcl
 tk
-yum-utils
-mysql
+mariadb  # Don't use `mysql` because of conflicts with IUS repository
