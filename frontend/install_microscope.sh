@@ -6,10 +6,6 @@ cd $1
 curl -o microcloud.tar.gz https://www.genoscope.cns.fr/agc/ftp/MicroCloud/microcloud-latest.tar.gz
 tar -xvf microcloud.tar.gz 
 
-# Wait for the NFS server
-ss-display "Waiting MySQL server to start"
-ss-get --timeout 800 mysql_is_ready
-
 # Connection to mysql
 mysql_hostname=$(ss-get mysql_hostname)
 mysql_password=$(ss-get mysql_root_password)
