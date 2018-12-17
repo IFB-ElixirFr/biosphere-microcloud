@@ -25,7 +25,7 @@ $mysql_request GO_CPD < $schemas_dir/GO_CPD_schema.sql
 $mysql_request PUB_CPD < $schemas_dir/PUB_CPD_schema.sql
 
 # Insert data
-data_dir="microcloud/sql_bases/datas"
+data_dir="microcloud/sql_bases/data"
 $mysql_request pkgdb < $data_dir/pkgdb_data.sql
 $mysql_request GO_Conf < $data_dir/GO_Conf_data.sql
 
