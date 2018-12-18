@@ -31,5 +31,7 @@ $mysql_request GO_Conf < $data_dir/GO_Conf_data.sql
 
 # Copy web code in DOCUMENT_ROOT
 cp -r -b -f microcloud/web_code/* /var/www/html/
+chown -R root:apache /var/www/html/*
+chmod -R u=rwX,g=rX,o=rX /var/www/html/*
 
 # Copy web scripts
