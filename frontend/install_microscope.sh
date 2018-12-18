@@ -1,4 +1,8 @@
-#!/bin/bash -xe
+#!/bin/bash
+
+set -e
+set -u
+set -o pipefail
 
 cd $1
 MYSQL_HOST=$2
