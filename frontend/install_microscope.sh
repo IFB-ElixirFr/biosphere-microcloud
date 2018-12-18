@@ -2,15 +2,8 @@
 
 cd $1
 
-# Get latest MicroScope code
-curl -o microcloud.tar.gz https://www.genoscope.cns.fr/agc/ftp/MicroCloud/microcloud-latest.tar.gz
-tar -xvf microcloud.tar.gz 
-
 # Connection to mysql
-mysql_hostname=$(ss-get mysql_hostname)
-mysql_password=$(ss-get mysql_root_password)
-mysql_user=root
-mysql_request="mysql -u $mysql_user -h $mysql_hostname -p$mysql_password"
+mysql_request="mysql -u $2 -h $3 -p$4"
 
 # Create databases 
 $mysql_request -e "CREATE DATABASE GO_CPD"; # --databases (-B) option includes CREATE DATABASE and USE statements unfortunately --tables option overrides the --databases (-B) option
