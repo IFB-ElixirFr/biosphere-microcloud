@@ -117,12 +117,11 @@ ss-display "Installation of MicroScope"
 curl -o microcloud.tar.gz https://www.genoscope.cns.fr/agc/ftp/MicroCloud/microcloud-latest.tar.gz
 tar -xvf microcloud.tar.gz
 
-dirname=/var/tmp/slipstream/biosphere-microcloud/
-user=root
-host=$(ss-get mysql_hostname)
-password=$(ss-get mysql_root_password)
+dirname=microcloud
+mysql_user=root
+mysql_root_password=$(ss-get mysql_root_password)
 
-./install_microscope.sh dirname user host password
+./install_microscope.sh ${dirname} ${mysql_hostname} ${mysql_user} ${mysql_root_password}
 
 ##########################
 # Configuration finished #
