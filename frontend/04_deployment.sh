@@ -107,6 +107,23 @@ ipserver=`ss-get nfsserver_hostname`
 ss-display "Mounting /data"
 mount $ipserver:/var/nfsshare /data
 
+######################
+# Install MicroScope #
+######################
+
+ss-display "Installation of MicroScope"
+
+# Get latest MicroScope code
+curl -o microcloud.tar.gz https://www.genoscope.cns.fr/agc/ftp/MicroCloud/microcloud-latest.tar.gz
+tar -xvf microcloud.tar.gz
+
+dirname=/var/tmp/slipstream/biosphere-microcloud/
+user=root
+host=$(ss-get mysql_hostname)
+password=$(ss-get mysql_root_password)
+
+./install_microscope.sh dirname user host password
+
 ##########################
 # Configuration finished #
 ##########################
