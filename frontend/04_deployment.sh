@@ -98,7 +98,7 @@ echo "${mysql_hostname} mysqlagcdb.genoscope.cns.fr mysqlagcdb" >> ${HOSTS_FILE}
 
 # Wait for the NFS server
 ss-display "Waiting NFS server to start"
-ss-get --timeout 800 nfsserver_is_ready
+ss-get --timeout 1600 nfsserver_is_ready
 
 # Get NFS server adress
 ipserver=`ss-get nfsserver_hostname`
