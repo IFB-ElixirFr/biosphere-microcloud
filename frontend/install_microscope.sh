@@ -30,10 +30,10 @@ $mysql_request pkgdb < $data_dir/pkgdb_data.sql
 $mysql_request GO_Conf < $data_dir/GO_Conf_data.sql
 
 # Set values in configuration file
-# TODO: do the same for MYSQL_HOST
 conf_file=web_code/conf/confConstant.inc.php
 sed -i "s/MYSQL_USER/\"${MYSQL_USER}\"/g" ${conf_file}
 sed -i "s/MYSQL_PASSWORD/\"${MYSQL_PASSWORD}\"/g" ${conf_file}
+sed -i "s/MYSQL_HOST/\"${MYSQL_HOST}\"/g" ${conf_file}
 
 # Copy web code in DOCUMENT_ROOT
 cp -r -b -f web_code/* /var/www/html/
