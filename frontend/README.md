@@ -20,7 +20,9 @@ Inputs:
   - `mysql_hostname`: IP address of the `mysql` component (connected to `mysql:hostname`)
   - `nfsserver_hostname`: IP address of the `nfsserver` component (connected to `nfsserver:hostname`)
   - `nfsserver_is_ready`: used to wait for the `nfsserver` component is ready (connected to `nfsserver:is_ready`)
-
+  - `mysql_is_ready`: used to wait for the `mysql` component is ready (connected to `mysql:is_ready`)
+  - `mysql_root_password`: used to create database tables and insert data (connected to `mysql:mysql_root_password`)
+  
 Outputs:
   - `private_ip`: the local IP address of this component; this output is set in the parent image
     (due to to a bug in slipstream, we have to declare it in `frontend`)
@@ -63,6 +65,10 @@ It waits on `nfsserver_is_ready`.
 
 We set `ip_local` at the very beginning of `04_deployment.sh` to give time to `nfsserver`.
 We wait on `nfsserver_is_ready` after having done almost all configuration.
+
+## MicroScope installation (04_deployment.sh)
+
+Fisrt, we wrote a script `microscopeRelease.py` to create a tar archive `microcloud.tar.gz` with all necessary items to install MicroScope. Then, we import the latest version of this archive. Once, the archive is uncompressed, the script `install_microscope.sh` is used to create the databases, insert the data, and copy web code and scripts.
 
 ## TODO
 
