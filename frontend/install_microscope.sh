@@ -27,7 +27,17 @@ $mysql_request PUB_CPD < $schemas_dir/PUB_CPD_schema.sql
 # Insert data
 data_dir="sql_bases/data"
 $mysql_request pkgdb < $data_dir/pkgdb_data.sql
+$mysql_request pkgdb < $data_dir/pkgdb_Annotator_data.sql
+$mysql_request pkgdb < $data_dir/pkgdb_Sid_Config_data.sql
+$mysql_request pkgdb < $data_dir/pkgdb_Sequence_Checkpoint_Desc_data.sql
 $mysql_request GO_Conf < $data_dir/GO_Conf_data.sql
+
+# Insert minimal data into pkgdb
+$mysql_request -e "insert into pkgdb.Organism values (0,'Organism','INIT',null,2323,'init','-','bac',1,'Organism_init')";
+$mysql_request -e "insert into pkgdb.Replicon values(0,1,'INIT',1,'unknown','unknown',11,1,0,null,null,0,now(),'REFERENCE','initialisation',null,null)";
+$mysql_request -e "insert into pkgdb.Sequence values (0,1,'1.fna',0,'INIT_v1_','INIT_v1_',0,now(),now(),null,'inProduction','public')";
+$mysql_request -e "insert into pkgdb.Annotator_Access_Rights values (1,1,'view',now())";
+$mysql_request -e "insert into  pkgdb.Sid_Config values (0,'SC_class','Status_Class_1','all'),(0,'SC_function','Function_1','all'),(0,'SC_localization','Localization_1','all'),(0,'SC_process','Biological_Process_0','all'),(0,'SC_productType','Product_Type_1','all')";
 
 # Set values in configuration file
 conf_file=web_code/conf/confConstant.inc.php
