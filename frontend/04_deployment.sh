@@ -121,11 +121,15 @@ ss-get --timeout 800 mysql_is_ready
 curl -o microcloud.tar.gz https://www.genoscope.cns.fr/agc/ftp/MicroCloud/microcloud-latest.tar.gz
 tar -xvf microcloud.tar.gz
 
+curl -o microscope_31.tar.gz https://www.genoscope.cns.fr/agc/ftp/MicroCloud/microscope_31-latest.tar.gz
+tar -xvf microscope_31.tar.gz
+
 dirname=microcloud
+oid_dirname=31
 mysql_user=root
 mysql_root_password=$(ss-get mysql_root_password)
 
-./install_microscope.sh ${dirname} ${mysql_hostname} ${mysql_user} ${mysql_root_password}
+./install_microscope.sh ${dirname} ${oid_dirname} ${mysql_hostname} ${mysql_user} ${mysql_root_password}
 
 ##########################
 # Configuration finished #
