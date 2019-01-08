@@ -26,11 +26,14 @@ $mysql_request PUB_CPD < $schemas_dir/PUB_CPD_schema.sql
 
 # Insert data
 data_dir="sql_bases/data"
-$mysql_request pkgdb < $data_dir/pkgdb_data.sql
+$mysql_request pkgdb < $data_dir/pkgdb_Maintenance_Country_Amiga_Params_data.sql
 $mysql_request pkgdb < $data_dir/pkgdb_Annotator_data.sql
 $mysql_request pkgdb < $data_dir/pkgdb_Sid_Config_data.sql
 $mysql_request pkgdb < $data_dir/pkgdb_Sequence_Checkpoint_Desc_data.sql
 $mysql_request GO_Conf < $data_dir/GO_Conf_data.sql
+
+# Insert data for Oid=31
+$mysql_request pkgdb < $data_dir/pkgdb_Organism_O_Taxonomy_Replicon_data.sql
 
 # Insert minimal data into pkgdb
 $mysql_request -e "insert into pkgdb.Organism values (0,'Organism','INIT',null,2323,'init','-','bac',1,'Organism_init')";
