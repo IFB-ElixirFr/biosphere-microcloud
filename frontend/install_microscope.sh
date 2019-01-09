@@ -33,7 +33,7 @@ $mysql_request pkgdb < $data_dir/pkgdb_Sequence_Checkpoint_Desc_data.sql
 $mysql_request GO_Conf < $data_dir/GO_Conf_data.sql
 
 # Insert data for O_id=31
-cd $2
+cd "../$2"
 oid_data_dir="data"
 $mysql_request pkgdb < $oid_data_dir/pkgdb_Organism_O_Taxonomy_Replicon_data.sql
 $mysql_request pkgdb < $oid_data_dir/pkgdb_S_id_data.sql
@@ -51,10 +51,9 @@ sed -i "s/MYSQL_PASSWORD/\"${MYSQL_PASSWORD}\"/g" ${conf_file}
 sed -i "s/MYSQL_HOST/\"${MYSQL_HOST}\"/g" ${conf_file}
 
 # Copy web code in DOCUMENT_ROOT
-cd $1
+cd "../$1"
 cp -r -b -f web_code/* /var/www/html/
 chown -R root:apache /var/www/html/*
 chmod -R u=rwX,g=rX,o=rX /var/www/html/*
 
 # Copy web scripts
-
