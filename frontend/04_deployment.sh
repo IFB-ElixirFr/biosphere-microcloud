@@ -98,7 +98,7 @@ echo "${mysql_hostname} mysqlagcdb.genoscope.cns.fr mysqlagcdb" >> ${HOSTS_FILE}
 
 # Wait for the NFS server
 ss-display "Waiting NFS server to start"
-ss-get --timeout 1600 nfsserver_is_ready
+ss-get --timeout 3200 nfsserver_is_ready
 
 # Get NFS server adress
 ipserver=`ss-get nfsserver_hostname`
@@ -115,7 +115,7 @@ ss-display "Installation of MicroScope"
 
 # Wait for the MySQL server
 ss-display "Waiting MySQL server to start"
-ss-get --timeout 800 mysql_is_ready
+ss-get --timeout 1600 mysql_is_ready
 
 # Get latest MicroScope code
 curl -o microcloud.tar.gz https://www.genoscope.cns.fr/agc/ftp/MicroCloud/microcloud-latest.tar.gz
