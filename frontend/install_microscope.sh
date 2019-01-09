@@ -46,13 +46,13 @@ $mysql_request -e "insert into pkgdb.Sequence values (0,1,'1.fna',0,'INIT_v1_','
 $mysql_request -e "insert into pkgdb.Annotator_Access_Rights values (1,1,'view',now())";
 
 # Set values in configuration file
+cd "../$1"
 conf_file=web_code/conf/confConstant.inc.php
 sed -i "s/MYSQL_USER/\"${MYSQL_USER}\"/g" ${conf_file}
 sed -i "s/MYSQL_PASSWORD/\"${MYSQL_PASSWORD}\"/g" ${conf_file}
 sed -i "s/MYSQL_HOST/\"${MYSQL_HOST}\"/g" ${conf_file}
 
 # Copy web code in DOCUMENT_ROOT
-cd "../$1"
 cp -r -b -f web_code/* /var/www/html/
 chown -R root:apache /var/www/html/*
 chmod -R u=rwX,g=rX,o=rX /var/www/html/*
