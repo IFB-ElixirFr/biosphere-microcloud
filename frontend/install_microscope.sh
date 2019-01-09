@@ -37,7 +37,7 @@ cd "../$2"
 oid_data_dir="data"
 $mysql_request pkgdb < $oid_data_dir/pkgdb_Organism_O_Taxonomy_Replicon_data.sql
 sed -i 's/DEFINER=[^*]*\*/\*/g' $oid_data_dir/pkgdb_S_id_data.sql
-$mysql_request pkgdb < $oid_data_dir/pkgdb_S_id_data.sql
+#$mysql_request pkgdb < $oid_data_dir/pkgdb_S_id_data.sql
 
 # Insert minimal data into pkgdb
 $mysql_request -e "insert into pkgdb.Organism values (0,'Organism','INIT',null,2323,'init','-','bac',1,'Organism_init')";
