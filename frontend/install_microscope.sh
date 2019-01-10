@@ -40,8 +40,9 @@ $mysql_request GO_Conf < $data_dir/GO_Conf_data.sql
 # Insert data for O_id=31
 cd "../$2"
 oid_data_dir="data"
-$mysql_request pkgdb < $oid_data_dir/pkgdb_Organism_O_Taxonomy_Replicon_data.sql
-$mysql_request pkgdb < $oid_data_dir/pkgdb_S_id_data.sql
+$mysql_request pkgdb < $oid_data_dir/pkgdb_Oid_data.sql
+$mysql_request pkgdb < $oid_data_dir/pkgdb_Sid_data.sql
+$mysql_request GO_CPD < $oid_data_dir/GO_CPD_Sid_data.sql
 
 # Insert minimal data into pkgdb
 $mysql_request -e "insert into pkgdb.Organism values (0,'Organism','INIT',null,2323,'init','-','bac',1,'Organism_init')";
