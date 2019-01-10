@@ -29,6 +29,14 @@ $mysql_request < $schemas_dir/GO_Conf_schema.sql
 $mysql_request GO_CPD < $schemas_dir/GO_CPD_schema.sql
 $mysql_request PUB_CPD < $schemas_dir/PUB_CPD_schema.sql
 
+# Create PUB_CPD and GO_CPD tables based on template
+$mysql_request -e "CREATE TABLE GO_CPD.36_GO_GO_CPD LIKE GO_CPD.Sid_GO_GO_CPD";
+$mysql_request -e "CREATE TABLE GO_CPD.36_GO_GO_CPD_lst LIKE GO_CPD.Sid_GO_GO_CPD_lst";
+$mysql_request -e "CREATE TABLE GO_CPD.36_GO_Synton LIKE GO_CPD.Sid_GO_Synton";
+$mysql_request -e "CREATE TABLE PUB_CPD.36_GO_RefSeq_CPD LIKE PUB_CPD.Sid_GO_RefSeq_CPD";
+$mysql_request -e "CREATE TABLE PUB_CPD.36_GO_RefSeq_CPD_lst LIKE PUB_CPD.Sid_GO_RefSeq_CPD_lst";
+$mysql_request -e "CREATE TABLE PUB_CPD.36_GO_RefSeq_Synton LIKE PUB_CPD.Sid_GO_RefSeq_Synton";
+
 # Insert data
 data_dir="sql_bases/data"
 $mysql_request pkgdb < $data_dir/pkgdb_Maintenance_Country_Amiga_Params_data.sql
