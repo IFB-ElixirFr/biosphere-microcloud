@@ -12,6 +12,11 @@ MYSQL_PASSWORD=$5
 # Connection to mysql
 mysql_request="mysql -h $MYSQL_HOST -u $MYSQL_USER -p$MYSQL_PASSWORD"
 
+# Create agc user
+$mysql_request -e "CREATE USER 'agc'@'%'";
+$mysql_request -e "GRANT ALL ON pkgdb.* TO 'agc'@'%'";
+$mysql_request -e "FLUSH PRIVILEGES";
+
 # Create databases 
 $mysql_request -e "CREATE DATABASE GO_CPD"; # --databases (-B) option includes CREATE DATABASE and USE statements unfortunately --tables option overrides the --databases (-B) option
 $mysql_request -e "CREATE DATABASE PUB_CPD"; # --databases (-B) option includes CREATE DATABASE and USE statements unfortunately --tables option overrides the --databases (-B) option
@@ -23,9 +28,6 @@ $mysql_request < $schemas_dir/REFSEQDB_schema.sql
 $mysql_request < $schemas_dir/GO_Conf_schema.sql
 $mysql_request GO_CPD < $schemas_dir/GO_CPD_schema.sql
 $mysql_request PUB_CPD < $schemas_dir/PUB_CPD_schema.sql
-
-# Create agc user
-$mysql_request -e "CREATE USER 'agc'@'%'"
 
 # Insert data
 data_dir="sql_bases/data"
