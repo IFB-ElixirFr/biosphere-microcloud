@@ -24,6 +24,9 @@ $mysql_request < $schemas_dir/GO_Conf_schema.sql
 $mysql_request GO_CPD < $schemas_dir/GO_CPD_schema.sql
 $mysql_request PUB_CPD < $schemas_dir/PUB_CPD_schema.sql
 
+# Create agc user
+$mysql_request -e "CREATE USER 'agc'@'%'"
+
 # Insert data
 data_dir="sql_bases/data"
 $mysql_request pkgdb < $data_dir/pkgdb_Maintenance_Country_Amiga_Params_data.sql
@@ -36,8 +39,7 @@ $mysql_request GO_Conf < $data_dir/GO_Conf_data.sql
 cd "../$2"
 oid_data_dir="data"
 $mysql_request pkgdb < $oid_data_dir/pkgdb_Organism_O_Taxonomy_Replicon_data.sql
-sed -i 's/DEFINER=[^*]*\*/\*/g' $oid_data_dir/pkgdb_S_id_data.sql
-#$mysql_request pkgdb < $oid_data_dir/pkgdb_S_id_data.sql
+$mysql_request pkgdb < $oid_data_dir/pkgdb_S_id_data.sql
 
 # Insert minimal data into pkgdb
 $mysql_request -e "insert into pkgdb.Organism values (0,'Organism','INIT',null,2323,'init','-','bac',1,'Organism_init')";
