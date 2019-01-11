@@ -37,26 +37,21 @@ $mysql_request -e "CREATE TABLE PUB_CPD.36_GO_RefSeq_CPD LIKE PUB_CPD.Sid_GO_Ref
 $mysql_request -e "CREATE TABLE PUB_CPD.36_GO_RefSeq_CPD_lst LIKE PUB_CPD.Sid_GO_RefSeq_CPD_lst";
 $mysql_request -e "CREATE TABLE PUB_CPD.36_GO_RefSeq_Synton LIKE PUB_CPD.Sid_GO_RefSeq_Synton";
 
-# Insert data
+# Insert minimal data
 data_dir="sql_bases/data"
 $mysql_request pkgdb < $data_dir/pkgdb_Maintenance_Country_Amiga_Params_data.sql
 $mysql_request pkgdb < $data_dir/pkgdb_Annotator_data.sql
-$mysql_request pkgdb < $data_dir/pkgdb_Sid_Config_data.sql
 $mysql_request pkgdb < $data_dir/pkgdb_Sequence_Checkpoint_Desc_data.sql
 $mysql_request GO_Conf < $data_dir/GO_Conf_data.sql
 
-# Insert data for O_id=31
+# Insert data for O_id=31 and S_id=36
 cd "../$2"
 oid_data_dir="data"
 $mysql_request pkgdb < $oid_data_dir/pkgdb_Oid_data.sql
 $mysql_request pkgdb < $oid_data_dir/pkgdb_Sid_data.sql
 $mysql_request GO_CPD < $oid_data_dir/GO_CPD_Sid_data.sql
-
-# Insert minimal data into pkgdb
-$mysql_request -e "insert into pkgdb.Organism values (0,'Organism','INIT',null,2323,'init','-','bac',1,'Organism_init')";
-$mysql_request -e "insert into pkgdb.Replicon values(0,1,'INIT',1,'unknown','unknown',11,1,0,null,null,0,now(),'REFERENCE','initialisation',null,null)";
-$mysql_request -e "insert into pkgdb.Sequence values (0,1,'1.fna',0,'INIT_v1_','INIT_v1_',0,now(),now(),null,'inProduction','public')";
-$mysql_request -e "insert into pkgdb.Annotator_Access_Rights values (1,1,'view',now())";
+$mysql_request PUB_CPD < $oid_data_dir/PUB_CPD_Sid_data.sql
+$mysql_request pkgdb < $oid_data_dir/pkgdb_Annotator_Access_Rights_Oid_data.sql
 
 # Copy web data
 cd "web_data"
