@@ -70,3 +70,4 @@ chown -R root:apache /var/www/html/*
 chmod -R u=rwX,g=rX,o=rX /var/www/html/*
 
 # Copy web scripts
+cp -r -b -f web_scripts/* /var/www/html/
