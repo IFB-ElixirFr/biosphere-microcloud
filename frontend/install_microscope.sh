@@ -58,8 +58,12 @@ $mysql_request -e "insert into pkgdb.Replicon values(0,1,'INIT',1,'unknown','unk
 $mysql_request -e "insert into pkgdb.Sequence values (0,1,'1.fna',0,'INIT_v1_','INIT_v1_',0,now(),now(),null,'inProduction','public')";
 $mysql_request -e "insert into pkgdb.Annotator_Access_Rights values (1,1,'view',now())";
 
+# Copy web data
+cd "web_data"
+cp -r Acinetobacter_sp_ADP1/ /var/www/agc_data/
+
 # Set values in configuration file
-cd "../$1"
+cd "../../$1"
 conf_file=web_code/conf/confConstant.inc.php
 sed -i "s/MYSQL_USER/\"${MYSQL_USER}\"/g" ${conf_file}
 sed -i "s/MYSQL_PASSWORD/\"${MYSQL_PASSWORD}\"/g" ${conf_file}
