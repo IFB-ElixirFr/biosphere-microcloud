@@ -28,6 +28,7 @@ $mysql_request < $schemas_dir/REFSEQDB_schema.sql
 $mysql_request < $schemas_dir/GO_Conf_schema.sql
 $mysql_request GO_CPD < $schemas_dir/GO_CPD_schema.sql
 $mysql_request PUB_CPD < $schemas_dir/PUB_CPD_schema.sql
+$mysql_request < $schemas_dir/GO_RES_schema.sql
 
 # Create PUB_CPD and GO_CPD tables based on template
 $mysql_request -e "CREATE TABLE GO_CPD.36_GO_GO_CPD LIKE GO_CPD.Sid_GO_GO_CPD";
@@ -43,6 +44,7 @@ $mysql_request pkgdb < $data_dir/pkgdb_Maintenance_Country_Amiga_Params_data.sql
 $mysql_request pkgdb < $data_dir/pkgdb_Annotator_data.sql
 $mysql_request pkgdb < $data_dir/pkgdb_Sequence_Checkpoint_Desc_data.sql
 $mysql_request GO_Conf < $data_dir/GO_Conf_data.sql
+$mysql_request GO_RES < $data_dir/GO_RES_ORGCLUST_clustering_param_ORGCLUST_distance_param_data.sql
 
 # Insert data for O_id=31 and S_id=36
 cd "../$2"
@@ -52,6 +54,11 @@ $mysql_request pkgdb < $oid_data_dir/pkgdb_Sid_data.sql
 $mysql_request GO_CPD < $oid_data_dir/GO_CPD_Sid_data.sql
 $mysql_request PUB_CPD < $oid_data_dir/PUB_CPD_Sid_data.sql
 $mysql_request pkgdb < $oid_data_dir/pkgdb_Annotator_Access_Rights_Oid_data.sql
+$mysql_request GO_RES < $oid_data_dir/GO_RES_GO_FEAT_data.sql
+$mysql_request GO_RES < $oid_data_dir/GO_RES_Sid_data.sql
+$mysql_request GO_RES < $oid_data_dir/GO_RES_ASid_data.sql
+$mysql_request GO_RES < $oid_data_dir/GO_RES_ASid1_ASid2_data.sql
+
 
 # Copy web data
 cd "web_data"
