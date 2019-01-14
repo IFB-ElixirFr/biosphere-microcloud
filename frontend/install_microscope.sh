@@ -77,4 +77,5 @@ chown -R root:apache /var/www/html/*
 chmod -R u=rwX,g=rX,o=rX /var/www/html/*
 
 # Copy web scripts
+mkdir /var/www/binphp/
 cp -r -b -f web_scripts/* /var/www/binphp/
