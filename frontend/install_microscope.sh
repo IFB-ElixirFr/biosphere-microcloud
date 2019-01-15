@@ -59,6 +59,15 @@ $mysql_request GO_RES < $oid_data_dir/GO_RES_Sid_data.sql
 $mysql_request GO_RES < $oid_data_dir/GO_RES_ASid_data.sql
 $mysql_request GO_RES < $oid_data_dir/GO_RES_ASid1_ASid2_data.sql
 
+# Insert data for O_id=16 and S_id=247 (REFSEQDB data)
+$mysql_request REFSEQDB < $oid_data_dir/REFSEQDB_Organism_Sequence_data.sql
+$mysql_request REFSEQDB < $oid_data_dir/REFSEQDB_Org_Info_Taxon_data.sql
+$mysql_request REFSEQDB < $oid_data_dir/REFSEQDB_O_Taxonomy_data.sql
+$mysql_request REFSEQDB < $oid_data_dir/REFSEQDB_Nodes_Names_data.sql
+$mysql_request REFSEQDB < $oid_data_dir/REFSEQDB_Genomic_Object_data.sql
+$mysql_request REFSEQDB < $oid_data_dir/REFSEQDB_PB_GO_CPD_data.sql
+$mysql_request REFSEQDB < $oid_data_dir/REFSEQDB_Division_data.sql
+
 # Copy web data
 cd "web_data"
 mkdir -p /var/www/agc_data/Acinetobacter_sp_ADP1/
