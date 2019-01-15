@@ -59,10 +59,10 @@ $mysql_request GO_RES < $oid_data_dir/GO_RES_Sid_data.sql
 $mysql_request GO_RES < $oid_data_dir/GO_RES_ASid_data.sql
 $mysql_request GO_RES < $oid_data_dir/GO_RES_ASid1_ASid2_data.sql
 
-
 # Copy web data
 cd "web_data"
-cp -r Acinetobacter_sp_ADP1/* /var/www/agc_data/Acinetobacter_sp_ADP1/
+mkdir -p /var/www/agc_data/Acinetobacter_sp_ADP1/
+cp -R Acinetobacter_sp_ADP1/ /var/www/agc_data/Acinetobacter_sp_ADP1/
 chown -R root:apache /var/www/agc_data/*
 chmod -R u=rwX,g=rX,o=rX /var/www/agc_data/*
 
