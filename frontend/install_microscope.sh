@@ -71,7 +71,7 @@ $mysql_request REFSEQDB < $oid_data_dir/REFSEQDB_Division_data.sql
 # Copy web data
 cd "web_data"
 mkdir -p /var/www/agc_data/Acinetobacter_sp_ADP1/
-cp -R Acinetobacter_sp_ADP1/ /var/www/agc_data/Acinetobacter_sp_ADP1/
+cp -R Acinetobacter_sp_ADP1/ /var/www/agc_data/
 chown -R root:apache /var/www/agc_data/*
 chmod -R u=rwX,g=rX,o=rX /var/www/agc_data/*
 
