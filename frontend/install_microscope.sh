@@ -5,9 +5,9 @@ set -u
 set -o pipefail
 
 cd $1
-MYSQL_HOST=$3
-MYSQL_USER=$4
-MYSQL_PASSWORD=$5
+MYSQL_HOST=$2
+MYSQL_USER=$3
+MYSQL_PASSWORD=$4
 
 # Connection to mysql
 mysql_request="mysql -h $MYSQL_HOST -u $MYSQL_USER -p$MYSQL_PASSWORD"
