@@ -8,12 +8,11 @@ ss-display "Installing MySQL docker"
 
 # Run mysql container and expose port
 # We generate the password with the same command than the docker container
+# and export it ASAP
 CONTAINER_NAME=mysql01
 export MYSQL_ROOT_PASSWORD="$(pwgen -1 32)"
-docker run --log-driver=journald --detach --name=${CONTAINER_NAME} --env="MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}" -p 3306:3306 mysql:5.7
-
-# Export password
 ss-set mysql_root_password ${MYSQL_ROOT_PASSWORD}
+docker run --log-driver=journald --detach --name=${CONTAINER_NAME} --env="MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}" -p 3306:3306 mysql:5.7
 
 ##################
 # MicroScope UDF #
