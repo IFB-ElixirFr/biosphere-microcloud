@@ -38,14 +38,7 @@ $mysql_request pkgdb < $data_dir/pkgdb_Sequence_Checkpoint_Desc_data.sql
 $mysql_request GO_Conf < $data_dir/GO_Conf_data.sql
 $mysql_request GO_RES < $data_dir/GO_RES_ORGCLUST_clustering_param_ORGCLUST_distance_param_data.sql
 
-# Copy web data
-cd "web_data"
-cp -R Acinetobacter_sp_ADP1/ /var/www/agc_data/
-chown -R root:apache /var/www/agc_data/*
-chmod -R u=rwX,g=rX,o=rX /var/www/agc_data/*
-
 # Set values in configuration file
-cd "../../$1"
 conf_file=web_code/conf/confConstant.inc.php
 sed -i "s/MYSQL_USER/\"${MYSQL_USER}\"/g" ${conf_file}
 sed -i "s/MYSQL_PASSWORD/\"${MYSQL_PASSWORD}\"/g" ${conf_file}
