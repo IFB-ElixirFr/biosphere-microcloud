@@ -68,15 +68,17 @@ We wait on `nfsserver_is_ready` after having done almost all configuration.
 
 ## MicroScope installation (04_deployment.sh)
 
-First, we wrote a script `microscopeRelease.py` to create a tar archive `microcloud.tar.gz` with all necessary items to install MicroScope. Secondly, we wrote another script `microscopeCopyOid.py` to create a tar archive `microscope_31.tar.gz` that contains minimal data for Oid=31 (Acinetobacter baylyi) and Sid=36.
-Then, we import the latest version of these archives. 
-Once, the archives are uncompressed, the script `install_microscope.sh` is used to create the databases, insert the data, and to copy web code, scripts and data.
+First, we wrote a script `microscopeRelease.py` to create a tar archive `microcloud.tar.gz` with all necessary items to install MicroScope. Then, we import the latest version of this archive. Once, the archive is uncompressed, the script `install_microscope.sh` is used to create the databases, insert the data, and to copy web code.
+
+## Copy Oid data (04_deployment.sh)
+
+Secondly, we wrote another script `microscopeCopyOid.py` to create a tar archive `microscope_31.tar.gz` that contains minimal data set for a specific Oid. Then, data are inserted in databases with the script `import_Oid.sh`. 
 
 ## TODO
 
 Important:
 * Apache error doc (needed for MicroScope)
-* MicroScope installation
+* MicroScope installation (import_Oid.sh)
 
 Security:
 * Use parameter for mysql password
