@@ -122,10 +122,12 @@ curl -o microcloud.tar.gz https://www.genoscope.cns.fr/agc/ftp/MicroCloud/microc
 tar -xvf microcloud.tar.gz
 
 dirname=microcloud
+Oid="31"
 mysql_user=root
 mysql_root_password=$(ss-get mysql_root_password)
 
 ./install_microscope.sh ${dirname} ${mysql_hostname} ${mysql_user} ${mysql_root_password}
+./import_Oid.sh ${dirname} ${Oid} ${mysql_hostname} ${mysql_user} ${mysql_root_password}
 
 ##########################
 # Configuration finished #
