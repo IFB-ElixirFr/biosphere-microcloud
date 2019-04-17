@@ -53,6 +53,6 @@ $mysql_request PUB_CPD < ${data_dir}/PUB_CPD_data.sql
 
 # Copy web data
 cd "${Oid}/web_data"
+cp -avr * /var/www/agc_data/
 chown -R root:apache /var/www/*
-chmod -R u=rwX,g=rX,o=rX /var/www/*
-cp -R * /var/www/agc_data/
+chmod -R u=rwx,g=rx,o=rx /var/www/*
