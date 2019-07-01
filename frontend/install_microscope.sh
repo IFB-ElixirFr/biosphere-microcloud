@@ -20,6 +20,7 @@ $mysql_request -e "FLUSH PRIVILEGES";
 # Create databases 
 $mysql_request -e "CREATE DATABASE GO_CPD"; # --databases (-B) option includes CREATE DATABASE and USE statements unfortunately --tables option overrides the --databases (-B) option
 $mysql_request -e "CREATE DATABASE PUB_CPD"; # --databases (-B) option includes CREATE DATABASE and USE statements unfortunately --tables option overrides the --databases (-B) option
+$mysql_request -e "CREATE DATABASE GO_SPE";
 
 # Create SQL schemas
 schemas_dir="sql_bases/schemas"
@@ -29,14 +30,14 @@ $mysql_request < $schemas_dir/GO_Conf_schema.sql
 $mysql_request GO_CPD < $schemas_dir/GO_CPD_schema.sql
 $mysql_request PUB_CPD < $schemas_dir/PUB_CPD_schema.sql
 $mysql_request < $schemas_dir/GO_RES_schema.sql
+$mysql_request < $schemas_dir/GO_SPE_schema.sql
 
 # Insert minimal data
 data_dir="sql_bases/data"
-$mysql_request pkgdb < $data_dir/pkgdb_Maintenance_Country_Amiga_Params_data.sql
-$mysql_request pkgdb < $data_dir/pkgdb_Annotator_data.sql
-$mysql_request pkgdb < $data_dir/pkgdb_Sequence_Checkpoint_Desc_data.sql
+$mysql_request pkgdb < $data_dir/pkgdb_data.sql
 $mysql_request GO_Conf < $data_dir/GO_Conf_data.sql
-$mysql_request GO_RES < $data_dir/GO_RES_ORGCLUST_clustering_param_ORGCLUST_distance_param_data.sql
+$mysql_request GO_RES < $data_dir/GO_RES_data.sql
+$mysql_request GO_SPE < $data_dir/GO_SPE_data.sql
 
 # Set values in configuration file
 conf_file=web_code/conf/confConstant.inc.php
