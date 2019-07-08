@@ -61,7 +61,8 @@ $mysql_request GO_SPE < ${data_dir}/GO_SPE_data.sql
 
 # Copy web data
 cd "${Oid}/web_data"
+cp -aR * /var/www/agc_data/
 chown -R root:apache /var/www/*
 chmod -R u=rwx,g=rx,o=rx /var/www/*
-cp -avr * /var/www/agc_data/
+
 
