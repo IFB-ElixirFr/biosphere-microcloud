@@ -50,7 +50,7 @@ done
 
 # Create GO_SPE schema
 schemas_dir="${Oid}/sql_bases/schemas"
-$mysql_request < $schemas_dir/GO_SPE_schema.sql
+$mysql_request GO_SPE < $schemas_dir/GO_SPE_schema.sql
 
 # Insert data for chosen Oid
 $mysql_request pkgdb < ${data_dir}/pkgdb_data.sql
