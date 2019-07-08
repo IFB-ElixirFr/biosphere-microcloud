@@ -27,8 +27,11 @@ mysql_request="mysql -h $MYSQL_HOST -u $MYSQL_USER -p$MYSQL_PASSWORD"
 $mysql_request -e "SET GLOBAL sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'";
 $mysql_request -e "SET SESSION sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'";
 
+# Create GO_SPE database
+ $mysql_request -e "CREATE DATABASE GO_SPE";
+
 # Import list of Sid
-data_dir="${Oid}/data"
+data_dir="${Oid}/sql_bases/data"
 file=${data_dir}/Sid_list.txt
 
 # Create list of Sid
@@ -45,14 +48,20 @@ for Sid in ${Sids[@]}; do
   $mysql_request -e "CREATE TABLE PUB_CPD.${Sid}_GO_RefSeq_Synton LIKE PUB_CPD.Sid_GO_RefSeq_Synton";
 done
 
+# Create GO_SPE schema
+schemas_dir="${Oid}/sql_bases/schemas"
+$mysql_request < $schemas_dir/GO_SPE_schema.sql
+
 # Insert data for chosen Oid
 $mysql_request pkgdb < ${data_dir}/pkgdb_data.sql
 $mysql_request GO_RES < ${data_dir}/GO_RES_data.sql
 $mysql_request GO_CPD < ${data_dir}/GO_CPD_data.sql
 $mysql_request PUB_CPD < ${data_dir}/PUB_CPD_data.sql
+$mysql_request GO_SPE < ${data_dir}/GO_SPE_data.sql
 
 # Copy web data
 cd "${Oid}/web_data"
-cp -avr * /var/www/agc_data/
 chown -R root:apache /var/www/*
 chmod -R u=rwx,g=rx,o=rx /var/www/*
+cp -avr * /var/www/agc_data/
+
