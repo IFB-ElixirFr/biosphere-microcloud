@@ -70,14 +70,13 @@ We wait on `nfsserver_is_ready` after having done almost all configuration.
 
 `microscopeRelease.py` is used to create a tar archive `microcloud.tar.gz` with all necessary items to install MicroScope. Then, the latest version of this archive is imported to frontend component and uncompressed. `install_microscope.sh` use these uncompressed files to create the databases, insert the data, and copy web code.
 
-# Copy data for a chosen Oid (04_deployment.sh)
+## Copy data for a chosen Oid (04_deployment.sh)
 
-`microscopeCopyOid.py` is used to create a tar archive `microscope_31.tar.gz` that contains minimal data set for a specific Oid. Then, the latest version of this archive is imported to frontend component and data are inserted in backend databases with `import_Oid.sh`. 
+`microscopeCopyOid.py` is used to create a tar archive `microscope_31.tar.gz` that contains minimal data set for a specific Oid. Then, the latest version of this archive is imported to frontend component and data are inserted in backend databases with `import_Oid.sh`.
 
-# Create federated links between both mysql servers (04_deployment.sh)
+## Create federated links between both mysql servers (04_deployment.sh)
 
-`create_federated_links.py` create federated tables and server links between permanent VM that contains public data banks and backend component to access these data.  
-
+`create_federated_links.py` create federated tables and server links between permanent VM that contains public data banks and backend component to access these data.
 
 ## TODO
 Important:
