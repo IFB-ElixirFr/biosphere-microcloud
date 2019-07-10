@@ -23,8 +23,7 @@ BACKEND_MYSQL_USER=$6
 BACKEND_MYSQL_PASSWORD=$7
 
 # Give backend rights access to permanent VM
-mysql -p${PERMANENT_MYSQL_PASSWORD}
-GRANT ALL ON *.* TO root@'?' IDENTIFIED BY ${BACKEND_MYSQL_PASSWORD};
+${permanent_mysql_request} -e "GRANT ALL ON *.* TO root@'?' IDENTIFIED BY ${BACKEND_MYSQL_PASSWORD};"
 
 # Create connection variable to access backend mysql server
 backend_mysql_request="mysql -h ${BACKEND_MYSQL_HOST} -u ${BACKEND_MYSQL_USER} -p${BACKEND_MYSQL_PASSWORD}" 
