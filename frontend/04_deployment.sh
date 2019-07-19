@@ -20,6 +20,19 @@ openssl genrsa -out ${KEY} 2048
 openssl req -new -key ${KEY} -out ${CSR} -subj "/OU=Domain Control Validated/CN=${IP}"
 openssl x509 -req -days 365 -in ${CSR} -signkey ${KEY} -out ${CERT}
 
+# Modify PHP limits
+cp -rp /etc/php.ini /etc/php.ini.orig
+function replace_ini() {
+    file=$1
+    key=$2
+    value=$3
+    # Replace value but keep the old one after the ;
+    sed -i "s/\s*${key}\s*=/${key} = ${value} ; Previous value was /" $file
+}
+replace_ini /etc/php.ini memory_limit 1024M
+replace_ini /etc/php.ini max_execution_time 1200
+replace_ini /etc/php.ini max_input_time 120
+
 # Create test page
 cat << EOF > /var/www/html/index.php
 <?php phpinfo() ?>
