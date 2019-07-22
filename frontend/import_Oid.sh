@@ -60,7 +60,15 @@ $mysql_request PUB_CPD < ${data_dir}/PUB_CPD_data.sql
 $mysql_request GO_SPE < ${data_dir}/GO_SPE_data.sql
 
 # Copy web data
+# Import Organism dirname to create a new dir to copy web data
+dirname_file=${data_dir}/O_dirname.txt
+dir=( $(tail -n +2 $dirname_file) )
+
+for dirname in ${dir[@]}; do
+  O_dirname=${dirname}
+done
+
 cd "${Oid}/web_data"
-cp -R * /var/www/agc_data/
-chown -R root:apache /var/www/*
-chmod -R u=rwx,g=rx,o=rx /var/www/*
+cp -r ${O_dirname} /var/www/agc_data/
+chown -R root:apache /var/www/agc_data/${O_dirname}
+chmod -R u=rwx,g=rx,o=rx /var/www/agc_data/${O_dirname}
