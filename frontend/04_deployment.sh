@@ -139,9 +139,6 @@ Oid="31"
 mysql_user=root
 mysql_root_password=$(ss-get mysql_root_password)
 
-# Change microcloud folder permissions
-chown -R root:root ${dirname}
-
 permanent_VM_hostname=$(ss-get permanent_VM_hostname)
 permanent_VM_port=$(ss-get permanent_VM_port)
 permanent_VM_mysql_user=root
