@@ -67,11 +67,7 @@ for dirname in ${dir[@]}; do
   O_dirname=${dirname}
 done
 
-# Change permissions
-chown -R root:root microcloud
-
 # Copy web data
-cd "${Oid}/web_data"
-cp -r ${O_dirname} /var/www/agc_data/
+cp -r ${Oid}/web_data/${O_dirname} /var/www/agc_data/${O_dirname}
 chown -R root:apache /var/www/agc_data/${O_dirname}
 chmod -R u=rwx,g=rx,o=rx /var/www/agc_data/${O_dirname}
