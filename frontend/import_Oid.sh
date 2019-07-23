@@ -68,6 +68,7 @@ for dirname in ${dir[@]}; do
 done
 
 # Copy web data
-cp -r ${Oid}/web_data/${O_dirname} /var/www/agc_data/${O_dirname}
+mkdir /var/www/agc_data/
+cp -r -b -f ${Oid}/web_data/* /var/www/agc_data/
 chown -R root:apache /var/www/agc_data/${O_dirname}
 chmod -R u=rwx,g=rx,o=rx /var/www/agc_data/${O_dirname}
