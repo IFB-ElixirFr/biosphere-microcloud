@@ -146,7 +146,7 @@ permanent_VM_mysql_root_password=$(ss-get permanent_VM_mysql_root_password)
 
 ./install_microscope.sh ${dirname} ${mysql_hostname} ${mysql_user} ${mysql_root_password}
 ./import_Oid.sh ${dirname} ${Oid} ${mysql_hostname} ${mysql_user} ${mysql_root_password}
-./create_federated_links.sh ${permanent_VM_hostname} ${permanent_VM_port} ${permanent_VM_mysql_user} ${permanent_VM_mysql_root_password} ${mysql_hostname} ${mysql_user} ${mysql_root_password}
+#./create_federated_links.sh ${permanent_VM_hostname} ${permanent_VM_port} ${permanent_VM_mysql_user} ${permanent_VM_mysql_root_password} ${mysql_hostname} ${mysql_user} ${mysql_root_password}
 
 
 ##########################
