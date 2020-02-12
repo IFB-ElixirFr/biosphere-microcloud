@@ -118,7 +118,7 @@ ipserver=`ss-get nfsserver_hostname`
 
 # Mount the volume
 ss-display "Mounting /data"
-mount $ipserver:/var/nfsshare /data
+mount $ipserver:/env /data
 
 ######################
 # Install MicroScope #
