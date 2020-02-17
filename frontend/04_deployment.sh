@@ -117,8 +117,9 @@ ss-get --timeout 32000 nfsserver_is_ready
 ipserver=`ss-get nfsserver_hostname`
 
 # Mount the volume
-#ss-display "Mounting /data"
-#mount $ipserver:/env /data
+ss-display "Mounting /env"
+mkdir -p /env
+mount $ipserver:/var/nfsshare /env
 
 ######################
 # Install MicroScope #
