@@ -1,0 +1,4 @@
+# This file is just used to keep track of the packages to install
+git
+nfs-common
+

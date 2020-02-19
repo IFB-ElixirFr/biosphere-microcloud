@@ -1,0 +1,8 @@
+# This file is just used to keep track of the packages to install
+ant
+default-jdk
+git
+mariadb-client
+nfs-kernel-server
+unzip
+
