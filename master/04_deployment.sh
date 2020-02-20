@@ -266,6 +266,8 @@ $mysql_request JBPMmicroscope < ${dirname}/JBPM.sql
 
 AGC_PRODUCTSHOME="/env/cns/proj/agc/module/products"
 cd ${AGC_PRODUCTSHOME}
+curl -O ${URL}/4.9.2.zip
+unzip 4.9.2.zip
 cd pegasus-4.9.2/src/tools/pegasus-mpi-cluster
 
 # Delete libnuma requirements
