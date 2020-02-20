@@ -61,7 +61,7 @@ mkdir -p ${AGC_PROFILESHOME}
 IG_HOME="/env/ig/soft/ig/modules"
 mkdir -p ${IG_HOME}
 
-# Access agc repository
+# Access agc repository/resources
 URL="https://www.genoscope.cns.fr/agc/ftp/MicroCloud"
 
 # Get minimal resources to perform modules
@@ -240,8 +240,6 @@ ss-display "Create jbpm database"
 ss-display "Waiting MySQL server to start"
 ss-get --timeout 16000 mysql_is_ready
 
-dirname=/tmp
-
 MYSQL_USER=root
 MYSQL_HOST=$(ss-get mysql_hostname)
 MYSQL_PASSWORD=$(ss-get mysql_root_password)
@@ -256,8 +254,11 @@ $mysql_request -e "CREATE USER 'agc' IDENTIFIED BY 'pwd21';"
 $mysql_request -e "CREATE DATABASE JBPMmicroscope";
 $mysql_request -e "GRANT ALL privileges ON *.* TO 'agc'@'%' IDENTIFIED BY 'pwd21';"
 
+# Get JBPMmicroscope schema from agc resources
+curl -O ${URL}/JBPM.sql
+
 # Create JBPMmicroscope schema
-$mysql_request JBPMmicroscope < ${dirname}/JBPM.sql
+$mysql_request JBPMmicroscope < JBPM.sql
 
 
 ##############################
