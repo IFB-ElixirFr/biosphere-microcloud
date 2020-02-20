@@ -68,7 +68,7 @@ URL="https://www.genoscope.cns.fr/agc/ftp/MicroCloud"
 curl --output ${IG_HOME}/.findproductflavor ${URL}/findproductflavor
 
 # Get modules required to run micJBPMwrapper
-./import_modules ${AGC_PRODUCTSHOME}
+./import_modules.sh ${AGC_PRODUCTSHOME}
 
 
 ################
