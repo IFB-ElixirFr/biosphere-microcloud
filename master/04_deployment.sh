@@ -158,6 +158,9 @@ systemctl start tomcat
 ufw allow 8080
 
 # Configure Tomcat Web Management Interface
+TOMCAT_USER=$(ss-get tomcat_user)
+TOMCAT_PASSWORD=$(ss-get tomcat_password)
+
 cd ${JBPMDirectory}/tomcat/conf
 
 # Create temp file
@@ -170,7 +173,7 @@ cat <<EOF>> tomcat-users.xml.tmp
 <role rolename="admin-gui"/>
 <role rolename="admin-script"/>
 <role rolename="admin"/>
-<user username="tomcat" password="tomcat" roles="manager-gui,admin-gui,admin,manager,manager-script,admin-script"/>
+<user username=${TOMCAT_USER} password=${TOMCAT_PASSWORD} roles="manager-gui,admin-gui,admin,manager,manager-script,admin-script"/>
 </tomcat-users>
 EOF
 
@@ -247,12 +250,15 @@ MYSQL_PASSWORD=$(ss-get mysql_root_password)
 # Connection to mysql
 mysql_request="mysql -h ${MYSQL_HOST} -u ${MYSQL_USER} -p${MYSQL_PASSWORD}"
 
-# Create user
-$mysql_request -e "CREATE USER 'agc' IDENTIFIED BY 'pwd21';"
+# Create jbpm user
+JBPM_USER=$(ss-get jbpm_user)
+JBPM_PASSWORD=$(ss-get jbpm_password)
+
+$mysql_request -e "CREATE USER '${JBPM_USER}' IDENTIFIED BY '${JBPM_PASSWORD}';"
 
 # Create JBPM database and grant permissions
 $mysql_request -e "CREATE DATABASE JBPMmicroscope";
-$mysql_request -e "GRANT ALL privileges ON *.* TO 'agc'@'%' IDENTIFIED BY 'pwd21';"
+$mysql_request -e "GRANT ALL privileges ON JBPMmicroscope.* TO '${JBPM_USER}'@'%' IDENTIFIED BY '${JBPM_PASSWORD}';"
 
 # Get JBPMmicroscope schema from agc resources
 curl -O ${URL}/JBPM.sql
