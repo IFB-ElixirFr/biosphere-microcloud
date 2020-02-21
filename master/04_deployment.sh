@@ -39,7 +39,7 @@ if [ "$category" == "Deployment" ]; then
         NFS_microcloud_ready 
         
         #NFS_mount function
-        NFS_microcloud_mount /env
+        NFS_microcloud_mount /var/nfsshare /env
     fi
 fi
 ss-display "End mounting."
