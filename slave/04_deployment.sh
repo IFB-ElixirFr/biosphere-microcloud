@@ -32,7 +32,7 @@ mkdir /env
 NFS_microcloud_ready
 
 # NFS_mount /env
-NFS_microcloud_mount /env
+NFS_microcloud_mount /var/nfsshare /env
 
 # Source jbpm profile
 JBPMDirectory="/env/cns/proj/agc/tools/COMMON/JBPMmicroscope"
