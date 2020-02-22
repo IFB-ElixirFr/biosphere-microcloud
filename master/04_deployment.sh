@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh -xe
 source /scripts/cluster/elasticluster.sh
 source /scripts/populate_hosts_with_components_name_and_ips.sh --dry-run
 source /scripts/allows_other_to_access_me.sh --dry-run
@@ -43,7 +43,7 @@ if [ "$category" == "Deployment" ]; then
     fi
 fi
 ss-display "End mounting."
-
+ss-set end_mount true
 
 ###############################
 # Install modules environment #
