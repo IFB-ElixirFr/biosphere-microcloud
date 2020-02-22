@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh -xe
 source /scripts/cluster/cluster_install.sh
 source /scripts/populate_hosts_with_components_name_and_ips.sh --dry-run
 source /scripts/allows_other_to_access_me.sh --dry-run
@@ -27,6 +27,15 @@ fi
 
 # Create shared directory /env
 mkdir /env
+
+# Wait for the shared directory /env
+ss-display "Waiting master to mount /env dir"
+shared_dir_ready=$(ss-get --timeout=3600 end_mount)
+while [ "$shared_dir_ready" != "true" ]
+do
+    sleep 10;
+	shared_dir_ready=$(ss-get --timeout=3600 end_mount)
+done
 
 # NFS_ready
 NFS_microcloud_ready
