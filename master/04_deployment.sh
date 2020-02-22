@@ -43,7 +43,6 @@ if [ "$category" == "Deployment" ]; then
     fi
 fi
 ss-display "End mounting."
-ss-set end_mount true
 
 ###############################
 # Install modules environment #
@@ -282,6 +281,8 @@ sed -i "s|NUMAIF=.*|NUMAIF=|" Makefile
 make
 make install
 
+# Shared dir is ready
+ss-set end_mount true
 
 ################################
 # Manage /var/mail/ubuntu file #
