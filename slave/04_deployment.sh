@@ -34,7 +34,7 @@ shared_dir_ready=$(ss-get --timeout=3600 end_mount)
 while [ "$shared_dir_ready" != "true" ]
 do
     sleep 10;
-	shared_dir_ready=$(ss-get --timeout=3600 end_mount)
+    shared_dir_ready=$(ss-get --timeout=3600 end_mount)
 done
 
 # NFS_ready
