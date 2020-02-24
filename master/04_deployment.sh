@@ -107,6 +107,9 @@ mkdir -p ${JBPMDirectory}/lib
 mkdir -p ${JBPMDirectory}/bin
 mkdir -p ${JBPMDirectory}/jbpmmicroscope
 mkdir -p ${JBPMResult}
+chmod g+s ${JBPMResult}
+mkdir -p ${JBPMResult}/log
+
 
 # Get jars
 curl --output ${JBPMDirectory}/lib/jbpmmicroscope.jar ${URL}/jbpmmicroscope-client-latest.jar
