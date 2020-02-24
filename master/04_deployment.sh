@@ -99,12 +99,14 @@ curl --output ${IG_HOME}/.findproductflavor ${URL}/findproductflavor
 
 # Create directories
 JBPMDirectory="/env/cns/proj/agc/tools/COMMON/JBPMmicroscope"
+JBPMResult="/env/cns/proj/agc/Data/Result/JBPMmicroscope"
 mkdir -p ${JBPMDirectory}
 chmod g+s ${JBPMDirectory}
 mkdir -p ${JBPMDirectory}/data/log
 mkdir -p ${JBPMDirectory}/lib
 mkdir -p ${JBPMDirectory}/bin
 mkdir -p ${JBPMDirectory}/jbpmmicroscope
+mkdir -p ${JBPMResult}
 
 # Get jars
 curl --output ${JBPMDirectory}/lib/jbpmmicroscope.jar ${URL}/jbpmmicroscope-client-latest.jar
