@@ -90,6 +90,10 @@ URL="https://www.genoscope.cns.fr/agc/ftp/MicroCloud"
 curl --output ${IG_HOME}/.findproductflavor ${URL}/findproductflavor
 
 # Get modules required to run micJBPMwrapper
+SLIPSTREAM_DIR="/var/tmp/slipstream"
+BASE_DIR=biosphere-microcloud
+COMPONENT=master
+cd ${SLIPSTREAM_DIR}/${BASE_DIR}/${COMPONENT}
 ./import_modules.sh ${AGC_PRODUCTSHOME}
 
 
@@ -219,6 +223,7 @@ cat <<EOF> context.xml
 EOF
 
 # Source jbpm profile before starting tomcat
+cd ${SLIPSTREAM_DIR}/${BASE_DIR}/${COMPONENT}
 source jbpm.profile ${JBPMDirectory}
 
 # Restart tomcat
