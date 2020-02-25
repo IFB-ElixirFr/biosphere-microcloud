@@ -52,5 +52,28 @@ AGC_PRODUCTSHOME="/env/cns/proj/agc/module/products"
 cd $AGC_PRODUCTSHOME/pegasus-4.9.2/src/tools/pegasus-mpi-cluster
 make install
 
-msg_info "Slave ready."
+#################################
+# Slurm Logrotate Configuration #
+#################################
+cat <<EOF> /etc/logrotate.d/slurm
+/var/log/slurm/*.log {
+    compress
+    missingok
+    nocopytruncate
+    nocreate
+    nodelaycompress
+    nomail
+    notifempty
+    noolddir
+    rotate 5
+    sharedscripts
+    size=5M
+    create 640 slurm root
+    postrotate
+    /etc/init.d/slurm reconfig
+    endscript
+}
+EOF
+
+msg_info "Slave ready"
 
