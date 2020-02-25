@@ -204,7 +204,7 @@ EOF
 # Create jbpm profile
 cd ${SLIPSTREAM_DIR}/${BASE_DIR}/${COMPONENT}
 
-cat <<EOF> JBPM.profile
+cat <<EOF> jbpm.profile
 ## JBPM PROFILE ##
 JBPMDirectory=${JBPMDirectory}
 
