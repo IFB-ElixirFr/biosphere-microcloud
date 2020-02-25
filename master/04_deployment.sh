@@ -222,10 +222,15 @@ export NCBIREFSEQDB="REFSEQDB"
 export GENOMEPUBDB="GenomePubDB"
 
 # DB connection
-export MYAGCUSER="root"
-export MYAGCPASS=$(ss-get mysql_root_password)
-export MYAGCHOST=$(ss-get mysql_hostname)
-export MYAGCPORT=3306
+MYAGCUSER="root"
+MYAGCPASS=$(ss-get mysql_root_password)
+MYAGCHOST=$(ss-get mysql_hostname)
+MYAGCPORT=3306
+
+export MYAGCUSER
+export MYAGCPASS
+export MYAGCHOST
+export MYAGCPORT
 
 export MICROSCOPE_DBconnect="mysql -A -N -u${MYAGCUSER} -p${MYAGCPASS} -h${MYAGCHOST}"
 alias mysqlagcdb="mysql -u${MYAGCUSER} -p${MYAGCPASS} -h${MYAGCHOST}"
@@ -400,4 +405,4 @@ EOF
 # Configuration finished #
 ##########################
 
-msg_info "Master ready."
+msg_info "Master ready"
