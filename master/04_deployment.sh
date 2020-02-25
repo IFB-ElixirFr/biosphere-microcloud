@@ -114,7 +114,7 @@ mv JBPMmicroscope ${JBPMDirectory}/bin/JBPMmicroscope
 cd ${JBPMDirectory}
 curl -O ${URL}/apache-tomcat-latest.tar.gz
 mkdir -p ${JBPMDirectory}/tomcat
-tar xzvf apache-tomcat-latest.tar.gz -C ${JBPMDirectory}/tomcat --strip-components=1
+tar xf apache-tomcat-latest.tar.gz -C ${JBPMDirectory}/tomcat --strip-components=1
 
 # Create Tomcat User
 groupadd tomcat
