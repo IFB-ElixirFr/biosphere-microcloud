@@ -375,8 +375,8 @@ EOF
 # Slurm Logrotate Configuration #
 #################################
 
-cat <<EOF> /var/log/slurm/*.log
-/var/log/slurm/*log {
+cat <<EOF> /etc/logrotate.d/slurm
+/var/log/slurm/*.log {
     compress
     missingok
     nocopytruncate
