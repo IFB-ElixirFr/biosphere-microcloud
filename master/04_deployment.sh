@@ -93,7 +93,6 @@ mkdir -p ${JBPMResult}
 chmod g+s ${JBPMResult}
 mkdir -p ${JBPMResult}/log
 
-
 # Get jars
 curl --output ${JBPMDirectory}/lib/jbpmmicroscope.jar ${URL}/jbpmmicroscope-client-latest.jar
 curl --output ${JBPMDirectory}/lib/SystemActorsLauncher.jar ${URL}/SystemActorsLauncher-latest.jar
@@ -335,11 +334,8 @@ $mysql_request -e "CREATE USER '${JBPM_USER}' IDENTIFIED BY '${JBPM_PASSWORD}';"
 $mysql_request -e "CREATE DATABASE JBPMmicroscope";
 $mysql_request -e "GRANT ALL privileges ON JBPMmicroscope.* TO '${JBPM_USER}'@'%' IDENTIFIED BY '${JBPM_PASSWORD}';"
 
-# Get JBPMmicroscope schema from agc resources
-curl -O ${URL}/JBPM.sql
-
 # Create JBPMmicroscope schema
-$mysql_request JBPMmicroscope < JBPM.sql
+$mysql_request JBPMmicroscope < ${JBPMDirectory}/JBPM.sql
 
 
 ##############################
