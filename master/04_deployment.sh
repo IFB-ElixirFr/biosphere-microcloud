@@ -30,39 +30,21 @@ install_playbooks slurm
 ss-display "Start mounting."
 
 # Create shared directory /env between master, slave(s) and frontend
+SLIPSTREAM_DIR="/var/tmp/slipstream"
+BASE_DIR=biosphere-microcloud
+COMPONENT=master
+cd ${SLIPSTREAM_DIR}/${BASE_DIR}/${COMPONENT}
+
 mkdir /env
 
 if [ "$category" == "Deployment" ]; then
     node_multiplicity=$(ss-get $SLAVE_NAME:multiplicity)
     if [ "$node_multiplicity" != "0" ]; then
-        # is NFS ready ?
-        ss-get --timeout=3600 nfsserver_is_ready
-        nfs_ready=$(ss-get --timeout=3600 nfsserver_is_ready)
-        echo "Waiting NFS to be ready."
-	    while [ "$nfs_ready" != "true" ]; do
-		    sleep 10;
-            nfs_ready=$(ss-get --timeout=3600 nfsserver_is_ready)
-        done
-        #NFS_mount function
-        nfs_hostname=$(ss-get --timeout=3600 nfsserver_hostname)
-        SHARED_DIR="/var/nfsshare"
-        MOUNT_DIR="/env"
-        echo "Mount $MOUNT_DIR where shared directory is $SHARED_DIR from $nfs_hostname host)."
-        if [ ! -d "$MOUNT_DIR" ]; then
-            echo "$MOUNT_DIR doesn't exist !"
-        else    
-            echo "Mounting $MOUNT_DIR..."
-            umount $MOUNT_DIR
-            mount $nfs_hostname:$SHARED_DIR $MOUNT_DIR 2>/tmp/mount_error_message.txt
-            ret=$?
-            echo "$(cat /tmp/mount_error_message.txt)"
+        # NFS_ready function
+        NFS_microcloud_ready 
         
-            if [ $ret -ne 0 ]; then
-                ss-abort "$(cat /tmp/mount_error_message.txt)"
-            else
-                 echo "$MOUNT_DIR is mounted"
-            fi
-        fi
+        #NFS_mount function
+        NFS_microcloud_mount /env
     fi
 fi
 ss-display "End mounting."
@@ -90,9 +72,6 @@ URL="https://www.genoscope.cns.fr/agc/ftp/MicroCloud"
 curl --output ${IG_HOME}/.findproductflavor ${URL}/findproductflavor
 
 # Get modules required to run micJBPMwrapper
-SLIPSTREAM_DIR="/var/tmp/slipstream"
-BASE_DIR=biosphere-microcloud
-COMPONENT=master
 cd ${SLIPSTREAM_DIR}/${BASE_DIR}/${COMPONENT}
 ./import_modules.sh ${AGC_PRODUCTSHOME}
 
