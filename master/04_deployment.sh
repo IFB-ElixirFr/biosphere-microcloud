@@ -247,6 +247,7 @@ cd ${SLIPSTREAM_DIR}/${BASE_DIR}/${COMPONENT}
 cat <<EOF> jbpm.profile
 ## JBPM PROFILE ##
 JBPMDirectory=${JBPMDirectory}
+AGC_PRODUCTSHOME=${AGC_PRODUCTSHOME}
 
 # Databases
 export MYAGCDB="pkgdb"
@@ -272,23 +273,21 @@ export MICROSCOPE_DBconnect="mysql -A -N -u${MYSQL_USER} -p${MYSQL_PASS} -h${MYS
 alias mysqlagcdb="mysql -u${MYSQL_USER} -p${MYSQL_PASS} -h${MYSQL_HOST}}"
 
 # micJBPMwrapper
-export PATH=${JBPMDirectory}/micJBPMwrapper/unix-noarch/bin:$PATH
+export PATH=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/bin:$PATH
 
-export MICROSCOPE_LIB_SCRIPT=${JBPMDirectory}/micJBPMwrapper/unix-noarch/lib/microscope.lib
-export MICROSCOPE_PATH_SCRIPT=${JBPMDirectory}/micJBPMwrapper/unix-noarch
-export MICROSCOPE_CONF_SCRIPT=${JBPMDirectory}/micJBPMwrapper/unix-noarch/conf
-export MICJBPMWRAPPER_ROOT=${JBPMDirectory}/micJBPMwrapper/unix-noarch
-export MICJBPMWRAPPER_EXEDIR=${JBPMDirectory}/micJBPMwrapper/unix-noarch/bin
-export MICJBPMWRAPPER_LIBDIR=${JBPMDirectory}/micJBPMwrapper/unix-noarch/lib
+export MICROSCOPE_LIB_SCRIPT=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/lib/microscope.lib
+export MICROSCOPE_PATH_SCRIPT=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch
+export MICROSCOPE_CONF_SCRIPT=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/conf
+export MICJBPMWRAPPER_ROOT=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch
+export MICJBPMWRAPPER_EXEDIR=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/bin
+export MICJBPMWRAPPER_LIBDIR=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/lib
 
 # bagsub
-export PATH=${JBPMDirectory}:${PATH}
+export PATH=${AGC_PRODUCTSHOME}:${PATH}
 
 # Tomcat
 export JBPM_PROJECT_SRC=${JBPMDirectory}/jbpmmicroscope
-
-PATH=${JBPM_PROJECT_SRC}/bin:${PATH}
-export PATH
+export PATH=${JBPM_PROJECT_SRC}/bin:${PATH}
 
 TOMCAT_HOME=${JBPMDirectory}/tomcat
 export TOMCAT_HOME
