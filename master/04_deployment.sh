@@ -47,7 +47,9 @@ if [ "$category" == "Deployment" ]; then
         NFS_microcloud_mount /env
     fi
 fi
-ss-display "End mounting."
+
+ss-display "Shared dir /env ready"
+
 
 ###############################
 # Install modules environment #
@@ -109,6 +111,8 @@ mv JBPMmicroscope ${JBPMDirectory}/bin/JBPMmicroscope
 ##################
 # Install Tomcat #
 ##################
+
+ss-display "Install Apache Tomcat Server"
 
 # Download tomcat 9
 cd ${JBPMDirectory}
@@ -212,6 +216,7 @@ MYSQL_HOST=$(ss-get mysql_hostname)
 MYSQL_PASS=$(ss-get mysql_root_password)
 MYSQL_USER="root"
 
+
 ########################################
 # Configure aliases to mysql component #
 # (uses mysql_hostname)                #
@@ -230,11 +235,12 @@ fi
 # Add mysql_hostname to /etc/hosts
 echo "$(ss-get mysql_hostname) mysqlagcdb.genoscope.cns.fr mysqlagcdb" >> ${HOSTS_FILE}
 
+
 #######################
 # Create jbpm profile #
 #######################
 
-ss-display "Create jbpm.profile"
+ss-display "Writting jbpm.profile"
 
 cd ${SLIPSTREAM_DIR}/${BASE_DIR}/${COMPONENT}
 
@@ -318,7 +324,7 @@ iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
 # Create jbpm database #
 ########################
 
-ss-display "Create jbpm database"
+ss-display "Creating jbpm database"
 
 # Wait for the MySQL server
 ss-display "Waiting MySQL server to start"
@@ -348,6 +354,8 @@ $mysql_request JBPMmicroscope < ${JBPMDirectory}/JBPM.sql
 ##############################
 # pegasus-mpi-cluster recipe #
 ##############################
+
+ss-display "Install Pegagus"
 
 AGC_PRODUCTSHOME="/env/cns/proj/agc/module/products"
 cd ${AGC_PRODUCTSHOME}
