@@ -357,7 +357,6 @@ $mysql_request JBPMmicroscope < ${JBPMDirectory}/JBPM.sql
 
 ss-display "Install Pegagus"
 
-AGC_PRODUCTSHOME="/env/cns/proj/agc/module/products"
 cd ${AGC_PRODUCTSHOME}
 curl -O ${URL}/pegasus-latest.tar.gz
 tar xf pegasus-latest.tar.gz
