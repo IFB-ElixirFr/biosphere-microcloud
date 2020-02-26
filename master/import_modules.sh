@@ -8,10 +8,10 @@
 ################################################################
 cd $1
 
-URL=https://www.genoscope.cns.fr/agc/ftp/MicroCloud/modules.txt
-curl -o "modules.txt" $URL
+URL=https://www.genoscope.cns.fr/agc/ftp/MicroCloud
+curl -o modules.txt ${URL}/modules.txt
 
 while IFS= read -r line; do
-    curl --output $1/$line https://www.genoscope.cns.fr/agc/ftp/MicroCloud/$line
-    tar -xzf $1/$line -C $1
+    module_name=$(echo $line | cut -d - -f 1)
+    wget -O - ${URL}/$line | tar -xzv --transform "s:^[^/]*:${module_name}:"
 done < "modules.txt"
