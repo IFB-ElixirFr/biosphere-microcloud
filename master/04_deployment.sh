@@ -200,7 +200,42 @@ cat <<EOF> context.xml
 </Context>
 EOF
 
-# Create jbpm profile
+
+###########################
+# Wait for mysql_hostname #
+###########################
+
+ss-display "Waiting SQL server to start"
+
+# Get IP adress of MySQL server
+MYSQL_HOST=$(ss-get mysql_hostname)
+MYSQL_PASS=$(ss-get mysql_root_password)
+MYSQL_USER="root"
+
+########################################
+# Configure aliases to mysql component #
+# (uses mysql_hostname)                #
+########################################
+
+ss-display "Adding aliases to mysql component"
+
+HOSTS_FILE=/etc/hosts
+
+# Save /etc/hosts
+if [ -e ${HOSTS_FILE} ]
+then
+  cp -p ${HOSTS_FILE} ${HOSTS_FILE}.orig
+fi
+
+# Add mysql_hostname to /etc/hosts
+echo "$(ss-get mysql_hostname) mysqlagcdb.genoscope.cns.fr mysqlagcdb" >> ${HOSTS_FILE}
+
+#######################
+# Create jbpm profile #
+#######################
+
+ss-display "Create jbpm.profile"
+
 cd ${SLIPSTREAM_DIR}/${BASE_DIR}/${COMPONENT}
 
 cat <<EOF> jbpm.profile
@@ -222,18 +257,13 @@ export NCBIREFSEQDB="REFSEQDB"
 export GENOMEPUBDB="GenomePubDB"
 
 # DB connection
-MYAGCUSER="root"
-MYAGCPASS=$(ss-get mysql_root_password)
-MYAGCHOST=$(ss-get mysql_hostname)
-MYAGCPORT=3306
+export MYAGCUSER="root"
+export MYAGCPASS=${MYSQL_PASS}
+export MYAGCHOST=${MYSQL_HOST}
+export MYAGCPORT=3306
 
-export MYAGCUSER
-export MYAGCPASS
-export MYAGCHOST
-export MYAGCPORT
-
-export MICROSCOPE_DBconnect="mysql -A -N -u${MYAGCUSER} -p${MYAGCPASS} -h${MYAGCHOST}"
-alias mysqlagcdb="mysql -u${MYAGCUSER} -p${MYAGCPASS} -h${MYAGCHOST}"
+export MICROSCOPE_DBconnect="mysql -A -N -u${MYSQL_USER} -p${MYSQL_PASS} -h${MYSQL_HOST}"
+alias mysqlagcdb="mysql -u${MYSQL_USER} -p${MYSQL_PASS} -h${MYSQL_HOST}}"
 
 # micJBPMwrapper
 export PATH=${JBPMDirectory}/micJBPMwrapper/unix-noarch/bin:$PATH
@@ -261,6 +291,7 @@ export JBPM_PROJECT_HOME
 
 alias tomcat_status='systemctl status tomcat'
 alias tomcat_start='systemctl start tomcat'
+alias tomcat_restart='systemctl restart tomcat'
 alias tomcat_stop='systemctl stop tomcat'
 alias tomcat_logs='tail -f -n 100 $TOMCAT_HOME/logs/catalina.out'
 
@@ -281,35 +312,6 @@ systemctl enable tomcat
 
 # Redirect port
 iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
-
-
-###########################
-# Wait for mysql_hostname #
-###########################
-
-ss-display "Waiting SQL server to start"
-
-# Get IP adress of MySQL server
-MYSQL_HOST=$(ss-get mysql_hostname)
-
-
-########################################
-# Configure aliases to mysql component #
-# (uses mysql_hostname)                #
-########################################
-
-ss-display "Adding aliases to mysql component"
-
-HOSTS_FILE=/etc/hosts
-
-# Save /etc/hosts
-if [ -e ${HOSTS_FILE} ]
-then
-  cp -p ${HOSTS_FILE} ${HOSTS_FILE}.orig
-fi
-
-# Add mysql_hostname to /etc/hosts
-echo "$(ss-get mysql_hostname) mysqlagcdb.genoscope.cns.fr mysqlagcdb" >> ${HOSTS_FILE}
 
 
 ########################
@@ -360,6 +362,7 @@ make install
 
 # Shared dir is ready
 ss-set end_mount true
+
 
 ################################
 # Manage /var/mail/ubuntu file #
