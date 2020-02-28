@@ -1,13 +1,4 @@
 #!/bin/bash
-# Source cluster_install script
-get_all_requirement_script
-apt install -y python-minimal
-apt update -y
-apt install requests==2.20.0
-apt install -y python-pip
-pip2 install -r /scripts/requirements.txt
-source /scripts/cluster/cluster_install.sh
-make_file_test_slurm /root/mydisk
 
 source /scripts/cluster/elasticluster.sh
 source /scripts/populate_hosts_with_components_name_and_ips.sh --dry-run
