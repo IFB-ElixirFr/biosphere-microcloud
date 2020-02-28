@@ -6,7 +6,7 @@ git_dir="biosphere-commons"
 get_global_repo()
 {
     if [ ! -e /tmp/$git_dir ]; then
-        git clone -b correct_errors $git_clone/ /tmp/$git_dir
+        git clone $git_clone/ /tmp/$git_dir
     else
         cd /tmp/$git_dir
         git pull
