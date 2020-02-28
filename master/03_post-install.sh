@@ -44,13 +44,3 @@ get_all_requirement_script()
         ss-abort "repository doesn't exist!"
     fi
 }
-
-# Source cluster_install script
-get_all_requirement_script
-apt install -y python-minimal
-apt update -y
-apt install requests==2.20.0
-apt install -y python-pip
-pip2 install -r /scripts/requirements.txt
-source /scripts/cluster/cluster_install.sh
-make_file_test_slurm /root/mydisk
