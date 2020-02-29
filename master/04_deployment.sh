@@ -355,7 +355,7 @@ $mysql_request JBPMmicroscope < ${JBPMDirectory}/JBPM.sql
 # pegasus-mpi-cluster recipe #
 ##############################
 
-ss-display "Install Pegagus"
+ss-display "Install Pegasus"
 
 cd ${AGC_PRODUCTSHOME}
 curl -O ${URL}/pegasus-latest.tar.gz
@@ -374,6 +374,8 @@ ss-set end_mount true
 ################################
 # Manage /var/mail/ubuntu file #
 ################################
+
+ss-display "Configure logrotates"
 
 # The size of /var/mail/ubuntu has been increasing and may cause memory shortage.
 cat <<EOF> /etc/logrotate.d/mailubuntu
