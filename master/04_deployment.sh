@@ -271,7 +271,7 @@ export MYAGCHOST=${MYSQL_HOST}
 export MYAGCPORT=3306
 
 export MICROSCOPE_DBconnect="mysql -A -N -u${MYSQL_USER} -p${MYSQL_PASS} -h${MYSQL_HOST}"
-alias mysqlagcdb="mysql -u${MYSQL_USER} -p${MYSQL_PASS} -h${MYSQL_HOST}}"
+alias mysqlagcdb="mysql -u${MYSQL_USER} -p${MYSQL_PASS} -h${MYSQL_HOST}"
 
 # micJBPMwrapper
 export PATH=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/bin:$PATH
