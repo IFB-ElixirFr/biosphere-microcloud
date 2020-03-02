@@ -119,6 +119,7 @@ cd ${JBPMDirectory}
 curl -O ${URL}/apache-tomcat-latest.tar.gz
 mkdir -p ${JBPMDirectory}/tomcat
 tar xf apache-tomcat-latest.tar.gz -C ${JBPMDirectory}/tomcat --strip-components=1
+rm apache-tomcat-latest.tar.gz
 
 # Create Tomcat User
 groupadd tomcat
