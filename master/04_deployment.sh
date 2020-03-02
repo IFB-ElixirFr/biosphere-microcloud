@@ -88,7 +88,6 @@ JBPMDirectory="/env/cns/proj/agc/tools/COMMON/JBPMmicroscope"
 JBPMResult="/env/cns/proj/agc/Data/Result/JBPMmicroscope"
 mkdir -p ${JBPMDirectory}
 chmod g+s ${JBPMDirectory}
-mkdir -p ${JBPMDirectory}/data/log
 mkdir -p ${JBPMDirectory}/lib
 mkdir -p ${JBPMDirectory}/bin
 mkdir -p ${JBPMDirectory}/jbpmmicroscope
@@ -287,7 +286,7 @@ export MICJBPMWRAPPER_LIBDIR=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/lib
 export PATH=${AGC_PRODUCTSHOME}:${PATH}
 
 # Tomcat
-export JBPM_PROJECT_SRC=${JBPMDirectory}/jbpmmicroscope
+export JBPM_PROJECT_SRC=${JBPMDirectory}
 export PATH=${JBPM_PROJECT_SRC}/bin:${PATH}
 
 TOMCAT_HOME=${JBPMDirectory}/tomcat
