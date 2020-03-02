@@ -360,6 +360,7 @@ ss-display "Install Pegasus"
 cd ${AGC_PRODUCTSHOME}
 curl -O ${URL}/pegasus-latest.tar.gz
 tar xf pegasus-latest.tar.gz
+rm pegasus-latest.tar.gz
 cd pegasus-4.9.2/src/tools/pegasus-mpi-cluster
 
 # Delete libnuma requirements
