@@ -1,5 +1,4 @@
 #!/bin/bash -xe
-EXPORT_DIR="/var/nfsshare"
-mkdir -p ${EXPORT_DIR}
-chmod -R 755 ${EXPORT_DIR}
-chown nfsnobody:nfsnobody ${EXPORT_DIR}
+mkdir /var/nfsshare
+chmod -R 755 /var/nfsshare
+chown nfsnobody:nfsnobody /var/nfsshare
