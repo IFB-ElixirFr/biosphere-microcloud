@@ -30,6 +30,12 @@ $mysql_request GO_CPD < $schemas_dir/GO_CPD_schema.sql
 $mysql_request PUB_CPD < $schemas_dir/PUB_CPD_schema.sql
 $mysql_request < $schemas_dir/GO_RES_schema.sql
 
+# Get and create workflow schemas
+URL=https://www.genoscope.cns.fr/agc/ftp/MicroCloud/WFschemas-latest.tar.gz
+curl -o WFschemas.tar.gz $URL
+tar -xf WFschemas.tar.gz
+$mysql_request pkgdb < workflow_schemas.sql
+
 # Insert minimal data
 data_dir="sql_bases/data"
 $mysql_request pkgdb < $data_dir/pkgdb_data.sql
@@ -50,4 +56,3 @@ chmod -R u=rwX,g=rX,o=rX /var/www/html/*
 # Copy web scripts
 mkdir /var/www/binphp/
 cp -r -b -f web_scripts/* /var/www/binphp/
-
