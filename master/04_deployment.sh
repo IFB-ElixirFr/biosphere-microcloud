@@ -106,6 +106,7 @@ curl -o ${JBPMDirectory}/JBPM.sql ${URL}/JBPM.sql
 cd ${JBPMDirectory}/jbpmmicroscope
 jar -xf ${JBPMDirectory}/lib/jbpmmicroscope.jar
 mv JBPMmicroscope ${JBPMDirectory}/bin/JBPMmicroscope
+chmod +x ${JBPMDirectory}/bin/JBPMmicroscope
 
 
 ##################
