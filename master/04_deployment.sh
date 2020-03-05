@@ -187,7 +187,7 @@ cat <<EOF>> tomcat-users.xml.tmp
 <role rolename="admin-gui"/>
 <role rolename="admin-script"/>
 <role rolename="admin"/>
-<user username=${TOMCAT_USER} password=${TOMCAT_PASSWORD} roles="manager-gui,admin-gui,admin,manager,manager-script,admin-script"/>
+<user username="${TOMCAT_USER}" password="${TOMCAT_PASSWORD}" roles="manager-gui,admin-gui,admin,manager,manager-script,admin-script"/>
 </tomcat-users>
 EOF
 
