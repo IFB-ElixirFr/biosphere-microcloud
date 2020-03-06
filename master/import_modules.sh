@@ -14,4 +14,7 @@ curl -o modules.txt ${URL}/modules.txt
 while IFS= read -r line; do
     module_name=$(echo $line | cut -d - -f 1)
     wget -O - ${URL}/$line | tar -xzv --transform "s:^[^/]*:${module_name}:"
+    if [ "${module_name}" = "bagsub" ]; then
+        sed -i 's/ulimit -u 16384 ; ulimit -n 16384 ; \\\\//' bagsub/linux-noarch/bin/bagsub
+    fi
 done < "modules.txt"
