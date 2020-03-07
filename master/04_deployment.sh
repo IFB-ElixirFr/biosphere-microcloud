@@ -284,8 +284,14 @@ export MICJBPMWRAPPER_ROOT=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch
 export MICJBPMWRAPPER_EXEDIR=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/bin
 export MICJBPMWRAPPER_LIBDIR=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/lib
 
+# AGCScriptToolMic
+export PATH=${AGC_PRODUCTSHOME}/AGCScriptToolMic/unix-noarch/bin:$PATH
+
 # bagsub
-export PATH=${AGC_PRODUCTSHOME}:${PATH}
+export PATH=${AGC_PRODUCTSHOME}/bagsub/linux-noarch/bin:$PATH
+
+# micDirecton
+export PATH=${AGC_PRODUCTSHOME}/micDirecton/linux-noarch/bin:$PATH
 
 # Tomcat
 export JBPM_PROJECT_SRC=${JBPMDirectory}
@@ -413,6 +419,15 @@ cat <<EOF> /etc/logrotate.d/slurm
     endscript
 }
 EOF
+
+
+######################
+# Deploy DIRECTON WF #
+######################
+
+cd ${JBPMDirectory}/bin
+./JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl/BagSub/ -defNames DIRECTON
+./JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl -defNames CRON_DIRECTON
 
 
 ##########################
