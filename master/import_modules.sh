@@ -16,5 +16,6 @@ while IFS= read -r line; do
     wget -O - ${URL}/$line | tar -xzv --transform "s:^[^/]*:${module_name}:"
     if [ "${module_name}" = "bagsub" ]; then
         sed -i 's/ulimit -u 16384 ; ulimit -n 16384 ; \\\\//' bagsub/linux-noarch/bin/bagsub
+        sed -i "s|BAGSUB_MPIRUN_OPTIONS='--mca orte_base_help_aggregate 0 --display-allocation'|BAGSUB_MPIRUN_OPTIONS='--allow-run-as-root --mca orte_base_help_aggregate 0 --display-allocation'|" bagsub/linux-noarch/bin/bagsub
     fi
 done < "modules.txt"
