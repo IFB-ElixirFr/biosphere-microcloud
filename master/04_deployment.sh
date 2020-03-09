@@ -316,10 +316,10 @@ curl --output ${JBPMDirectory}/tomcat/webapps/jbpmmicroscope.war ${URL}/jbpmmicr
 
 # Start tomcat
 systemctl daemon-reload
-tomcat_start
+systemctl start tomcat
 
 # Enable service
-tomcat_enable
+systemctl enable tomcat
 
 # Allow port and redirect port
 ufw allow 8080
