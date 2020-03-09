@@ -133,9 +133,6 @@ chmod -R g+r conf
 chmod g+x conf
 chown -R tomcat webapps/ work/ temp/ logs/
 
-# Download jbpm war into tomcat/webapps dir
-curl --output ${JBPMDirectory}/tomcat/webapps/jbpmmicroscope.war ${URL}/jbpmmicroscope-server-latest.war
-
 # Create Tomcat service
 JAVA_HOME="/usr/lib/jvm/default-java"
 
@@ -167,10 +164,6 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 EOF
-
-systemctl daemon-reload
-systemctl start tomcat
-ufw allow 8080
 
 # Configure Tomcat Web Management Interface
 TOMCAT_USER=$(ss-get tomcat_user)
@@ -302,10 +295,11 @@ export TOMCAT_HOME
 JBPM_PROJECT_HOME=${JBPMDirectory}
 export JBPM_PROJECT_HOME
 
-alias tomcat_status='systemctl status tomcat'
-alias tomcat_start='systemctl start tomcat'
-alias tomcat_restart='systemctl restart tomcat'
-alias tomcat_stop='systemctl stop tomcat'
+alias tomcat_status='service tomcat status'
+alias tomcat_start='service tomcat start'
+alias tomcat_restart='service tomcat restart'
+alias tomcat_stop='service tomcat stop'
+alias tomcat_enable='service tomcat enable'
 alias tomcat_logs='tail -f -n 100 $TOMCAT_HOME/logs/catalina.out'
 
 # Slurm
@@ -317,13 +311,18 @@ cp jbpm.profile ${AGC_PROFILESHOME}/jbpm.profile
 cd ${AGC_PROFILESHOME}
 source jbpm.profile
 
-# Restart tomcat
-systemctl restart tomcat
+# Download jbpm war into tomcat/webapps dir
+curl --output ${JBPMDirectory}/tomcat/webapps/jbpmmicroscope.war ${URL}/jbpmmicroscope-server-latest.war
+
+# Start tomcat
+systemctl daemon-reload
+tomcat_start
 
 # Enable service
-systemctl enable tomcat
+tomcat_enable
 
-# Redirect port
+# Allow port and redirect port
+ufw allow 8080
 iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
 
 
