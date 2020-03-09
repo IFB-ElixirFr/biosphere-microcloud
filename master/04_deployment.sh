@@ -428,6 +428,7 @@ EOF
 cd ${JBPMDirectory}/bin
 ./JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl/BagSub/ -defNames DIRECTON
 ./JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl -defNames CRON_DIRECTON
+./JBPMmicroscope startCron -names CRON_DIRECTON
 
 
 ##########################
