@@ -199,6 +199,8 @@ cat <<EOF> context.xml
 </Context>
 EOF
 
+# change 
+chown -R tomcat:tomcat ${JBPMResult}
 
 ###########################
 # Wait for mysql_hostname #
