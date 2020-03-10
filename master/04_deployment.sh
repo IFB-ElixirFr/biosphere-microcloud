@@ -270,8 +270,6 @@ export MICROSCOPE_DBconnect="mysql -A -N -u${MYSQL_USER} -p${MYSQL_PASS} -h${MYS
 alias mysqlagcdb="mysql -u${MYSQL_USER} -p${MYSQL_PASS} -h${MYSQL_HOST}"
 
 # micJBPMwrapper
-export PATH=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/bin:$PATH
-
 export MICROSCOPE_LIB_SCRIPT=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/lib/microscope.lib
 export MICROSCOPE_PATH_SCRIPT=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch
 export MICROSCOPE_CONF_SCRIPT=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/conf
@@ -279,18 +277,8 @@ export MICJBPMWRAPPER_ROOT=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch
 export MICJBPMWRAPPER_EXEDIR=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/bin
 export MICJBPMWRAPPER_LIBDIR=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/lib
 
-# AGCScriptToolMic
-export PATH=${AGC_PRODUCTSHOME}/AGCScriptToolMic/unix-noarch/bin:$PATH
-
-# bagsub
-export PATH=${AGC_PRODUCTSHOME}/bagsub/linux-noarch/bin:$PATH
-
-# micDirecton
-export PATH=${AGC_PRODUCTSHOME}/micDirecton/linux-noarch/bin:$PATH
-
 # Tomcat
 export JBPM_PROJECT_SRC=${JBPMDirectory}
-export PATH=${JBPM_PROJECT_SRC}/bin:${PATH}
 
 TOMCAT_HOME=${JBPMDirectory}/tomcat
 export TOMCAT_HOME
@@ -304,8 +292,12 @@ alias tomcat_stop='service tomcat stop'
 alias tomcat_enable='service tomcat enable'
 alias tomcat_logs='tail -f -n 100 $TOMCAT_HOME/logs/catalina.out'
 
+# Export PATH (modules and tomcat)
+export PATH=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/bin:${AGC_PRODUCTSHOME}/AGCScriptToolMic/unix-noarch/bin:${AGC_PRODUCTSHOME}/micDirecton/linux-noarch/bin:${AGC_PRODUCTSHOME}/bagsub/linux-noarch/bin:${JBPM_PROJECT_SRC}/bin:${PATH}
+
 # Slurm
 export SLURM_CPUS_ON_NODE=4
+
 EOF
 
 # Source jbpm profile before starting tomcat
