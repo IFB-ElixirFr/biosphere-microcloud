@@ -348,9 +348,6 @@ $mysql_request -e "CREATE USER '${JBPM_USER}' IDENTIFIED BY '${JBPM_PASSWORD}';"
 $mysql_request -e "CREATE DATABASE JBPMmicroscope";
 $mysql_request -e "GRANT ALL privileges ON JBPMmicroscope.* TO '${JBPM_USER}'@'%' IDENTIFIED BY '${JBPM_PASSWORD}';"
 
-# Create JBPMmicroscope schema
-#$mysql_request JBPMmicroscope < ${JBPMDirectory}/JBPM.sql
-
 
 ##############################
 # pegasus-mpi-cluster recipe #
