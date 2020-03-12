@@ -340,6 +340,11 @@ systemctl enable tomcat
 ufw allow 8080
 iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
 
+# Insert JBPMmicroscope minimal data
+$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_GROUP (CLASS_,NAME_) values ('G','microscopeAdmin');"
+$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_USER(CLASS_,NAME_,EMAIL_,PASSWORD_) VALUES ('U','admin','','genoscope');"
+$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_MEMBERSHIP(CLASS_,ROLE_,USER_,GROUP_) VALUES ('M','administrator',1,1);"
+
 
 ##############################
 # pegasus-mpi-cluster recipe #
