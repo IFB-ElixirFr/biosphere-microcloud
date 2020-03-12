@@ -211,7 +211,7 @@ ss-display "Waiting SQL server to start"
 
 # Get IP adress of MySQL server
 MYSQL_HOST=$(ss-get mysql_hostname)
-MYSQL_PASS=$(ss-get mysql_root_password)
+MYSQL_PASSWORD=$(ss-get mysql_root_password)
 MYSQL_USER="root"
 
 
@@ -238,15 +238,7 @@ echo "$(ss-get mysql_hostname) mysqlagcdb.genoscope.cns.fr mysqlagcdb" >> ${HOST
 # Create jbpm database #
 ########################
 
-ss-display "Creating jbpm database"
-
-# Wait for the MySQL server
-ss-display "Waiting MySQL server to start"
-ss-get --timeout 16000 mysql_is_ready
-
-MYSQL_USER=root
-MYSQL_HOST=$(ss-get mysql_hostname)
-MYSQL_PASSWORD=$(ss-get mysql_root_password)
+ss-display "Creating JBPMmicroscope database"
 
 # Connection to mysql
 mysql_request="mysql -h ${MYSQL_HOST} -u ${MYSQL_USER} -p${MYSQL_PASSWORD}"
@@ -291,12 +283,12 @@ export GENOMEPUBDB="GenomePubDB"
 
 # DB connection
 export MYAGCUSER="root"
-export MYAGCPASS=${MYSQL_PASS}
+export MYAGCPASS=${MYSQL_PASSWORD}
 export MYAGCHOST=${MYSQL_HOST}
 export MYAGCPORT=3306
 
-export MICROSCOPE_DBconnect="mysql -A -N -u${MYSQL_USER} -p${MYSQL_PASS} -h${MYSQL_HOST}"
-alias mysqlagcdb="mysql -u${MYSQL_USER} -p${MYSQL_PASS} -h${MYSQL_HOST}"
+export MICROSCOPE_DBconnect="mysql -A -N -u${MYSQL_USER} -p${MYSQL_PASSWORD} -h${MYSQL_HOST}"
+alias mysqlagcdb="mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -h${MYSQL_HOST}"
 
 # micJBPMwrapper
 export MICROSCOPE_LIB_SCRIPT=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/lib/microscope.lib
