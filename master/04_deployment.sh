@@ -199,8 +199,9 @@ cat <<EOF> context.xml
 </Context>
 EOF
 
-# change 
+# Change dir ownership
 chown -R tomcat:tomcat ${JBPMResult}
+
 
 ###########################
 # Wait for mysql_hostname #
@@ -231,6 +232,34 @@ fi
 
 # Add mysql_hostname to /etc/hosts
 echo "$(ss-get mysql_hostname) mysqlagcdb.genoscope.cns.fr mysqlagcdb" >> ${HOSTS_FILE}
+
+
+########################
+# Create jbpm database #
+########################
+
+ss-display "Creating jbpm database"
+
+# Wait for the MySQL server
+ss-display "Waiting MySQL server to start"
+ss-get --timeout 16000 mysql_is_ready
+
+MYSQL_USER=root
+MYSQL_HOST=$(ss-get mysql_hostname)
+MYSQL_PASSWORD=$(ss-get mysql_root_password)
+
+# Connection to mysql
+mysql_request="mysql -h ${MYSQL_HOST} -u ${MYSQL_USER} -p${MYSQL_PASSWORD}"
+
+# Create jbpm user
+JBPM_USER=$(ss-get jbpm_user)
+JBPM_PASSWORD=$(ss-get jbpm_password)
+
+$mysql_request -e "CREATE USER '${JBPM_USER}' IDENTIFIED BY '${JBPM_PASSWORD}';"
+
+# Create JBPM database and grant permissions
+$mysql_request -e "CREATE DATABASE JBPMmicroscope";
+$mysql_request -e "GRANT ALL privileges ON JBPMmicroscope.* TO '${JBPM_USER}'@'%' IDENTIFIED BY '${JBPM_PASSWORD}';"
 
 
 #######################
@@ -318,34 +347,6 @@ systemctl enable tomcat
 # Allow port and redirect port
 ufw allow 8080
 iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
-
-
-########################
-# Create jbpm database #
-########################
-
-ss-display "Creating jbpm database"
-
-# Wait for the MySQL server
-ss-display "Waiting MySQL server to start"
-ss-get --timeout 16000 mysql_is_ready
-
-MYSQL_USER=root
-MYSQL_HOST=$(ss-get mysql_hostname)
-MYSQL_PASSWORD=$(ss-get mysql_root_password)
-
-# Connection to mysql
-mysql_request="mysql -h ${MYSQL_HOST} -u ${MYSQL_USER} -p${MYSQL_PASSWORD}"
-
-# Create jbpm user
-JBPM_USER=$(ss-get jbpm_user)
-JBPM_PASSWORD=$(ss-get jbpm_password)
-
-$mysql_request -e "CREATE USER '${JBPM_USER}' IDENTIFIED BY '${JBPM_PASSWORD}';"
-
-# Create JBPM database and grant permissions
-$mysql_request -e "CREATE DATABASE JBPMmicroscope";
-$mysql_request -e "GRANT ALL privileges ON JBPMmicroscope.* TO '${JBPM_USER}'@'%' IDENTIFIED BY '${JBPM_PASSWORD}';"
 
 
 ##############################
