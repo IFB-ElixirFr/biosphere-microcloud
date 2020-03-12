@@ -30,11 +30,11 @@ mkdir /env
 
 # Wait for the shared directory /env
 ss-display "Waiting master to mount /env dir"
-shared_dir_ready=$(ss-get --timeout=3600 end_mount)
+shared_dir_ready=$(ss-get --timeout=800 end_mount)
 while [ "$shared_dir_ready" != "true" ]
 do
-    sleep 10;
-    shared_dir_ready=$(ss-get --timeout=3600 end_mount)
+    sleep 60;
+    shared_dir_ready=$(ss-get --timeout=800 end_mount)
 done
 
 # NFS_ready
