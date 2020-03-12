@@ -294,7 +294,7 @@ alias tomcat_enable='service tomcat enable'
 alias tomcat_logs='tail -f -n 100 $TOMCAT_HOME/logs/catalina.out'
 
 # Export PATH (modules and tomcat)
-export PATH=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/bin:${AGC_PRODUCTSHOME}/AGCScriptToolMic/unix-noarch/bin:${AGC_PRODUCTSHOME}/micDirecton/linux-noarch/bin:${AGC_PRODUCTSHOME}/bagsub/linux-noarch/bin:${JBPM_PROJECT_SRC}/bin:${PATH}
+export PATH=${JBPMDirectory}/bin:${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/bin:${AGC_PRODUCTSHOME}/AGCScriptToolMic/unix-noarch/bin:${AGC_PRODUCTSHOME}/micDirecton/linux-noarch/bin:${AGC_PRODUCTSHOME}/bagsub/linux-noarch/bin:${JBPM_PROJECT_SRC}/bin:${PATH}
 
 # Slurm
 export SLURM_CPUS_ON_NODE=4
