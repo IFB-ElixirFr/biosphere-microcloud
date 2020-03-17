@@ -342,11 +342,6 @@ systemctl enable tomcat
 ufw allow 8080
 iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
 
-# Insert JBPMmicroscope minimal data
-$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_GROUP (CLASS_,NAME_) values ('G','microscopeAdmin');"
-$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_USER(CLASS_,NAME_,EMAIL_,PASSWORD_) VALUES ('U','admin','','genoscope');"
-$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_MEMBERSHIP(CLASS_,ROLE_,USER_,GROUP_) VALUES ('M','administrator',1,1);"
-
 
 ##############################
 # pegasus-mpi-cluster recipe #
@@ -417,6 +412,15 @@ EOF
 
 cd ${JBPMDirectory}/bin
 ./JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl/BagSub/ -defNames DIRECTON
+
+# Insert JBPMmicroscope minimal data before deploy workflow
+ss-display "Print mysql request ${mysql_request}"
+
+$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_GROUP (CLASS_,NAME_) values ('G','microscopeAdmin');"
+$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_USER(CLASS_,NAME_,EMAIL_,PASSWORD_) VALUES ('U','admin','root@localhost','genoscope');"
+$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_MEMBERSHIP(CLASS_,ROLE_,USER_,GROUP_) VALUES ('M','administrator',1,1);"
+
+# Deploy workflow
 ./JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl -defNames CRON_DIRECTON
 ./JBPMmicroscope startCron -names CRON_DIRECTON
 
