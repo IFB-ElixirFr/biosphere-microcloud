@@ -69,10 +69,25 @@ docker exec ${CONTAINER_NAME} rm -rf lib_mysqludf_sequtils-${MIC_UDF_VERSION}.ta
 # Remove packages
 docker exec ${CONTAINER_NAME} sh -c "apt-get -y remove ${MIC_UDF_PACKAGES} && apt-get -y autoremove"
 
+################
+# Mount volume #
+################
+
+# Wait for the NFS server
+ss-display "Waiting NFS server to start"
+ss-get --timeout 800 nfsserver_is_ready
+
+# Get NFS server adress
+ipserver=`ss-get nfsserver_hostname`
+
+# Mount the volume
+ss-display "Mounting /env"
+mkdir -p /env
+mount $ipserver:/var/nfsshare /env
+
 ####################
 # Backend is ready #
 ####################
 
 ss-set is_ready "true"
 ss-display "MySQL backend ready"
-
