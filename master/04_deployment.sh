@@ -127,11 +127,10 @@ groupadd tomcat
 useradd -s /bin/false -g tomcat -d ${JBPMDirectory}/tomcat tomcat
 
 # Update Permissions
+chown -R tomcat:tomcat ${JBPMDirectory}/tomcat
 cd ${JBPMDirectory}/tomcat
-chgrp -R tomcat ${JBPMDirectory}/tomcat
 chmod -R g+r conf
 chmod g+x conf
-chown -R tomcat webapps/ work/ temp/ logs/
 
 # Create Tomcat service
 JAVA_HOME="/usr/lib/jvm/default-java"
