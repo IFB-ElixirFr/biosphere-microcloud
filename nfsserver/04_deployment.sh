@@ -8,6 +8,9 @@ ss-display "Exporting NFS share of $EXPORT_DIR..."
 IP_FRONTEND=`ss-get --timeout 800 frontend_private_ip`
 echo "${EXPORT_DIR} ${IP_FRONTEND}(rw,sync,no_root_squash,no_all_squash)" >> ${EXPORTS_FILE}
 
+IP_BACKEND=`ss-get --timeout 800 mysql_private_ip`
+echo "${EXPORT_DIR} ${IP_BACKEND}(rw,sync,no_root_squash,no_all_squash)" >> ${EXPORTS_FILE}
+
 IP_MASTER=$(ss-get --timeout 800 master_private_ip)
 echo "${EXPORT_DIR} ${IP_MASTER}(rw,sync,no_root_squash,no_all_squash)" >> ${EXPORTS_FILE}
 
