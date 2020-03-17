@@ -108,6 +108,8 @@ jar -xf ${JBPMDirectory}/lib/jbpmmicroscope.jar
 mv JBPMmicroscope ${JBPMDirectory}/bin/JBPMmicroscope
 chmod +x ${JBPMDirectory}/bin/JBPMmicroscope
 
+# Update PATH
+MODULES_PATH=${JBPMDirectory}/bin:${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/bin:${AGC_PRODUCTSHOME}/AGCScriptToolMic/unix-noarch/bin:${AGC_PRODUCTSHOME}/micDirecton/linux-noarch/bin:${AGC_PRODUCTSHOME}/bagsub/linux-noarch/bin:${JBPM_PROJECT_SRC}/bin:${PATH}
 
 ##################
 # Install Tomcat #
@@ -150,6 +152,7 @@ Environment=CATALINA_HOME=${JBPMDirectory}/tomcat
 Environment=CATALINA_BASE=${JBPMDirectory}/tomcat
 Environment='CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC'
 Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom'
+Environment=PATH=${MODULES_PATH}
 
 ExecStart=${JBPMDirectory}/tomcat/bin/startup.sh
 ExecStop=${JBPMDirectory}/tomcat/bin/shutdown.sh
@@ -313,7 +316,7 @@ alias tomcat_enable='service tomcat enable'
 alias tomcat_logs='tail -f -n 100 $TOMCAT_HOME/logs/catalina.out'
 
 # Export PATH (modules and tomcat)
-export PATH=${JBPMDirectory}/bin:${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/bin:${AGC_PRODUCTSHOME}/AGCScriptToolMic/unix-noarch/bin:${AGC_PRODUCTSHOME}/micDirecton/linux-noarch/bin:${AGC_PRODUCTSHOME}/bagsub/linux-noarch/bin:${JBPM_PROJECT_SRC}/bin:${PATH}
+export PATH=${MODULES_PATH}
 
 # Slurm
 export SLURM_CPUS_ON_NODE=4
