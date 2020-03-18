@@ -130,6 +130,8 @@ useradd -s /bin/false -g tomcat -d ${JBPMDirectory}/tomcat tomcat
 
 # Update Permissions
 chown -R tomcat:tomcat ${JBPMDirectory}/tomcat
+chown -R tomcat:tomcat ${AGC_PRODUCTSHOME}
+
 cd ${JBPMDirectory}/tomcat
 chmod -R g+r conf
 chmod g+x conf
