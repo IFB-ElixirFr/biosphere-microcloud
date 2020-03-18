@@ -334,11 +334,11 @@ source jbpm.profile
 curl --output ${JBPMDirectory}/tomcat/webapps/jbpmmicroscope.war ${URL}/jbpmmicroscope-server-latest.war
 
 # Start tomcat
-systemctl daemon-reload
-systemctl start tomcat
+#systemctl daemon-reload
+#systemctl start tomcat
 
 # Enable service
-systemctl enable tomcat
+#systemctl enable tomcat
 
 # Allow port and redirect port
 ufw allow 8080
@@ -412,19 +412,19 @@ EOF
 # Deploy DIRECTON WF #
 ######################
 
-cd ${JBPMDirectory}/bin
-./JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl/BagSub/ -defNames DIRECTON
+#cd ${JBPMDirectory}/bin
+#./JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl/BagSub/ -defNames DIRECTON
 
 # Insert JBPMmicroscope minimal data before deploy workflow
-ss-display "Print mysql request ${mysql_request}"
+#ss-display "Print mysql request ${mysql_request}"
 
-$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_GROUP (CLASS_,NAME_) values ('G','microscopeAdmin');"
-$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_USER(CLASS_,NAME_,EMAIL_,PASSWORD_) VALUES ('U','admin','root@localhost','genoscope');"
-$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_MEMBERSHIP(CLASS_,ROLE_,USER_,GROUP_) VALUES ('M','administrator',1,1);"
+#$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_GROUP (CLASS_,NAME_) values ('G','microscopeAdmin');"
+#$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_USER(CLASS_,NAME_,EMAIL_,PASSWORD_) VALUES ('U','admin','root@localhost','genoscope');"
+#$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_MEMBERSHIP(CLASS_,ROLE_,USER_,GROUP_) VALUES ('M','administrator',1,1);"
 
 # Deploy workflow
-./JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl -defNames CRON_DIRECTON
-./JBPMmicroscope startCron -names CRON_DIRECTON
+#./JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl -defNames CRON_DIRECTON
+#./JBPMmicroscope startCron -names CRON_DIRECTON
 
 
 ##########################
