@@ -204,7 +204,7 @@ cat <<EOF> context.xml
 EOF
 
 # Change dir ownership
-chown -R tomcat:tomcat ${JBPMResult}
+chown -R tomcat:tomcat /env
 
 
 ###########################
