@@ -369,17 +369,17 @@ ss-set end_mount true
 # Manage /var/mail/root file #
 ################################
 
-#ss-display "Configure logrotates"
+ss-display "Configure logrotates"
 
-# The size of /var/mail/ubuntu has been increasing and may cause memory shortage.
-#cat <<EOF> /etc/logrotate.d/mailroot
-#/var/mail/root {
-#    size 10M   # Rotate if the size is >=10MB
-#    rotate 5   # Keep 5 rotated logs
-#    notifempty # Do not rotate if empty
-#    compress   # Compresses rotated logs, default
-#}
-#EOF
+# The size of /var/mail/root has been increasing and may cause memory shortage.
+cat <<EOF> /etc/logrotate.d/mailroot
+/var/mail/root {
+    size 10M   # Rotate if the size is >=10MB
+    rotate 5   # Keep 5 rotated logs
+    notifempty # Do not rotate if empty
+    compress   # Compresses rotated logs, default
+}
+EOF
 
 
 #################################
