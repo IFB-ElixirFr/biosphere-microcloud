@@ -152,8 +152,7 @@ Environment=JAVA_HOME=${JAVA_HOME}
 Environment=CATALINA_PID=${JBPMDirectory}/tomcat/temp/tomcat.pid
 Environment=CATALINA_HOME=${JBPMDirectory}/tomcat
 Environment=CATALINA_BASE=${JBPMDirectory}/tomcat
-Environment='CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC'
-Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom'
+Environment='CATALINA_OPTS=-Xms512M -Xmx2g -server'
 Environment=PATH=${MODULES_PATH}
 
 ExecStart=${JBPMDirectory}/tomcat/bin/startup.sh
@@ -334,11 +333,11 @@ source jbpm.profile
 curl --output ${JBPMDirectory}/tomcat/webapps/jbpmmicroscope.war ${URL}/jbpmmicroscope-server-latest.war
 
 # Start tomcat
-#systemctl daemon-reload
-#systemctl start tomcat
+systemctl daemon-reload
+systemctl start tomcat
 
 # Enable service
-#systemctl enable tomcat
+systemctl enable tomcat
 
 # Allow port and redirect port
 ufw allow 8080
@@ -412,12 +411,13 @@ EOF
 # Deploy DIRECTON WF #
 ######################
 
+# Start nodes
+scontrol update nodename=slave-[1-2] state=idle 
+
 #cd ${JBPMDirectory}/bin
 #./JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl/BagSub/ -defNames DIRECTON
 
 # Insert JBPMmicroscope minimal data before deploy workflow
-#ss-display "Print mysql request ${mysql_request}"
-
 #$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_GROUP (CLASS_,NAME_) values ('G','microscopeAdmin');"
 #$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_USER(CLASS_,NAME_,EMAIL_,PASSWORD_) VALUES ('U','admin','root@localhost','genoscope');"
 #$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_MEMBERSHIP(CLASS_,ROLE_,USER_,GROUP_) VALUES ('M','administrator',1,1);"
