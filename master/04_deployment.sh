@@ -378,17 +378,14 @@ EOF
 # Start nodes
 scontrol update nodename=slave-[1-2] state=idle 
 
-#cd ${JBPMDirectory}/bin
-#./JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl/BagSub/ -defNames DIRECTON
+# Deploy one WF (is needed to create JBPMmicroscope tables) 
+cd ${JBPMDirectory}/bin
+./JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl/BagSub/ -defNames workflowMetier1
 
-# Insert JBPMmicroscope minimal data before deploy workflow
-#$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_GROUP (CLASS_,NAME_) values ('G','microscopeAdmin');"
-#$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_USER(CLASS_,NAME_,EMAIL_,PASSWORD_) VALUES ('U','admin','root@localhost','genoscope');"
-#$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_MEMBERSHIP(CLASS_,ROLE_,USER_,GROUP_) VALUES ('M','administrator',1,1);"
-
-# Deploy workflow
-#./JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl -defNames CRON_DIRECTON
-#./JBPMmicroscope startCron -names CRON_DIRECTON
+# Insert JBPMmicroscope minimal data before deploy CRON
+$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_GROUP (CLASS_,NAME_) values ('G','microscopeAdmin');"
+$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_USER(CLASS_,NAME_,EMAIL_,PASSWORD_) VALUES ('U','admin','root@localhost','genoscope');"
+$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_MEMBERSHIP(CLASS_,ROLE_,USER_,GROUP_) VALUES ('M','administrator',1,1);"
 
 
 ##########################
