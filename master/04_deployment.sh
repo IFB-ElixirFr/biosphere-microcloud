@@ -158,17 +158,6 @@ EOF
 # Delete temp file
 mv tomcat-users.xml.tmp tomcat-users.xml
 
-# Update context.xml
-cd ${JBPMDirectory}/tomcat/webapps/manager/META-INF/
-cat <<EOF> context.xml
-<?xml version="1.0" encoding="UTF-8"?>
-<Context antiResourceLocking="false" privileged="true" >
-  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
-    allow="\d+\.\d+\.\d+\.\d+" />
-  <Manager sessionAttributeValueClassNameFilter="java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.CsrfPreventionFilter\$LruCache(?:\$1)?|java\.util\.(?:Linked)?HashMap"/>
-</Context>
-EOF
-
 # Change dir ownership
 chown -R tomcat:tomcat ${JBPMResult}
 
@@ -230,7 +219,7 @@ $mysql_request -e "GRANT ALL privileges ON JBPMmicroscope.* TO '${JBPM_USER}'@'%
 
 ss-display "Writting jbpm.profile"
 
-cd ${SLIPSTREAM_DIR}/${BASE_DIR}/${COMPONENT}/
+cd ${SLIPSTREAM_DIR}/${BASE_DIR}/${COMPONENT}
 cat <<EOF> jbpm.profile
 ## JBPM PROFILE ##
 JBPMDirectory=${JBPMDirectory}
@@ -284,14 +273,12 @@ export PATH=${MODULES_PATH}
 
 # Slurm
 export SLURM_CPUS_ON_NODE=4
-
 EOF
 
 # Create setenv.sh
-cd $TOMCAT_HOME/bin/
+cd ${JBPMDirectory}/tomcat/bin/
 cat <<EOF> setenv.sh
 export CATALINA_OPTS="$CATALINA_OPTS -Xms512m -Xmx2g -server"
-
 EOF
 
 # Source jbpm profile before starting tomcat
@@ -303,7 +290,19 @@ source jbpm.profile
 curl --output ${JBPMDirectory}/tomcat/webapps/jbpmmicroscope.war ${URL}/jbpmmicroscope-server-latest.war
 
 # Start tomcat
-$TOMCAT_HOME/bin/catalina.sh start
+cd ${JBPMDirectory}/tomcat/bin
+./catalina.sh start
+
+# Update context.xml
+cd ${JBPMDirectory}/tomcat/webapps/manager/META-INF
+cat <<EOF> context.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiResourceLocking="false" privileged="true" >
+  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+    allow="\d+\.\d+\.\d+\.\d+" />
+  <Manager sessionAttributeValueClassNameFilter="java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.CsrfPreventionFilter\$LruCache(?:\$1)?|java\.util\.(?:Linked)?HashMap"/>
+</Context>
+EOF
 
 # Allow port and redirect port
 ufw allow 8080
