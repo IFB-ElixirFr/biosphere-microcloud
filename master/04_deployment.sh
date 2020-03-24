@@ -219,8 +219,7 @@ $mysql_request -e "GRANT ALL privileges ON JBPMmicroscope.* TO '${JBPM_USER}'@'%
 
 ss-display "Writting jbpm.profile"
 
-cd ${SLIPSTREAM_DIR}/${BASE_DIR}/${COMPONENT}
-cat <<EOF> jbpm.profile
+cat <<EOF> ${AGC_PROFILESHOME}/jbpm.profile
 ## JBPM PROFILE ##
 JBPMDirectory=${JBPMDirectory}
 AGC_PRODUCTSHOME=${AGC_PRODUCTSHOME}
@@ -276,8 +275,7 @@ export SLURM_CPUS_ON_NODE=4
 EOF
 
 # Create setenv.sh
-cd ${JBPMDirectory}/tomcat/bin/
-cat <<EOF> setenv.sh
+cat <<EOF> ${JBPMDirectory}/tomcat/bin/setenv.sh
 export CATALINA_OPTS="$CATALINA_OPTS -Xms512m -Xmx2g -server"
 EOF
 
@@ -290,8 +288,7 @@ source jbpm.profile
 curl --output ${JBPMDirectory}/tomcat/webapps/jbpmmicroscope.war ${URL}/jbpmmicroscope-server-latest.war
 
 # Update context.xml
-cd ${JBPMDirectory}/tomcat/webapps/manager/META-INF
-cat <<EOF> context.xml
+cat <<EOF> ${JBPMDirectory}/tomcat/webapps/manager/META-INF/context.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <Context antiResourceLocking="false" privileged="true" >
   <Valve className="org.apache.catalina.valves.RemoteAddrValve"
