@@ -136,38 +136,6 @@ cd ${JBPMDirectory}/tomcat
 chmod -R g+r conf
 chmod g+x conf
 
-# Create Tomcat service
-JAVA_HOME="/usr/lib/jvm/default-java"
-
-cd /etc/systemd/system
-cat <<EOF>tomcat.service
-[Unit]
-Description=Apache Tomcat Web Application Container
-After=network.target
-
-[Service]
-Type=forking
-
-Environment=JAVA_HOME=${JAVA_HOME}
-Environment=CATALINA_PID=${JBPMDirectory}/tomcat/temp/tomcat.pid
-Environment=CATALINA_HOME=${JBPMDirectory}/tomcat
-Environment=CATALINA_BASE=${JBPMDirectory}/tomcat
-Environment='CATALINA_OPTS=-Xms512M -Xmx2g -server'
-Environment=PATH=${MODULES_PATH}
-
-ExecStart=${JBPMDirectory}/tomcat/bin/startup.sh
-ExecStop=${JBPMDirectory}/tomcat/bin/shutdown.sh
-
-User=tomcat
-Group=tomcat
-UMask=0007
-RestartSec=10
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
 # Configure Tomcat Web Management Interface
 TOMCAT_USER=$(ss-get tomcat_user)
 TOMCAT_PASSWORD=$(ss-get tomcat_password)
@@ -192,8 +160,7 @@ EOF
 mv tomcat-users.xml.tmp tomcat-users.xml
 
 # Udate context.xml
-cd ${JBPMDirectory}/tomcat/webapps/manager/META-INF/
-cat <<EOF> context.xml
+cat <<EOF> ${JBPMDirectory}/tomcat/webapps/manager/META-INF/context.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <Context antiResourceLocking="false" privileged="true" >
   <Valve className="org.apache.catalina.valves.RemoteAddrValve"
@@ -263,9 +230,7 @@ $mysql_request -e "GRANT ALL privileges ON JBPMmicroscope.* TO '${JBPM_USER}'@'%
 
 ss-display "Writting jbpm.profile"
 
-cd ${SLIPSTREAM_DIR}/${BASE_DIR}/${COMPONENT}
-
-cat <<EOF> jbpm.profile
+cat <<EOF> ${SLIPSTREAM_DIR}/${BASE_DIR}/${COMPONENT}/jbpm.profile
 ## JBPM PROFILE ##
 JBPMDirectory=${JBPMDirectory}
 AGC_PRODUCTSHOME=${AGC_PRODUCTSHOME}
@@ -309,11 +274,8 @@ export TOMCAT_HOME
 JBPM_PROJECT_HOME=${JBPMDirectory}
 export JBPM_PROJECT_HOME
 
-alias tomcat_status='service tomcat status'
-alias tomcat_start='service tomcat start'
-alias tomcat_restart='service tomcat restart'
-alias tomcat_stop='service tomcat stop'
-alias tomcat_enable='service tomcat enable'
+alias tomcat_start='$TOMCAT_HOME/bin/catalina.sh start'
+alias tomcat_stop='$TOMCAT_HOME/bin/catalina.sh stop'
 alias tomcat_logs='tail -f -n 100 $TOMCAT_HOME/logs/catalina.out'
 
 # Export PATH (modules and tomcat)
@@ -321,6 +283,12 @@ export PATH=${MODULES_PATH}
 
 # Slurm
 export SLURM_CPUS_ON_NODE=4
+
+EOF
+
+# Create setenv.sh
+cat <<EOF> $TOMCAT_HOME/bin/setenv.sh
+export CATALINA_OPTS="$CATALINA_OPTS -Xms512m -Xmx2g -server"
 
 EOF
 
@@ -333,11 +301,7 @@ source jbpm.profile
 curl --output ${JBPMDirectory}/tomcat/webapps/jbpmmicroscope.war ${URL}/jbpmmicroscope-server-latest.war
 
 # Start tomcat
-systemctl daemon-reload
-systemctl start tomcat
-
-# Enable service
-systemctl enable tomcat
+$TOMCAT_HOME/bin/catalina.sh start
 
 # Allow port and redirect port
 ufw allow 8080
