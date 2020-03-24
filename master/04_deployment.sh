@@ -289,10 +289,6 @@ source jbpm.profile
 # Download jbpm war into tomcat/webapps dir
 curl --output ${JBPMDirectory}/tomcat/webapps/jbpmmicroscope.war ${URL}/jbpmmicroscope-server-latest.war
 
-# Start tomcat
-cd ${JBPMDirectory}/tomcat/bin
-./catalina.sh start
-
 # Update context.xml
 cd ${JBPMDirectory}/tomcat/webapps/manager/META-INF
 cat <<EOF> context.xml
@@ -303,6 +299,10 @@ cat <<EOF> context.xml
   <Manager sessionAttributeValueClassNameFilter="java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.CsrfPreventionFilter\$LruCache(?:\$1)?|java\.util\.(?:Linked)?HashMap"/>
 </Context>
 EOF
+
+# Start tomcat
+cd ${JBPMDirectory}/tomcat/bin
+./catalina.sh start
 
 # Allow port and redirect port
 ufw allow 8080
