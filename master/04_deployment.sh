@@ -385,6 +385,9 @@ $mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_GROUP (CLASS_,NAME_) value
 $mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_USER(CLASS_,NAME_,EMAIL_,PASSWORD_) VALUES ('U','admin','root@localhost','genoscope');"
 $mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_MEMBERSHIP(CLASS_,ROLE_,USER_,GROUP_) VALUES ('M','administrator',1,1);"
 
+# Replace inProduction status by inFunctional in Sequence table to allow WF to be relaunched
+$mysql_request pkgdb -e "UPDATE Sequence SET S_status='inFunctional' where S_id=36;"
+
 
 ##########################
 # Configuration finished #
