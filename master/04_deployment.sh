@@ -378,7 +378,7 @@ scontrol update nodename=slave-[1-2] state=idle
 
 # Deploy one WF (is needed to create JBPMmicroscope tables) 
 cd ${JBPMDirectory}/bin
-./JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl/BagSub/ -defNames workflowMetier1
+./JBPMmicroscope showProcessDefinitions
 
 # Insert JBPMmicroscope minimal data before deploy CRON
 $mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_GROUP (CLASS_,NAME_) values ('G','microscopeAdmin');"
