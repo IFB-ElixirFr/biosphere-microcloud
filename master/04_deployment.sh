@@ -276,7 +276,7 @@ EOF
 
 # Create setenv.sh
 cat <<EOF> ${JBPMDirectory}/tomcat/bin/setenv.sh
-export CATALINA_OPTS="$CATALINA_OPTS -Xms512m -Xmx2g -server"
+export CATALINA_OPTS="\$CATALINA_OPTS -Xms512m -Xmx2g -server"
 EOF
 
 # Source jbpm profile before starting tomcat
