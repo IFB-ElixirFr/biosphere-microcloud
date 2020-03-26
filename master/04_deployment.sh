@@ -99,9 +99,6 @@ mkdir -p ${JBPMResult}/log
 curl --output ${JBPMDirectory}/lib/jbpmmicroscope.jar ${URL}/jbpmmicroscope-client-latest.jar
 curl --output ${JBPMDirectory}/lib/SystemActorsLauncher.jar ${URL}/SystemActorsLauncher-latest.jar
 
-# Get sql schema to create jbpm database
-curl -o ${JBPMDirectory}/JBPM.sql ${URL}/JBPM.sql
-
 # Extract sources and bin from jbpmmicroscope.jar
 cd ${JBPMDirectory}/jbpmmicroscope
 jar -xf ${JBPMDirectory}/lib/jbpmmicroscope.jar
