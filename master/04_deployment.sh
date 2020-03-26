@@ -369,21 +369,22 @@ cat <<EOF> /etc/logrotate.d/slurm
 EOF
 
 
-######################
-# Deploy DIRECTON WF #
-######################
+##########################
+# Create JBPMmicroscope  #
+# Update databases       #
+##########################
 
 # Start nodes
 scontrol update nodename=slave-[1-2] state=idle 
 
-# Deploy one WF (is needed to create JBPMmicroscope tables) 
+# Create JBPMmicroscope tables
 cd ${JBPMDirectory}/bin
 ./JBPMmicroscope showProcessDefinitions
 
 # Insert JBPMmicroscope minimal data before deploy CRON
-$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_GROUP (CLASS_,NAME_) values ('G','microscopeAdmin');"
-$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_USER(CLASS_,NAME_,EMAIL_,PASSWORD_) VALUES ('U','admin','root@localhost','genoscope');"
-$mysql_request JBPMmicroscope -e "INSERT INTO JBPM_ID_MEMBERSHIP(CLASS_,ROLE_,USER_,GROUP_) VALUES ('M','administrator',1,1);"
+curl --output ${JBPMDirectory}/userJBPM.sh ${URL}/userJBPM.sh
+cd ${JBPMDirectory}
+./userJBPM.sh mage root@localhost JBPMmicroscope
 
 # Replace inProduction status by inFunctional in Sequence table to allow WF to be relaunched
 $mysql_request pkgdb -e "UPDATE Sequence SET S_status='inFunctional' where S_id=36;"
