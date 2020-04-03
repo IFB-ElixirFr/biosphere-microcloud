@@ -2,7 +2,9 @@
 
 ######################################
 # Title: create_federated_links.sh
-# Description: This script will create all the federated links between the permanent VM and the backend component. We use the 'SHOW CREATE TABLE' statement to rewrite the 'CREATE TABLE' statement to our convenience
+# Description: This script will create all the federated links between the permanent VM and the backend component.
+# We use the 'SHOW CREATE TABLE' statement to rewrite the 'CREATE TABLE' statement to our convenience.
+# DB databases were created in the permanent VM with 'microscopeCreateDBschemas.py'
 # Usage:$ ./create_federated_links.sh PERMANENT_MYSQL_HOST PERMANENT_MYSQL_PORT PERMANENT_MYSQL_USER PERMANENT_MYSQL_PASSWORD BACKEND_MYSQL_HOST BACKEND_MYSQL_USER BACKEND_MYSQL_PASSWORD
 # Author:
 # Date: 03/04/2019
@@ -33,8 +35,8 @@ databases=$(${permanent_mysql_request} -e 'SHOW DATABASES;')
 for db in ${databases[@]}; do
   if [ ${db} != "Database" ] && [ ${db} != "mysql" ] && [ ${db} != "information_schema" ] && [ ${db} != "performance_schema" ] && [ ${db} != "sys" ] && [ ${db} != "phpmyadmin" ] && [ ${db} != "test" ]; then 
     ${backend_mysql_request} -e "CREATE DATABASE ${db};\nCREATE SERVER federatedlink_${db}
-FOREIGN DATA WRAPPER mysql
-OPTIONS (USER '${PERMANENT_MYSQL_USER}', HOST '${PERMANENT_MYSQL_HOST}', DATABASE '${db}', PORT ${PERMANENT_MYSQL_PORT}, Password '${PERMANENT_MYSQL_PASSWORD}')"; 
+    FOREIGN DATA WRAPPER mysql
+    OPTIONS (USER '${PERMANENT_MYSQL_USER}', HOST '${PERMANENT_MYSQL_HOST}', DATABASE '${db}', PORT ${PERMANENT_MYSQL_PORT}, Password '${PERMANENT_MYSQL_PASSWORD}')"; 
   fi
 done
 
