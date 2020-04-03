@@ -19,7 +19,8 @@ $mysql_request -e "FLUSH PRIVILEGES";
 
 # Create databases 
 $mysql_request -e "CREATE DATABASE GO_CPD"; # --databases (-B) option includes CREATE DATABASE and USE statements unfortunately --tables option overrides the --databases (-B) option
-$mysql_request -e "CREATE DATABASE PUB_CPD"; # --databases (-B) option includes CREATE DATABASE and USE statements unfortunately --tables option overrides the --databases (-B) option
+$mysql_request -e "CREATE DATABASE PUB_CPD";
+$mysql_request -e "CREATE DATABASE PRESTATIONDB";
 
 # Create SQL schemas
 schemas_dir="sql_bases/schemas"
@@ -29,12 +30,14 @@ $mysql_request < $schemas_dir/GO_Conf_schema.sql
 $mysql_request GO_CPD < $schemas_dir/GO_CPD_schema.sql
 $mysql_request PUB_CPD < $schemas_dir/PUB_CPD_schema.sql
 $mysql_request < $schemas_dir/GO_RES_schema.sql
+$mysql_request PRESTATIONDB < PRESTATIONDB_schema.sql
 
 # Insert minimal data
 data_dir="sql_bases/data"
 $mysql_request pkgdb < $data_dir/pkgdb_data.sql
 $mysql_request GO_Conf < $data_dir/GO_Conf_data.sql
 $mysql_request GO_RES < $data_dir/GO_RES_data.sql
+$mysql_request GO_RES < $data_dir/PRESTATIONDB_data.sql
 
 # Set values in configuration file
 conf_file=web_code/conf/confConstant.inc.php
