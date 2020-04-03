@@ -54,3 +54,8 @@ apt install -y python-pip
 pip2 install -r /scripts/requirements.txt
 source /scripts/cluster/cluster_install.sh
 make_file_test_slurm /root/mydisk
+
+# Install needed modules python for micGenome running
+pip3 install mysql-connector-python
+pip3 install pymysql
+pip3 install ete3
