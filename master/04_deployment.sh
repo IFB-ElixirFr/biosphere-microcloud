@@ -133,7 +133,17 @@ mv JBPMmicroscope ${JBPMDirectory}/bin/JBPMmicroscope
 chmod +x ${JBPMDirectory}/bin/JBPMmicroscope
 
 # Update PATH
-MODULES_PATH=${JBPMDirectory}/bin:${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/bin:${AGC_PRODUCTSHOME}/AGCScriptToolMic/unix-noarch/bin:${AGC_PRODUCTSHOME}/micDirecton/linux-noarch/bin:${AGC_PRODUCTSHOME}/bagsub/linux-noarch/bin:${JBPM_PROJECT_SRC}/bin:${PATH}
+MODULES_PATH=${JBPMDirectory}/bin:${AGC_PRODUCTSHOME}/micGenome/unix-noarch/bin:${AGC_PRODUCTSHOME}/micPrestation/unix-noarch/bin:${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/bin:${AGC_PRODUCTSHOME}/AGCScriptToolMic/unix-noarch/bin:${AGC_PRODUCTSHOME}/micDirecton/linux-noarch/bin:${AGC_PRODUCTSHOME}/bagsub/linux-noarch/bin:${JBPM_PROJECT_SRC}/bin:${PATH}
+
+
+#############################
+# Install micPrestation env #
+#############################
+
+# Create directories
+mkdir -p ${AGC_HOME}/scratch_microscope/Genome/
+mkdir -p /env/cns/wwwext/microscope_data/micpresta_data/
+
 
 ##################
 # Install Tomcat #
@@ -278,6 +288,17 @@ export MICROSCOPE_CONF_SCRIPT=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/con
 export MICJBPMWRAPPER_ROOT=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch
 export MICJBPMWRAPPER_EXEDIR=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/bin
 export MICJBPMWRAPPER_LIBDIR=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/lib
+
+# micPrestation
+export DATAdirPRESTA=/env/cns/wwwext/microscope_data/micpresta_data/
+export WORKdirPRESTA=${AGC_HOME}/scratch_microscope/Genome/
+export LOGOUTPRESTA=${AGC_HOME}/scratch_microscope/Genome/
+export TAXONOMYDBDIR=${AGC_HOME}/scratch_microscope/Data/TAXONOMYDB
+
+# micGenome
+export MICGENOME_ROOT=${AGC_PRODUCTSHOME}/micGenome/unix-noarch
+export MICGENOME_EXEDIR=${AGC_PRODUCTSHOME}/micGenome/unix-noarch/bin
+export MICGENOME_LIBDIR=${AGC_PRODUCTSHOME}/micGenome/unix-noarch/lib
 
 # Tomcat
 export JBPM_PROJECT_SRC=${JBPMDirectory}
