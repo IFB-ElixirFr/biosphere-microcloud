@@ -37,7 +37,6 @@ data_dir="sql_bases/data"
 $mysql_request pkgdb < $data_dir/pkgdb_data.sql
 $mysql_request GO_Conf < $data_dir/GO_Conf_data.sql
 $mysql_request GO_RES < $data_dir/GO_RES_data.sql
-$mysql_request GO_RES < $data_dir/PRESTATIONDB_data.sql
 
 # Set values in configuration file
 conf_file=web_code/conf/confConstant.inc.php
