@@ -158,12 +158,15 @@ mkdir -p ${JBPMDirectory}/tomcat
 tar xf apache-tomcat-latest.tar.gz -C ${JBPMDirectory}/tomcat --strip-components=1
 rm apache-tomcat-latest.tar.gz
 
+# Tomcat home directory
+TOMCAT_HOME=${JBPMDirectory}/tomcat
+
 # Create Tomcat User
 groupadd tomcat
-useradd -s /bin/false -g tomcat -d ${JBPMDirectory}/tomcat tomcat
+useradd -s /bin/false -g tomcat -d ${TOMCAT_HOME} tomcat
 
 # Update Permissions
-chown -R tomcat:tomcat ${JBPMDirectory}/tomcat
+chown -R tomcat:tomcat ${TOMCAT_HOME}
 chown -R tomcat:tomcat ${AGC_PRODUCTSHOME}
 
 cd ${JBPMDirectory}/tomcat
@@ -174,7 +177,7 @@ chmod g+x conf
 TOMCAT_USER=$(ss-get tomcat_user)
 TOMCAT_PASSWORD=$(ss-get tomcat_password)
 
-cd ${JBPMDirectory}/tomcat/conf
+cd ${TOMCAT_HOME}/conf
 
 # Create temp file
 head -36 tomcat-users.xml>tomcat-users.xml.tmp
@@ -303,14 +306,14 @@ export MICGENOME_LIBDIR=${AGC_PRODUCTSHOME}/micGenome/unix-noarch/lib
 # Tomcat
 export JBPM_PROJECT_SRC=${JBPMDirectory}
 
-TOMCAT_HOME=${JBPMDirectory}/tomcat
+TOMCAT_HOME=${TOMCAT_HOME}
 export TOMCAT_HOME
 JBPM_PROJECT_HOME=${JBPMDirectory}
 export JBPM_PROJECT_HOME
 
-alias tomcat_start='$TOMCAT_HOME/bin/catalina.sh start'
-alias tomcat_stop='$TOMCAT_HOME/bin/catalina.sh stop'
-alias tomcat_logs='tail -f -n 100 $TOMCAT_HOME/logs/catalina.out'
+alias tomcat_start='${TOMCAT_HOME}/bin/catalina.sh start'
+alias tomcat_stop='${TOMCAT_HOME}/bin/catalina.sh stop'
+alias tomcat_logs='tail -f -n 100 ${TOMCAT_HOME}/logs/catalina.out'
 
 # Export PATH (modules and tomcat)
 export PATH=${MODULES_PATH}
@@ -429,6 +432,7 @@ cd ${JBPMDirectory}/bin
 # Insert JBPMmicroscope minimal data before deploy CRON
 curl --output ${JBPMDirectory}/userJBPM.sh ${URL}/userJBPM.sh
 cd ${JBPMDirectory}
+chmod u+x userJBPM.sh
 ./userJBPM.sh mage root@localhost JBPMmicroscope
 
 # Replace inProduction status by inFunctional in Sequence table to allow WF to be relaunched
