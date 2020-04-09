@@ -435,9 +435,6 @@ cd ${JBPMDirectory}
 chmod u+x userJBPM.sh
 ./userJBPM.sh mage root@localhost JBPMmicroscope
 
-# Replace inProduction status by inFunctional in Sequence table to allow WF to be relaunched
-$mysql_request pkgdb -e "UPDATE Sequence SET S_status='inFunctional' where S_id=36;"
-
 
 ##########################
 # Configuration finished #
