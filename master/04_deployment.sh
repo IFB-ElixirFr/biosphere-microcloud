@@ -254,10 +254,10 @@ $mysql_request -e "GRANT ALL privileges ON JBPMmicroscope.* TO '${JBPM_USER}'@'%
 # Create jbpm profile #
 #######################
 
-ss-display "Writting jbpm.profile"
+ss-display "Writting microcloud.profile"
 
-cat <<EOF> ${AGC_PROFILESHOME}/jbpm.profile
-## JBPM PROFILE ##
+cat <<EOF> ${AGC_PROFILESHOME}/microcloud.profile
+## MicroCloud PROFILE ##
 JBPMDirectory=${JBPMDirectory}
 AGC_PRODUCTSHOME=${AGC_PRODUCTSHOME}
 
@@ -328,9 +328,9 @@ export CATALINA_OPTS="\$CATALINA_OPTS -Xms512m -Xmx2g -server"
 EOF
 
 # Source jbpm profile before starting tomcat
-cp jbpm.profile ${AGC_PROFILESHOME}/jbpm.profile
+cp microcloud.profile ${AGC_PROFILESHOME}/microcloud.profile
 cd ${AGC_PROFILESHOME}
-source jbpm.profile
+source microcloud.profile
 
 # Download jbpm war into tomcat/webapps dir
 curl --output ${JBPMDirectory}/tomcat/webapps/jbpmmicroscope.war ${URL}/jbpmmicroscope-server-latest.war
