@@ -318,8 +318,6 @@ alias tomcat_logs='tail -f -n 100 ${TOMCAT_HOME}/logs/catalina.out'
 # Export PATH (modules and tomcat)
 export PATH=${MODULES_PATH}
 
-# Slurm
-export SLURM_CPUS_ON_NODE=4
 EOF
 
 # Create setenv.sh
