@@ -136,6 +136,10 @@ curl -o microcloud.tar.gz https://www.genoscope.cns.fr/agc/ftp/MicroCloud/microc
 tar -xvf microcloud.tar.gz
 
 dirname=microcloud
+
+# Change default contact email 
+find ./${dirname} -type f -exec sed -i -e "s|mage@genoscope.cns.fr|root@localhost|" {} \;
+
 mysql_user=root
 mysql_root_password=$(ss-get mysql_root_password)
 
