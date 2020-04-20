@@ -56,6 +56,6 @@ source /scripts/cluster/cluster_install.sh
 make_file_test_slurm /root/mydisk
 
 # Install needed modules python for micGenome running
-pip3 install mysql-connector-python
-pip3 install pymysql
-pip3 install ete3
+pip install mysql-connector-python
+pip install pymysql
+pip install ete3
