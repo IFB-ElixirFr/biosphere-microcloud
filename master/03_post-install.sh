@@ -1,6 +1,5 @@
 #!/bin/bash
-#git_clone="https://github.com/IFB-ElixirFr/biosphere-commons.git"
-git_clone="https://github.com/lburlot/biosphere-commons.git"
+git_clone="https://github.com/IFB-ElixirFr/biosphere-commons.git"
 git_dir="biosphere-commons"
 
 get_global_repo()
