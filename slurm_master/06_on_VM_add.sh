@@ -11,7 +11,7 @@ allow_others
 
 populate_hosts_with_components_name_and_ips_on_vm_add hostname
 
-ss-set nfs.ready "false"
+ss-set nfsserver_is_ready "false"
 if [ "$SLIPSTREAM_SCALING_NODE" == "slave" ]; then
     add_nodes_elasticluster slurm
 else
