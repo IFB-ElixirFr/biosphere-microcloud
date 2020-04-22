@@ -420,9 +420,6 @@ EOF
 # Update databases       #
 ##########################
 
-# Start nodes
-scontrol update nodename=slave-[1-2] state=idle 
-
 # Create JBPMmicroscope tables
 cd ${JBPMDirectory}/bin
 ./JBPMmicroscope showProcessDefinitions
