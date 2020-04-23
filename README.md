@@ -17,19 +17,21 @@ The components are based on [IFB CentOS 7 image](https://nuv.la/module/ifb/examp
 except `slurm_master` and `slurm_slave` which are based on [IFB Ubuntu 18.04 image](https://nuv.la/module/ifb/examples/images/ubuntu-18.04-ifb).
 All components are on the private network except `slurm_master` and `frontend`.
 
-`nfsserver` is based [this component](https://nuv.la/module/ifb/devzone/NFS-Frontend-Backend/MonBackEndNFS-v18772-copy/18857)
-by S. Delmotte (we use the "secure" version where only some VM can mount the share).
-`slurm_master` is based on [this component](https://nuv.la/module/ifb/devzone/jlorenzo/cluster/slurm_master-ubuntu18/19722)
-by J. Lorenzo.
-`slurm_cluster` is based on [this component](https://nuv.la/module/ifb/devzone/jlorenzo/cluster/slurm_slave-ubuntu18/19719)
-by J. Lorenzo.
-
 The `MicroCloud` application instantiates each component (by default, it instantiates 2 `slurm_slave` components).
 
 From a user point of view:
 
   - browsing, service demands, etc. are done on `frontend` through a web browser.
   - WF deployment, sequence integration, etc. are done on `slurm_master` (SSH connection).
+
+### Note
+
+`nfsserver` is based on [this component](https://nuv.la/module/ifb/devzone/NFS-Frontend-Backend/MonBackEndNFS-v18772-copy/18857)
+by S. Delmotte (we use the "secure" version where only some VM can mount the share).
+`slurm_master` is based on [this component](https://nuv.la/module/ifb/devzone/jlorenzo/cluster/slurm_master-ubuntu18/19722)
+by J. Lorenzo.
+`slurm_cluster` is based on [this component](https://nuv.la/module/ifb/devzone/jlorenzo/cluster/slurm_slave-ubuntu18/19719)
+by J. Lorenzo.
 
 ## Technical notes
 
