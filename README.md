@@ -5,7 +5,7 @@ SlipStream components clone this repository and execute scripts from it.
 
 ## Components & application
 
-There are currently 5 components on the project (see the corresponding folder for more details):
+The project currently contains 5 components (see the corresponding folder for more details):
 
   - `nfsserver`: this is the NFS server which exposes storage to the network (under `/var/nfsshare`).
   - `mysql`: this is the MySQL server; it interacts with a permanent VM.
@@ -17,7 +17,7 @@ The components are based on [IFB CentOS 7 image](https://nuv.la/module/ifb/examp
 except `master` and `slave` which are based on [IFB Ubuntu 18.04 image](https://nuv.la/module/ifb/examples/images/ubuntu-18.04-ifb).
 All components are on the private network except `master` and `frontend`.
 
-The `MicroCloud` application instantiates and connect components (by default, it instantiates 2 `slurm_slave` components).
+The `MicroCloud` application instantiates and connect components (by default, it instantiates 2 `slave` components).
 
 From a user point of view:
 
@@ -28,9 +28,9 @@ From a user point of view:
 
 `nfsserver` is based on [this component](https://nuv.la/module/ifb/devzone/NFS-Frontend-Backend/MonBackEndNFS-v18772-copy/18857)
 by S. Delmotte (we use the "secure" version where only some VM can mount the share).
-`slurm_master` is based on [this component](https://nuv.la/module/ifb/devzone/jlorenzo/cluster/slurm_master-ubuntu18/19722)
+`master` is based on [this component](https://nuv.la/module/ifb/devzone/jlorenzo/cluster/slurm_master-ubuntu18/19722)
 by J. Lorenzo.
-`slurm_cluster` is based on [this component](https://nuv.la/module/ifb/devzone/jlorenzo/cluster/slurm_slave-ubuntu18/19719)
+`cluster` is based on [this component](https://nuv.la/module/ifb/devzone/jlorenzo/cluster/slurm_slave-ubuntu18/19719)
 by J. Lorenzo.
 
 ## Technical notes
