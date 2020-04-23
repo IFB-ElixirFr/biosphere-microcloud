@@ -4,42 +4,34 @@ Component recipes for MicroCloud
 
 This repository contains the recipes needed to deploy MicroScope on IFB Biosphere.
 
-## Components & connections
+## Components & application
 
-There are currently 3 components on the project:
+There are currently 5 components on the project (see the corresponding folder for more details):
 
-  - `nfsserver`: this is the NFS server which exposes storage to the network (under `/var/nfsshare`); it is based on [an example](https://nuv.la/module/ifb/devzone/NFS-Frontend-Backend) by S. Delmotte;
-  the code is on SlipStream to ease interaction with S. Delmotte; we use the "secure" version where only the `frontend` VM can mount the share
-  - `mysql`: this is the MySQL server; the code is in `mysql` (see notes here)
-  - `frontend`: this is the web server; the code is in `frontend` (see notes here); phpMyAdmin is installed on it
+  - `nfsserver`: this is the NFS server which exposes storage to the network (under `/var/nfsshare`);
+    it is based on [an example](https://nuv.la/module/ifb/devzone/NFS-Frontend-Backend)
+    by S. Delmotte (we use the "secure" version where only some VM can mount the share).
+  - `mysql`: this is the MySQL server; it interacts with a permanent VM.
+  - `master`: this is the head node for the cluster; it also runs `jbpmmicroscope`.
+  - `slave`: cluster compute node.
+  - `frontend`: this is the web server; the code is in `frontend` (see notes here); phpMyAdmin is installed on it.
 
-The `MicroCloud` application instantiates 1 instance of each component (so we sometime speak of VM).
-The components are based on [IFB CentOS 7 image](https://nuv.la/module/ifb/examples/images/centos-7-ifb).
+The components are based on [IFB CentOS 7 image](https://nuv.la/module/ifb/examples/images/centos-7-ifb)
+except `master` and `slave` which are based on [IFB Ubuntu 18.04 image](https://nuv.la/module/ifb/examples/images/ubuntu-18.04-ifb).
+All components are on the private network except `master` and `frontend`.
 
-By nature, the frontend is connected to the MySQL server and the NFS server.
+The `MicroCloud` application instantiates each component (by default, it instantiates 2 `slave` components).
 
-                       ____________
-                      |            | private_ip
-               ------>|  frontend  |--------
-               |      |____________|<---   |
-               |                       |   |         public network
-     ----------|-----------------------|---|-------------
-      hostname |              is_ready |   |         private network
-        _______|_____                __|___V______
-       |             |              |             |
-       |    mysql    |              |  nfsserver  |
-       |_____________|              |_____________|
+From a user point of view:
 
-
-  - `nfsserver` needs the private IP address of this component to add it to the NFS configuration
-  - `frontend` needs to wait for `nfsserver` to be ready to mount the share
-  - `frontend` needs the IP address of `mysql` to configure phpMyAdmin and to set up aliases
+  - browsing, service demands, etc. are done on `frontend` through a web browser.
+  - WF deployment, sequence integration, etc. are done on `master` (SSH connection).
 
 # Technical notes
 
 ## VM naming convention
 
-All names are `lowercase_underscore_separated`.
+All names are `lowercase_underscore_separated` (except `nfsserver` since it was copied).
 
 ## Input and output ports naming convention
 
