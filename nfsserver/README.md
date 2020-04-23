@@ -1,4 +1,4 @@
-# Installation of MicroScope NFS Backend
+# NFS Backend
 
 ## Introduction
 
@@ -8,17 +8,29 @@ It is based on [this component](https://nuv.la/module/ifb/devzone/NFS-Frontend-B
 by S. Delmotte (we use the "secure" version where only some VM can mount the share).
 
 ## Parameters
+
 Inputs:
   - `frontend_private_ip`: IP adress of the `frontend` component (connected to `frontend:private_ip`)
+  - `mysql_private_ip`: IP adress of the `mysql` component (connected to `mysql:private_ip`)
+  - `master_private_ip`: IP adress of the `master` component (connected to `master:ip.ready`)
+  - `slave_nodename`: component name of SLURM compute nodes (connected to `slave:nodename`)
 
 Outputs:
   - `is_ready`: indicates when this component is ready
 
 ## Technical notes
 
-The code is left in the Applications Workflows part of SlipStream to make easier the changes that S. Delmotte could make in the NFS server component.
+### Install/Post-install
 
-We install a NFS server and create shared directory /var/nfsshare. Then, we modify /etc/exports to decide whose client is allowed to access share directory. For the moment, only the frontend client is allowed.
- 
+We install a NFS server and create the shared directory `/var/nfsshare`.
+
+### Deployment
+
+At this step, we add the IP address of authorized clients to `/etc/exports`:
+  - the IP given in `frontend_private_ip`, `master_private_ip` and `mysql_private_ip`
+  - the IP of SLURM compute nodes: to get them, we query the component whose name is given in `slave_nodename`,
+    get the multiplicity (number of instances) and then the IP of each instance.
 
 ## TODO
+
+  - how to react to addition/removal of compute nodes ?
