@@ -17,7 +17,7 @@ The components are based on [IFB CentOS 7 image](https://nuv.la/module/ifb/examp
 except `slurm_master` and `slurm_slave` which are based on [IFB Ubuntu 18.04 image](https://nuv.la/module/ifb/examples/images/ubuntu-18.04-ifb).
 All components are on the private network except `slurm_master` and `frontend`.
 
-The `MicroCloud` application instantiates each component (by default, it instantiates 2 `slurm_slave` components).
+The `MicroCloud` application instantiates and connect components (by default, it instantiates 2 `slurm_slave` components).
 
 From a user point of view:
 
