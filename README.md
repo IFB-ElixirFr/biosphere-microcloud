@@ -27,13 +27,13 @@ From a user point of view:
   - browsing, service demands, etc. are done on `frontend` through a web browser.
   - WF deployment, sequence integration, etc. are done on `master` (SSH connection).
 
-# Technical notes
+## Technical notes
 
-## VM naming convention
+### VM naming convention
 
 All names are `lowercase_underscore_separated` (except `nfsserver` since it was copied).
 
-## Input and output ports naming convention
+### Input and output ports naming convention
 
 All names are `lowercase_underscore_separated`.
 
@@ -49,7 +49,7 @@ Outputs:
   - each component SHOULD have a `is_ready` output which is set to `true` at the very end of the deployment script
 
 
-# TODO
+## TODO
 
   - add some documentation about `nfssserver`
   - how are declared service URL from the `MicroCloud` application ?
