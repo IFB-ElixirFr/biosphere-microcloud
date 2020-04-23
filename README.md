@@ -25,7 +25,7 @@ All components are on the private network except `master` and `frontend`.
 
 The `MicroCloud` application instantiates and connects components (by default, it instantiates 2 `slave` components).
 
-<p align="center"><img src="Logical_Architecture.svg" width="50%"></p>
+<p align="center"><img src="Logical_Architecture.svg" width="100%"></p>
 
 From a user point of view:
 
