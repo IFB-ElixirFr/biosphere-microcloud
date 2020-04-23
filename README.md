@@ -7,9 +7,7 @@ SlipStream components clone this repository and execute scripts from it.
 
 The project currently contains 5 components (see the corresponding folder for more details):
 
-  - `nfsserver`: this is the NFS server which exposes storage to the network (under `/var/nfsshare`);
-    it is based on [an example](https://nuv.la/module/ifb/devzone/NFS-Frontend-Backend)
-    by S. Delmotte (we use the "secure" version where only some VM can mount the share).
+  - `nfsserver`: this is the NFS server which exposes storage to the network (under `/var/nfsshare`).
   - `mysql`: this is the MySQL server; it interacts with a permanent VM.
   - `slurm_master`: this is the head node for the cluster; it also runs `jbpmmicroscope`.
   - `slurm_slave`: cluster compute node.
@@ -18,6 +16,13 @@ The project currently contains 5 components (see the corresponding folder for mo
 The components are based on [IFB CentOS 7 image](https://nuv.la/module/ifb/examples/images/centos-7-ifb)
 except `slurm_master` and `slurm_slave` which are based on [IFB Ubuntu 18.04 image](https://nuv.la/module/ifb/examples/images/ubuntu-18.04-ifb).
 All components are on the private network except `slurm_master` and `frontend`.
+
+`nfsserver` is based [this component](https://nuv.la/module/ifb/devzone/NFS-Frontend-Backend/MonBackEndNFS-v18772-copy/18857)
+by S. Delmotte (we use the "secure" version where only some VM can mount the share).
+`slurm_master` is based on [this component](https://nuv.la/module/ifb/devzone/jlorenzo/cluster/slurm_master-ubuntu18/19722)
+by J. Lorenzo.
+`slurm_cluster` is based on [this component](https://nuv.la/module/ifb/devzone/jlorenzo/cluster/slurm_slave-ubuntu18/19719)
+by J. Lorenzo.
 
 The `MicroCloud` application instantiates each component (by default, it instantiates 2 `slurm_slave` components).
 
@@ -30,7 +35,7 @@ From a user point of view:
 
 ### VM naming convention
 
-All names are `lowercase_underscore_separated` (except `nfsserver` since it was copied).
+All names are `lowercase_underscore_separated` (except `nfsserver`).
 
 ### Input and output ports naming convention
 
