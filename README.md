@@ -1,7 +1,13 @@
 # biosphere-microcloud
 
+## Introduction
+
 This repository contains the recipes needed to deploy MicroScope on [IFB Biosphere](https://biosphere.france-bioinformatique.fr/).
 SlipStream components clone this repository and execute scripts from it.
+
+The application connects to a permanent VM (`umr5558-microcloud.univ-lyon1.fr`)
+to create a MySQL federation (port 3306).
+Therefore, it can only be deployed on `ifb-prabi-cloud` (where the permanent VM is accessible).
 
 ## Components & application
 
@@ -17,7 +23,7 @@ The components are based on [IFB CentOS 7 image](https://nuv.la/module/ifb/examp
 except `master` and `slave` which are based on [IFB Ubuntu 18.04 image](https://nuv.la/module/ifb/examples/images/ubuntu-18.04-ifb).
 All components are on the private network except `master` and `frontend`.
 
-The `MicroCloud` application instantiates and connect components (by default, it instantiates 2 `slave` components).
+The `MicroCloud` application instantiates and connects components (by default, it instantiates 2 `slave` components).
 
 From a user point of view:
 
@@ -45,6 +51,7 @@ Outputs:
   - the entry name SHOULD NOT start with the name of the component
   - each component SHOULD have a `is_ready` output which is set to `true` at the very end of the deployment script
 
+Note that `master` and `slave` use different conventions (they were copied from IFB team).
 
 ## TODO
 
