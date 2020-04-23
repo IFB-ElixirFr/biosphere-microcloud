@@ -161,26 +161,6 @@ fi
 echo "$(ss-get mysql_hostname) mysqlagcdb.genoscope.cns.fr mysqlagcdb" >> ${HOSTS_FILE}
 
 
-########################
-# Create jbpm database #
-########################
-
-ss-display "Creating JBPMmicroscope database"
-
-# Connection to mysql
-mysql_request="mysql -h ${MYSQL_HOST} -u ${MYSQL_USER} -p${MYSQL_PASSWORD}"
-
-# Create jbpm user
-JBPM_USER=$(ss-get jbpm_user)
-JBPM_PASSWORD=$(ss-get jbpm_password)
-
-$mysql_request -e "CREATE USER '${JBPM_USER}' IDENTIFIED BY '${JBPM_PASSWORD}';"
-
-# Create JBPM database and grant permissions
-$mysql_request -e "CREATE DATABASE JBPMmicroscope";
-$mysql_request -e "GRANT ALL privileges ON JBPMmicroscope.* TO '${JBPM_USER}'@'%' IDENTIFIED BY '${JBPM_PASSWORD}';"
-
-
 #############################
 # Create microcloud profile #
 #############################
@@ -285,6 +265,13 @@ make install
 ss-set end_mount true
 
 
+########################
+# Create jBPM database #
+########################
+
+./config_jbpm.sh ${JBPMDirectory} ${MYSQL_HOST} ${MYSQL_USER} ${MYSQL_PASSWORD}
+
+
 ################################
 # Manage /var/mail/root file #
 ################################
@@ -325,22 +312,6 @@ cat <<EOF> /etc/logrotate.d/slurm
     endscript
 }
 EOF
-
-
-##########################
-# Create JBPMmicroscope  #
-# Update databases       #
-##########################
-
-# Create JBPMmicroscope tables
-cd ${JBPMDirectory}/bin
-./JBPMmicroscope showProcessDefinitions
-
-# Insert JBPMmicroscope minimal data before deploy CRON
-curl --output ${JBPMDirectory}/userJBPM.sh ${URL}/userJBPM.sh
-cd ${JBPMDirectory}
-chmod u+x userJBPM.sh
-./userJBPM.sh mage root@localhost JBPMmicroscope
 
 
 ##########################
