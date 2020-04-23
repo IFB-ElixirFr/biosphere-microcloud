@@ -19,11 +19,8 @@ The project currently contains 5 components (see the corresponding folder for mo
   - `slave`: cluster compute node.
   - `frontend`: this is the web server; the code is in `frontend` (see notes here); phpMyAdmin is installed on it.
 
-The components are based on [IFB CentOS 7 image](https://nuv.la/module/ifb/examples/images/centos-7-ifb)
-except `master` and `slave` which are based on [IFB Ubuntu 18.04 image](https://nuv.la/module/ifb/examples/images/ubuntu-18.04-ifb).
-All components are on the private network except `master` and `frontend`.
-
 The `MicroCloud` application instantiates and connects components (by default, it instantiates 2 `slave` components).
+All components are on the private network except `master` and `frontend`.
 
 <p align="center"><img src="Logical_Architecture.svg" width="100%"></p>
 
@@ -54,6 +51,11 @@ Outputs:
   - each component SHOULD have a `is_ready` output which is set to `true` at the very end of the deployment script
 
 Note that `master` and `slave` use different conventions (they were copied from IFB team).
+
+### Base images
+
+The components are based on [IFB CentOS 7 image](https://nuv.la/module/ifb/examples/images/centos-7-ifb)
+except `master` and `slave` which are based on [IFB Ubuntu 18.04 image](https://nuv.la/module/ifb/examples/images/ubuntu-18.04-ifb).
 
 ## TODO
 
