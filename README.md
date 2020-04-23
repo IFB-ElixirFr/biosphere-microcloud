@@ -1,8 +1,7 @@
 # biosphere-microcloud
 
-Component recipes for MicroCloud
-
-This repository contains the recipes needed to deploy MicroScope on IFB Biosphere.
+This repository contains the recipes needed to deploy MicroScope on [IFB Biosphere](https://biosphere.france-bioinformatique.fr/).
+SlipStream components clone this repository and execute scripts from it.
 
 ## Components & application
 
