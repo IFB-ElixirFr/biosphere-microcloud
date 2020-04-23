@@ -4,7 +4,8 @@
 
 This component is the NFS server for MicroScope.
 
-The installation of the NFS server is based on S. Delmotte work.
+It is based on [this component](https://nuv.la/module/ifb/devzone/NFS-Frontend-Backend/MonBackEndNFS-v18772-copy/18857)
+by S. Delmotte (we use the "secure" version where only some VM can mount the share).
 
 ## Parameters
 Inputs:
