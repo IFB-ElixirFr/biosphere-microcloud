@@ -24,15 +24,6 @@ From a user point of view:
   - browsing, service demands, etc. are done on `frontend` through a web browser.
   - WF deployment, sequence integration, etc. are done on `master` (SSH connection).
 
-### Note
-
-`nfsserver` is based on [this component](https://nuv.la/module/ifb/devzone/NFS-Frontend-Backend/MonBackEndNFS-v18772-copy/18857)
-by S. Delmotte (we use the "secure" version where only some VM can mount the share).
-`master` is based on [this component](https://nuv.la/module/ifb/devzone/jlorenzo/cluster/slurm_master-ubuntu18/19722)
-by J. Lorenzo.
-`cluster` is based on [this component](https://nuv.la/module/ifb/devzone/jlorenzo/cluster/slurm_slave-ubuntu18/19719)
-by J. Lorenzo.
-
 ## Technical notes
 
 ### VM naming convention
@@ -57,5 +48,4 @@ Outputs:
 
 ## TODO
 
-  - add some documentation about `nfssserver`
   - how are declared service URL from the `MicroCloud` application ?
