@@ -2,6 +2,7 @@
 source /scripts/cluster/cluster_install.sh
 source /scripts/populate_hosts_with_components_name_and_ips.sh --dry-run
 source /scripts/allows_other_to_access_me.sh --dry-run
+source ../lib.sh
 
 #main
 category=$(ss-get ss:category)
