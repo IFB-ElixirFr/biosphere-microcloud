@@ -269,7 +269,7 @@ ss-set end_mount true
 # Create jBPM database #
 ########################
 
-./config_jbpm.sh ${JBPMDirectory} ${MYSQL_HOST} ${MYSQL_USER} ${MYSQL_PASSWORD}
+./config_jbpm.sh ${URL} ${JBPMDirectory} ${MYSQL_HOST} ${MYSQL_USER} ${MYSQL_PASSWORD}
 
 
 ################################
