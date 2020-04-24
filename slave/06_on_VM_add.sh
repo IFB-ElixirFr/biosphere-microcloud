@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -xe
 
 source /scripts/allows_other_to_access_me.sh --dry-run
 
