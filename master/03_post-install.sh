@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -xe
 git_clone="https://github.com/IFB-ElixirFr/biosphere-commons.git"
 git_dir="biosphere-commons"
 
