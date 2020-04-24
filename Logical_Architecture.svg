@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
-<svg width="53cm" height="25cm" viewBox="158 36 1057 485" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="40cm" height="34cm" viewBox="158 36 783 665" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="160" y="60" width="780" height="460"/>
   <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00ff00" x="280" y="80" width="640" height="420"/>
   <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="455" y="151">
@@ -328,56 +328,58 @@
     <polygon style="fill: #000000" points="398.71,404.091 408.67,399.012 406.21,404.032 408.75,409.012 "/>
     <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="398.71,404.091 408.67,399.012 406.21,404.032 408.75,409.012 "/>
   </g>
-  <g>
-    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 4; stroke: #000000" x1="1009.74" y1="100" x2="1090.26" y2="100"/>
-    <polygon style="fill: #000000" points="1002.24,100 1012.24,95 1009.74,100 1012.24,105 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1002.24,100 1012.24,95 1009.74,100 1012.24,105 "/>
-    <polygon style="fill: #000000" points="1097.76,100 1087.76,105 1090.26,100 1087.76,95 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1097.76,100 1087.76,105 1090.26,100 1087.76,95 "/>
-  </g>
-  <g>
-    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1090.26" y1="140" x2="1009.74" y2="140"/>
-    <polygon style="fill: #000000" points="1097.76,140 1087.76,145 1090.26,140 1087.76,135 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1097.76,140 1087.76,145 1090.26,140 1087.76,135 "/>
-    <polygon style="fill: #000000" points="1002.24,140 1012.24,135 1009.74,140 1012.24,145 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1002.24,140 1012.24,135 1009.74,140 1012.24,145 "/>
-  </g>
-  <g>
-    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 20 8 4 8; stroke: #000000" x1="1009.74" y1="180" x2="1090.26" y2="180"/>
-    <polygon style="fill: #000000" points="1002.24,180 1012.24,175 1009.74,180 1012.24,185 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1002.24,180 1012.24,175 1009.74,180 1012.24,185 "/>
-    <polygon style="fill: #000000" points="1097.76,180 1087.76,185 1090.26,180 1087.76,175 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1097.76,180 1087.76,185 1090.26,180 1087.76,175 "/>
-  </g>
-  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1120" y="100">
-    <tspan x="1120" y="100">MySQL queries</tspan>
-  </text>
-  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1120" y="140">
-    <tspan x="1120" y="140">NFS mount</tspan>
-  </text>
-  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1120" y="180">
-    <tspan x="1120" y="180">SLURM</tspan>
-  </text>
   <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="660" y="340">
     <tspan x="660" y="340">NFS share /env</tspan>
     <tspan x="660" y="356">  - web data</tspan>
     <tspan x="660" y="372">  - software</tspan>
     <tspan x="660" y="388">  - computation results</tspan>
   </text>
-  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 20; stroke: #000000" x1="280" y1="290" x2="920" y2="290"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 20; stroke: #000000" x1="280" y1="220" x2="920" y2="220"/>
   <text font-size="20.32" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="160" y="55.2078">
     <tspan x="160" y="55.2078">ifb-prabi-girofle</tspan>
   </text>
-  <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00ff00" x="1000" y="220" width="100" height="20"/>
-  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1120" y="220">
-    <tspan x="1120" y="220">Temporary VM</tspan>
+  <text font-size="16.9333" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="300" y="234.84">
+    <tspan x="300" y="234.84">private</tspan>
+    <tspan x="300" y="256.006">network</tspan>
   </text>
-  <text font-size="16.9333" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="440" y="434.84">
-    <tspan x="440" y="434.84">private</tspan>
-    <tspan x="440" y="456.006">network</tspan>
+  <text font-size="16.9333" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="300" y="94.8398">
+    <tspan x="300" y="94.8398">public</tspan>
+    <tspan x="300" y="116.006">network</tspan>
   </text>
-  <text font-size="16.9333" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="300" y="154.84">
-    <tspan x="300" y="154.84">public</tspan>
-    <tspan x="300" y="176.006">network</tspan>
-  </text>
+  <g>
+    <g>
+      <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 4; stroke: #000000" x1="189.736" y1="560" x2="270.264" y2="560"/>
+      <polygon style="fill: #000000" points="182.236,560 192.236,555 189.736,560 192.236,565 "/>
+      <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="182.236,560 192.236,555 189.736,560 192.236,565 "/>
+      <polygon style="fill: #000000" points="277.764,560 267.764,565 270.264,560 267.764,555 "/>
+      <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="277.764,560 267.764,565 270.264,560 267.764,555 "/>
+    </g>
+    <g>
+      <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="270.264" y1="600" x2="189.736" y2="600"/>
+      <polygon style="fill: #000000" points="277.764,600 267.764,605 270.264,600 267.764,595 "/>
+      <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="277.764,600 267.764,605 270.264,600 267.764,595 "/>
+      <polygon style="fill: #000000" points="182.236,600 192.236,595 189.736,600 192.236,605 "/>
+      <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="182.236,600 192.236,595 189.736,600 192.236,605 "/>
+    </g>
+    <g>
+      <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 20 8 4 8; stroke: #000000" x1="189.736" y1="640" x2="270.264" y2="640"/>
+      <polygon style="fill: #000000" points="182.236,640 192.236,635 189.736,640 192.236,645 "/>
+      <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="182.236,640 192.236,635 189.736,640 192.236,645 "/>
+      <polygon style="fill: #000000" points="277.764,640 267.764,645 270.264,640 267.764,635 "/>
+      <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="277.764,640 267.764,645 270.264,640 267.764,635 "/>
+    </g>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="300" y="560">
+      <tspan x="300" y="560">MySQL queries</tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="300" y="600">
+      <tspan x="300" y="600">NFS mount</tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="300" y="640">
+      <tspan x="300" y="640">SLURM</tspan>
+    </text>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00ff00" x="180" y="680" width="100" height="20"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="300" y="680">
+      <tspan x="300" y="680">Temporary VM</tspan>
+    </text>
+  </g>
 </svg>
