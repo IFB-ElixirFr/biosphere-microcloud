@@ -1,15 +1,16 @@
 #!/bin/sh -xe
-#############################################################################
+#################################################################################
 # Title: config_jbpm.sh
 # Description: Create and set up JBPMmicroscope database.
-# Usage: ./config_jbpm.sh JBPM_DIRECTORY MYSQL_HOST MYSQL_USER MYSQL_PASSWORD
+# Usage: ./config_jbpm.sh URL JBPM_DIRECTORY MYSQL_HOST MYSQL_USER MYSQL_PASSWORD
 # Date: 2020-04-23
-#############################################################################
+#################################################################################
 
-JBPM_DIRECTORY=$1
-MYSQL_HOST=$2
-MYSQL_USER=$3
-MYSQL_PASSWORD=$4
+URL=$1
+JBPM_DIRECTORY=$2
+MYSQL_HOST=$3
+MYSQL_USER=$4
+MYSQL_PASSWORD=$5
 
 ss-display "Creating JBPMmicroscope database"
 
@@ -35,4 +36,3 @@ curl --output ${JBPM_DIRECTORY}/userJBPM.sh ${URL}/userJBPM.sh
 cd ${JBPM_DIRECTORY}
 chmod u+x userJBPM.sh
 ./userJBPM.sh mage root@localhost JBPMmicroscope
-
