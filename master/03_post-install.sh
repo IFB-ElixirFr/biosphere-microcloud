@@ -48,7 +48,6 @@ get_all_requirement_script()
 get_all_requirement_script
 apt install -y python-minimal
 apt update -y
-apt install requests==2.20.0
 apt install -y python-pip
 pip2 install -r /scripts/requirements.txt
 source /scripts/cluster/cluster_install.sh
