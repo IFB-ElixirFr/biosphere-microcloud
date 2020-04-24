@@ -3,6 +3,7 @@
 source /scripts/cluster/elasticluster.sh
 source /scripts/populate_hosts_with_components_name_and_ips.sh --dry-run
 source /scripts/allows_other_to_access_me.sh --dry-run
+source ../lib.sh
 
 # Initiate cluster
 export USER_NEW="ubuntu"
@@ -43,36 +44,10 @@ if [ "$category" == "Deployment" ]; then
     node_multiplicity=$(ss-get $SLAVE_NAME:multiplicity)
     if [ "$node_multiplicity" != "0" ]; then
         # Check NFS is ready
-        ss-get --timeout=3600 nfsserver_is_ready
-        nfs_ready=$(ss-get --timeout=3600 nfsserver_is_ready)
-        msg_info "Waiting NFS to be ready."
-        while [ "$nfs_ready" != "true" ]
-        do
-            sleep 10;
-            nfs_ready=$(ss-get --timeout=3600 nfsserver_is_ready)
-        done 
-        
-        # Mount NFS shared dir
-        SHARED_DIR=/var/nfsshare
-        MOUNT_DIR=/env
-        nfs_hostname=$(ss-get --timeout=3600 nfsserver_hostname)
-        msg_info "Mount $MOUNT_DIR where shared directory is $SHARED_DIR from $nfs_hostname host)."
-        if [ ! -d "$MOUNT_DIR" ]; then
-            msg_info "$MOUNT_DIR doesn't exist !"
-        else    
-            msg_info "Mounting $MOUNT_DIR..."
-    
-            umount $MOUNT_DIR
-            mount $nfs_hostname:$SHARED_DIR $MOUNT_DIR 2>/tmp/mount_error_message.txt
-            ret=$?
-            msg_info "$(cat /tmp/mount_error_message.txt)"
-        
-            if [ $ret -ne 0 ]; then
-                ss-abort "$(cat /tmp/mount_error_message.txt)"
-            else
-                 msg_info "$MOUNT_DIR is mounted"
-            fi
-        fi
+        NFS_microcloud_ready
+
+        # NFS_mount /env
+        NFS_microcloud_mount /var/nfsshare /env
     fi
 fi
 
