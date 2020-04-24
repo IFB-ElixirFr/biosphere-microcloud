@@ -106,6 +106,25 @@ cd ${SLIPSTREAM_DIR}/${BASE_DIR}/${COMPONENT}
 ./import_modules.sh ${AGC_PRODUCTSHOME}
 
 
+##############################
+# pegasus-mpi-cluster recipe #
+##############################
+
+ss-display "Install Pegasus"
+
+cd ${AGC_PRODUCTSHOME}
+curl -O ${URL}/pegasus-latest.tar.gz
+tar xf pegasus-latest.tar.gz
+rm pegasus-latest.tar.gz
+cd pegasus-4.9.2/src/tools/pegasus-mpi-cluster
+# Delete libnuma requirements
+sed -i "s|NUMAIF=.*|NUMAIF=|" Makefile
+# Set PEGASUS_HOME (needed for Makefile)
+export PEGASUS_HOME=${AGC_PRODUCTSHOME}/pegasus-4.9.2/
+make
+make install
+
+ 
 ################
 # Install jBPM #
 ################
@@ -118,7 +137,7 @@ TOMCAT_HOME=${JBPMDirectory}/tomcat
 ./install_jbpm.sh ${URL} ${JBPMDirectory} ${JBPMResult} ${TOMCAT_HOME}
 
 # Update PATH
-MODULES_PATH=${JBPMDirectory}/bin:${AGC_PRODUCTSHOME}/micGenome/unix-noarch/bin:${AGC_PRODUCTSHOME}/micPrestation/unix-noarch/bin:${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/bin:${AGC_PRODUCTSHOME}/AGCScriptToolMic/unix-noarch/bin:${AGC_PRODUCTSHOME}/micDirecton/linux-noarch/bin:${AGC_PRODUCTSHOME}/bagsub/linux-noarch/bin:${JBPM_PROJECT_SRC}/bin:${PATH}
+MODULES_PATH=${JBPMDirectory}/bin:${AGC_PRODUCTSHOME}/micGenome/unix-noarch/bin:${AGC_PRODUCTSHOME}/micPrestation/unix-noarch/bin:${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/bin:${AGC_PRODUCTSHOME}/AGCScriptToolMic/unix-noarch/bin:${AGC_PRODUCTSHOME}/micDirecton/linux-noarch/bin:${AGC_PRODUCTSHOME}/bagsub/linux-noarch/bin:${JBPM_PROJECT_SRC}/bin:${PEGASUS_HOME}/bin:${PATH}
 
 
 #############################
@@ -195,6 +214,9 @@ export MYAGCPORT=3306
 export MICROSCOPE_DBconnect="mysql -A -N -u${MYSQL_USER} -p${MYSQL_PASSWORD} -h${MYSQL_HOST}"
 alias mysqlagcdb="mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -h${MYSQL_HOST}"
 
+# Pegasus
+export PEGASUS_HOME=${PEGASUS_HOME}
+
 # micJBPMwrapper
 export MICROSCOPE_LIB_SCRIPT=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/lib/microscope.lib
 export MICROSCOPE_PATH_SCRIPT=${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch
@@ -231,6 +253,9 @@ export PATH=${MODULES_PATH}
 
 EOF
 
+# Shared dir is ready
+ss-set end_mount true
+
 # Source profile before starting tomcat
 cd ${AGC_PROFILESHOME}
 source microcloud.profile
@@ -242,28 +267,6 @@ cd ${JBPMDirectory}/tomcat/bin
 # Allow port and redirect port
 ufw allow 8080
 iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
-
-
-##############################
-# pegasus-mpi-cluster recipe #
-##############################
-
-ss-display "Install Pegasus"
-
-cd ${AGC_PRODUCTSHOME}
-curl -O ${URL}/pegasus-latest.tar.gz
-tar xf pegasus-latest.tar.gz
-rm pegasus-latest.tar.gz
-cd pegasus-4.9.2/src/tools/pegasus-mpi-cluster
-
-# Delete libnuma requirements
-sed -i "s|NUMAIF=.*|NUMAIF=|" Makefile
-make
-make install
-
-# Shared dir is ready
-ss-set end_mount true
-
 
 ########################
 # Create jBPM database #

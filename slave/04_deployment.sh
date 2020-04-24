@@ -48,11 +48,6 @@ NFS_microcloud_mount /var/nfsshare /env
 JBPMDirectory="/env/cns/proj/agc/tools/COMMON/JBPMmicroscope"
 source jbpm.profile ${JBPMDirectory}
 
-# pegasus-mpi-cluster: create link to binary
-AGC_PRODUCTSHOME="/env/cns/proj/agc/module/products"
-cd $AGC_PRODUCTSHOME/pegasus-4.9.2/src/tools/pegasus-mpi-cluster
-make install
-
 #################################
 # Slurm Logrotate Configuration #
 #################################
