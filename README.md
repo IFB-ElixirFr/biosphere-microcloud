@@ -26,7 +26,7 @@ All components are on the private network except `master` and `frontend`.
 
 From a user point of view:
 
-  - browsing, service demands, etc. are done on `frontend` through a web browser.
+  - Browsing, service demands, etc. are done on `frontend` through a web browser.
   - WF deployment, sequence integration, etc. are done on `master` (SSH connection).
 
 ## Technical notes
@@ -41,14 +41,14 @@ All names are `lowercase_underscore_separated`.
 
 Inputs and variables in script:
 
-  - if an input is supposed to come from another component its name SHOULD begin with the name of the source component;
-  for instance the input connected to the `hostname` output of the `mysql` component is `mysql_hostname`
-  - if the value of a parameter is read in a variable, the name of the variable SHOULD be the same than the name of the input
+  - If an input is supposed to come from another component its name SHOULD begin with the name of the source component;
+    for instance the input connected to the `hostname` output of the `mysql` component is `mysql_hostname`.
+  - If the value of a parameter is read in a variable, the name of the variable SHOULD be the same than the name of the input.
 
 Outputs:
 
-  - the entry name SHOULD NOT start with the name of the component
-  - each component SHOULD have a `is_ready` output which is set to `true` at the very end of the deployment script
+  - The entry name SHOULD NOT start with the name of the component.
+  - Each component SHOULD have a `is_ready` output which is set to `true` at the very end of the deployment script.
 
 Note that `master` and `slave` use different conventions (they were copied from IFB team).
 
