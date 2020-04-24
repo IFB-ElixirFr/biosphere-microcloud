@@ -1,0 +1,49 @@
+#!/bin/bash
+######################################################################
+# Title: lib.sh
+# Description: These functions are used to mount NFS shared directory.
+# Date: 2020-04-24
+######################################################################
+
+#####
+# NFS
+#####
+
+NFS_microcloud_ready(){
+    ss-get --timeout=3600 nfsserver_is_ready
+    nfs_ready=$(ss-get --timeout=3600 nfsserver_is_ready)
+    msg_info "Waiting NFS to be ready."
+	while [ "$nfs_ready" != "true" ]
+	do
+		sleep 10;
+		nfs_ready=$(ss-get --timeout=3600 nfsserver_is_ready)
+	done
+}
+
+NFS_microcloud_mount()
+{
+    # Pas de paramètre
+    if [[ $# -lt 2 ]]; then
+        echo "This function expects 2 directories in argument !"
+    else    
+        SHARED_DIR=$1
+        MOUNT_DIR=$2
+        msg_info "Mount $MOUNT_DIR where shared directory is $SHARED_DIR from $NFSSERVER_HOSTNAME host)."
+        if [ ! -d "$MOUNT_DIR" ]; then
+            msg_info "$MOUNT_DIR doesn't exist !"
+        else    
+            msg_info "Mounting $MOUNT_DIR..."
+    
+            umount $MOUNT_DIR
+            mount $NFSSERVER_HOSTNAME:$SHARED_DIR $MOUNT_DIR 2>/tmp/mount_error_message.txt
+            ret=$?
+            msg_info "$(cat /tmp/mount_error_message.txt)"
+        
+            if [ $ret -ne 0 ]; then
+                ss-abort "$(cat /tmp/mount_error_message.txt)"
+            else
+                 msg_info "$MOUNT_DIR is mounted"
+            fi
+        fi
+    fi
+}
