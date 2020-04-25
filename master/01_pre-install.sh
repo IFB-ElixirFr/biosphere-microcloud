@@ -1,4 +1,4 @@
-#!/bin/bash -xe
+#!/bin/bash -x
 
 #sed -i 's/^.*ssh/ssh/g' /home/ubuntu/.ssh/authorized_keys
 #sed -i 's/^.*ssh/ssh/g' /root/.ssh/authorized_keys
