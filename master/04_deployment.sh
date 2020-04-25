@@ -1,4 +1,4 @@
-#!/bin/bash -xe
+#!/bin/bash -x
 
 source /scripts/cluster/elasticluster.sh
 source /scripts/populate_hosts_with_components_name_and_ips.sh --dry-run
