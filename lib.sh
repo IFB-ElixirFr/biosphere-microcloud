@@ -22,7 +22,6 @@ NFS_microcloud_ready(){
 
 NFS_microcloud_mount()
 {
-    # Pas de paramètre
     if [[ $# -lt 2 ]]; then
         echo "This function expects 2 directories in argument !"
     else    
