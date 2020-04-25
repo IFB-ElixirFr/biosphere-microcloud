@@ -105,14 +105,14 @@ make install
 ################
 
 # Create directories
-JBPMDirectory="/env/cns/proj/agc/tools/COMMON/JBPMmicroscope"
-JBPMResult="/env/cns/proj/agc/Data/Result/JBPMmicroscope"
-TOMCAT_HOME=${JBPMDirectory}/tomcat
+JBPM_PROJECT_SRC="/env/cns/proj/agc/tools/COMMON/JBPMmicroscope"
+JBPM_PROJECT_HOME="/env/cns/proj/agc/Data/Result/JBPMmicroscope"
+TOMCAT_HOME=${JBPM_PROJECT_SRC}/tomcat
 
-./install_jbpm.sh ${URL} ${JBPMDirectory} ${JBPMResult} ${TOMCAT_HOME}
+./install_jbpm.sh ${URL} ${JBPM_PROJECT_SRC} ${JBPM_PROJECT_HOME} ${TOMCAT_HOME}
 
 # Update PATH
-MODULES_PATH=${JBPMDirectory}/bin:${AGC_PRODUCTSHOME}/micGenome/unix-noarch/bin:${AGC_PRODUCTSHOME}/micPrestation/unix-noarch/bin:${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/bin:${AGC_PRODUCTSHOME}/AGCScriptToolMic/unix-noarch/bin:${AGC_PRODUCTSHOME}/micDirecton/linux-noarch/bin:${AGC_PRODUCTSHOME}/bagsub/linux-noarch/bin:${JBPM_PROJECT_SRC}/bin:${PEGASUS_HOME}/bin:${PATH}
+MODULES_PATH=${JBPM_PROJECT_SRC}/bin:${AGC_PRODUCTSHOME}/micGenome/unix-noarch/bin:${AGC_PRODUCTSHOME}/micPrestation/unix-noarch/bin:${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/bin:${AGC_PRODUCTSHOME}/AGCScriptToolMic/unix-noarch/bin:${AGC_PRODUCTSHOME}/micDirecton/linux-noarch/bin:${AGC_PRODUCTSHOME}/bagsub/linux-noarch/bin:${JBPM_PROJECT_SRC}/bin:${PEGASUS_HOME}/bin:${PATH}
 
 
 #############################
@@ -163,7 +163,7 @@ ss-display "Writting microcloud.profile"
 
 cat <<EOF> ${AGC_PROFILESHOME}/microcloud.profile
 ## MicroCloud PROFILE ##
-JBPMDirectory=${JBPMDirectory}
+JBPM_PROJECT_SRC=${JBPM_PROJECT_SRC}
 AGC_PRODUCTSHOME=${AGC_PRODUCTSHOME}
 
 # Databases
@@ -212,11 +212,11 @@ export MICGENOME_EXEDIR=${AGC_PRODUCTSHOME}/micGenome/unix-noarch/bin
 export MICGENOME_LIBDIR=${AGC_PRODUCTSHOME}/micGenome/unix-noarch/lib
 
 # Tomcat
-export JBPM_PROJECT_SRC=${JBPMDirectory}
+export JBPM_PROJECT_SRC=${JBPM_PROJECT_SRC}
 
 TOMCAT_HOME=${TOMCAT_HOME}
 export TOMCAT_HOME
-JBPM_PROJECT_HOME=${JBPMDirectory}
+JBPM_PROJECT_HOME=${JBPM_PROJECT_HOME}
 export JBPM_PROJECT_HOME
 
 alias tomcat_start='${TOMCAT_HOME}/bin/catalina.sh start'
@@ -236,7 +236,7 @@ cd ${AGC_PROFILESHOME}
 source microcloud.profile
 
 # Start tomcat
-cd ${JBPMDirectory}/tomcat/bin
+cd ${JBPM_PROJECT_SRC}/tomcat/bin
 ./catalina.sh start
 
 # Allow port and redirect port
@@ -247,7 +247,7 @@ iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
 # Create jBPM database #
 ########################
 
-./config_jbpm.sh ${URL} ${JBPMDirectory} ${MYSQL_HOST} ${MYSQL_USER} ${MYSQL_PASSWORD}
+./config_jbpm.sh ${URL} ${JBPM_PROJECT_SRC} ${MYSQL_HOST} ${MYSQL_USER} ${MYSQL_PASSWORD}
 
 
 ################################

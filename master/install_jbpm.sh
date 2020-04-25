@@ -1,40 +1,40 @@
 #!/bin/sh -xe
-###################################################################
+#############################################################################
 # Title: install_jbpm.sh
 # Description: Install jBPM
-# Usage: ./install_jbpm.sh URL JBPMDirectory JBPMResult TOMCAT_HOME
+# Usage: ./install_jbpm.sh URL JBPM_PROJECT_SRC JBPM_PROJECT_HOME TOMCAT_HOME
 # Date: 2020-04-23
-###################################################################
+#############################################################################
 
 URL=$1
-JBPMDirectory=$2
-JBPMResult=$3
+JBPM_PROJECT_SRC=$2
+JBPM_PROJECT_HOME=$3
 TOMCAT_HOME=$4
 
-mkdir -p ${JBPMDirectory}
-chmod g+s ${JBPMDirectory}
-mkdir -p ${JBPMDirectory}/lib
-mkdir -p ${JBPMDirectory}/bin
-mkdir -p ${JBPMDirectory}/jbpmmicroscope
-mkdir -p ${JBPMResult}
-chmod g+s ${JBPMResult}
-mkdir -p ${JBPMResult}/log
+mkdir -p ${JBPM_PROJECT_SRC}
+chmod g+s ${JBPM_PROJECT_SRC}
+mkdir -p ${JBPM_PROJECT_SRC}/lib
+mkdir -p ${JBPM_PROJECT_SRC}/bin
+mkdir -p ${JBPM_PROJECT_SRC}/jbpmmicroscope
+mkdir -p ${JBPM_PROJECT_HOME}
+chmod g+s ${JBPM_PROJECT_HOME}
+mkdir -p ${JBPM_PROJECT_HOME}/log
 
 # Get jars
-curl --output ${JBPMDirectory}/lib/jbpmmicroscope.jar ${URL}/jbpmmicroscope-client-latest.jar
-curl --output ${JBPMDirectory}/lib/SystemActorsLauncher.jar ${URL}/SystemActorsLauncher-latest.jar
+curl --output ${JBPM_PROJECT_SRC}/lib/jbpmmicroscope.jar ${URL}/jbpmmicroscope-client-latest.jar
+curl --output ${JBPM_PROJECT_SRC}/lib/SystemActorsLauncher.jar ${URL}/SystemActorsLauncher-latest.jar
 
 # Extract sources and bin from jbpmmicroscope.jar
-cd ${JBPMDirectory}/jbpmmicroscope
-jar -xf ${JBPMDirectory}/lib/jbpmmicroscope.jar
-mv JBPMmicroscope ${JBPMDirectory}/bin/JBPMmicroscope
-chmod +x ${JBPMDirectory}/bin/JBPMmicroscope
+cd ${JBPM_PROJECT_SRC}/jbpmmicroscope
+jar -xf ${JBPM_PROJECT_SRC}/lib/jbpmmicroscope.jar
+mv JBPMmicroscope ${JBPM_PROJECT_SRC}/bin/JBPMmicroscope
+chmod +x ${JBPM_PROJECT_SRC}/bin/JBPMmicroscope
 
 # Download tomcat 9
-cd ${JBPMDirectory}
+cd ${JBPM_PROJECT_SRC}
 curl -O ${URL}/apache-tomcat-latest.tar.gz
-mkdir -p ${JBPMDirectory}/tomcat
-tar xf apache-tomcat-latest.tar.gz -C ${JBPMDirectory}/tomcat --strip-components=1
+mkdir -p ${JBPM_PROJECT_SRC}/tomcat
+tar xf apache-tomcat-latest.tar.gz -C ${JBPM_PROJECT_SRC}/tomcat --strip-components=1
 rm apache-tomcat-latest.tar.gz
 
 # Create Tomcat User
@@ -45,7 +45,7 @@ useradd -s /bin/false -g tomcat -d ${TOMCAT_HOME} tomcat
 chown -R tomcat:tomcat ${TOMCAT_HOME}
 chown -R tomcat:tomcat ${AGC_PRODUCTSHOME}
 
-cd ${JBPMDirectory}/tomcat
+cd ${JBPM_PROJECT_SRC}/tomcat
 chmod -R g+r conf
 chmod g+x conf
 
@@ -72,18 +72,18 @@ EOF
 mv tomcat-users.xml.tmp tomcat-users.xml
 
 # Change dir ownership
-chown -R tomcat:tomcat ${JBPMResult}
+chown -R tomcat:tomcat ${JBPM_PROJECT_HOME}
 
 # Create setenv.sh
-cat <<EOF> ${JBPMDirectory}/tomcat/bin/setenv.sh
+cat <<EOF> ${JBPM_PROJECT_SRC}/tomcat/bin/setenv.sh
 export CATALINA_OPTS="\$CATALINA_OPTS -Xms512m -Xmx2g -server"
 EOF
 
 # Download jbpm war into tomcat/webapps dir
-curl --output ${JBPMDirectory}/tomcat/webapps/jbpmmicroscope.war ${URL}/jbpmmicroscope-server-latest.war
+curl --output ${JBPM_PROJECT_SRC}/tomcat/webapps/jbpmmicroscope.war ${URL}/jbpmmicroscope-server-latest.war
 
 # Update context.xml
-cat <<EOF> ${JBPMDirectory}/tomcat/webapps/manager/META-INF/context.xml
+cat <<EOF> ${JBPM_PROJECT_SRC}/tomcat/webapps/manager/META-INF/context.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <Context antiResourceLocking="false" privileged="true" >
   <Valve className="org.apache.catalina.valves.RemoteAddrValve"

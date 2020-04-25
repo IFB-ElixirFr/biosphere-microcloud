@@ -46,8 +46,8 @@ NFS_microcloud_ready
 NFS_microcloud_mount /var/nfsshare /env
 
 # Source jbpm profile
-JBPMDirectory="/env/cns/proj/agc/tools/COMMON/JBPMmicroscope"
-source jbpm.profile ${JBPMDirectory}
+JBPM_PROJECT_SRC="/env/cns/proj/agc/tools/COMMON/JBPMmicroscope"
+source jbpm.profile ${JBPM_PROJECT_SRC}
 
 #################################
 # Slurm Logrotate Configuration #
