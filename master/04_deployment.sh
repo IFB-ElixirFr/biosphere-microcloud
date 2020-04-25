@@ -23,7 +23,11 @@ if [ $IP_PARAMETER == "hostname" ]; then
     fi
 fi
 
+# Disable option e because this script might return non 0
+set +e
 install_elasticluster
+# Re-enable option e
+set -e
 sed -i '/- slurm-drmaa-dev/d' $playbook_dir/roles/slurm-client/tasks/main.yml
 install_ansible
 config_elasticluster slurm
