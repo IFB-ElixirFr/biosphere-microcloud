@@ -47,10 +47,7 @@ get_all_requirement_script()
 
 # Source cluster_install script
 get_all_requirement_script
-apt install -y python-minimal
-apt update -y
-yes | apt install python-requests
-apt install -y python-pip
+apt install -y python-minimal python-pip python-requests
 pip2 install -r /scripts/requirements.txt
 source /scripts/cluster/cluster_install.sh
 make_file_test_slurm /root/mydisk
