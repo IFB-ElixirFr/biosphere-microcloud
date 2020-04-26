@@ -9,6 +9,8 @@
 # NFS
 #####
 
+# This function is copied from biosphere-commnons (NFS_ready)
+# with adaptations for MicroCloud.
 NFS_microcloud_ready(){
     ss-get --timeout=3600 nfsserver_is_ready
     nfs_ready=$(ss-get --timeout=3600 nfsserver_is_ready)
@@ -20,6 +22,8 @@ NFS_microcloud_ready(){
 	done
 }
 
+# This function is copied from biosphere-commnons (NFS_mount)
+# with adaptations for MicroCloud.
 NFS_microcloud_mount()
 {
     if [[ $# -lt 2 ]]; then
