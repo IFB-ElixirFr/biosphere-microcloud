@@ -19,7 +19,11 @@ allow_others
 
 populate_hosts_with_components_name_and_ips hostname
 
+# Disable option e because this script might return non 0
+set +e
 initiate_slave_cluster
+# Re-enable option e
+set -e
 if [ $IP_PARAMETER == "hostname" ]; then
     check_ip
     if [ "$category" == "Deployment" ]; then
