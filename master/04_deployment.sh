@@ -34,13 +34,16 @@ install_playbooks slurm
 # Re-enable option e
 set -e
 
-ss-display "Start mounting."
+######################################################################
+# Create shared directory /env between master, slave(s) and frontend #
+######################################################################
 
 # Create shared directory /env between master, slave(s) and frontend
 SLIPSTREAM_DIR="/var/tmp/slipstream"
 BASE_DIR=biosphere-microcloud
 COMPONENT=master
 cd ${SLIPSTREAM_DIR}/${BASE_DIR}/${COMPONENT}
+ss-display "Start mounting."
 
 # Create /env dir
 mkdir /env
@@ -235,6 +238,9 @@ EOF
 
 # Shared dir is ready
 ss-set end_mount true
+################
+# Start tomcat #
+################
 
 # Source profile before starting tomcat
 cd ${AGC_PROFILESHOME}
@@ -247,6 +253,7 @@ cd ${JBPM_PROJECT_SRC}/tomcat/bin
 # Allow port and redirect port
 ufw allow 8080
 iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
+
 
 ########################
 # Create jBPM database #
