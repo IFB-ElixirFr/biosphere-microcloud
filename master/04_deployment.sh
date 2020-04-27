@@ -38,11 +38,6 @@ set -e
 # Create shared directory /env between master, slave(s) and frontend #
 ######################################################################
 
-# Create shared directory /env between master, slave(s) and frontend
-SLIPSTREAM_DIR="/var/tmp/slipstream"
-BASE_DIR=biosphere-microcloud
-COMPONENT=master
-cd ${SLIPSTREAM_DIR}/${BASE_DIR}/${COMPONENT}
 ss-display "Start mounting."
 
 # Create /env dir
@@ -85,7 +80,6 @@ URL="https://www.genoscope.cns.fr/agc/ftp/MicroCloud"
 curl --output ${IG_HOME}/.findproductflavor ${URL}/findproductflavor
 
 # Get modules required to run micJBPMwrapper
-cd ${SLIPSTREAM_DIR}/${BASE_DIR}/${COMPONENT}
 ./import_modules.sh ${AGC_PRODUCTSHOME}
 
 
@@ -95,7 +89,7 @@ cd ${SLIPSTREAM_DIR}/${BASE_DIR}/${COMPONENT}
 
 ss-display "Install Pegasus"
 
-cd ${AGC_PRODUCTSHOME}
+pushd ${AGC_PRODUCTSHOME}
 curl -O ${URL}/pegasus-latest.tar.gz
 tar xf pegasus-latest.tar.gz
 rm pegasus-latest.tar.gz
@@ -106,6 +100,7 @@ sed -i "s|NUMAIF=.*|NUMAIF=|" Makefile
 export PEGASUS_HOME=${AGC_PRODUCTSHOME}/pegasus-4.9.2/
 make
 make install
+popd
 
  
 ################
@@ -238,17 +233,16 @@ EOF
 
 # Shared dir is ready
 ss-set end_mount true
+
 ################
 # Start tomcat #
 ################
 
 # Source profile before starting tomcat
-cd ${AGC_PROFILESHOME}
-source microcloud.profile
+source ${AGC_PROFILESHOME}/microcloud.profile
 
 # Start tomcat
-cd ${JBPM_PROJECT_SRC}/tomcat/bin
-./catalina.sh start
+${JBPM_PROJECT_SRC}/tomcat/bin/catalina.sh start
 
 # Allow port and redirect port
 ufw allow 8080
