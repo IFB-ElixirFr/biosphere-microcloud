@@ -6,3 +6,5 @@ mariadb-client
 nfs-kernel-server
 unzip
 readseq
+python-minimal
+python-pip
