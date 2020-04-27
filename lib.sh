@@ -39,7 +39,10 @@ NFS_mount_microcloud()
         else
             msg_info "Mounting $MOUNT_DIR..."
 
-            umount $MOUNT_DIR
+            # Unmount $MOUNT_DIR if it is mounted
+            if mountpoint -q -- $MOUNT_DIR; then
+                umount $MOUNT_DIR
+            fi
             mount $NFSSERVER_HOSTNAME:$SHARED_DIR $MOUNT_DIR 2>/tmp/mount_error_message.txt
             ret=$?
             msg_info "$(cat /tmp/mount_error_message.txt)"
