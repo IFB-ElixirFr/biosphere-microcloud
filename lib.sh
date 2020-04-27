@@ -11,7 +11,7 @@
 
 # This function is copied from biosphere-commnons (NFS_ready)
 # with adaptations for MicroCloud.
-NFS_microcloud_ready()
+NFS_ready_microcloud()
 {
     ss-get --timeout=3600 nfsserver_is_ready
     nfs_ready=$(ss-get --timeout=3600 nfsserver_is_ready)
@@ -25,7 +25,7 @@ NFS_microcloud_ready()
 
 # This function is copied from biosphere-commnons (NFS_mount)
 # with adaptations for MicroCloud.
-NFS_microcloud_mount()
+NFS_mount_microcloud()
 {
     if [[ $# -lt 2 ]]; then
         echo "This function expects 2 directories in argument !"

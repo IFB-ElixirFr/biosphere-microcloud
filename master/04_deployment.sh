@@ -49,10 +49,10 @@ if [ "$category" == "Deployment" ]; then
     node_multiplicity=$(ss-get $SLAVE_NAME:multiplicity)
     if [ "$node_multiplicity" != "0" ]; then
         # Check NFS is ready
-        NFS_microcloud_ready
+        NFS_ready_microcloud
 
         # NFS_mount /env
-        NFS_microcloud_mount /var/nfsshare /env
+        NFS_mount_microcloud /var/nfsshare /env
     fi
 fi
 
