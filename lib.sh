@@ -16,11 +16,11 @@ NFS_ready_microcloud()
     ss-get --timeout=3600 nfsserver_is_ready
     nfs_ready=$(ss-get --timeout=3600 nfsserver_is_ready)
     msg_info "Waiting NFS to be ready."
-	while [ "$nfs_ready" != "true" ]
-	do
-		sleep 10;
-		nfs_ready=$(ss-get --timeout=3600 nfsserver_is_ready)
-	done
+    while [ "$nfs_ready" != "true" ]
+    do
+        sleep 10;
+	nfs_ready=$(ss-get --timeout=3600 nfsserver_is_ready)
+    done
 }
 
 # This function is copied from biosphere-commnons (NFS_mount)
