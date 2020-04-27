@@ -27,11 +27,12 @@ NFS_ready_microcloud()
 # with adaptations for MicroCloud.
 NFS_mount_microcloud()
 {
-    if [[ $# -lt 2 ]]; then
-        echo "This function expects 2 directories in argument !"
+    if [[ $# -lt 3 ]]; then
+        echo "This function expects 3 arguments !"
     else
         SHARED_DIR=$1
-        MOUNT_DIR=$2
+        NFSSERVER_HOSTNAME=$2
+        MOUNT_DIR=$3
         msg_info "Mount $MOUNT_DIR where shared directory is $SHARED_DIR from $NFSSERVER_HOSTNAME host)."
         if [ ! -d "$MOUNT_DIR" ]; then
             msg_info "$MOUNT_DIR doesn't exist !"

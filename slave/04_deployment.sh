@@ -47,7 +47,7 @@ done
 NFS_ready_microcloud
 
 # NFS_mount /env
-NFS_mount_microcloud /var/nfsshare /env
+NFS_mount_microcloud /var/nfsshare $(ss-get --timeout=3600 nfsserver_hostname) /env
 
 # Source jbpm profile
 JBPM_PROJECT_SRC="/env/cns/proj/agc/tools/COMMON/JBPMmicroscope"

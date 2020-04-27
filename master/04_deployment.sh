@@ -52,7 +52,7 @@ if [ "$category" == "Deployment" ]; then
         NFS_ready_microcloud
 
         # NFS_mount /env
-        NFS_mount_microcloud /var/nfsshare /env
+        NFS_mount_microcloud /var/nfsshare $(ss-get --timeout=3600 nfsserver_hostname) /env
     fi
 fi
 
