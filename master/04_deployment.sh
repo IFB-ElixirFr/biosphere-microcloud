@@ -1,5 +1,8 @@
 #!/bin/bash -x
 
+# The following steps may change working directory so we save it
+CWD=$(pwd)
+
 # Source functions from biosphere-commons
 source /scripts/cluster/elasticluster.sh
 source /scripts/populate_hosts_with_components_name_and_ips.sh --dry-run
@@ -33,6 +36,9 @@ config_elasticluster slurm
 install_playbooks slurm
 # Re-enable option e
 set -e
+
+# Reset working directory
+cd ${CWD}
 
 ######################################################################
 # Create shared directory /env between master, slave(s) and frontend #
