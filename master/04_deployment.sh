@@ -118,7 +118,7 @@ JBPM_PROJECT_SRC="/env/cns/proj/agc/tools/COMMON/JBPMmicroscope"
 JBPM_PROJECT_HOME="/env/cns/proj/agc/Data/Result/JBPMmicroscope"
 TOMCAT_HOME=${JBPM_PROJECT_SRC}/tomcat
 
-./install_jbpm.sh ${URL} ${JBPM_PROJECT_SRC} ${JBPM_PROJECT_HOME} ${TOMCAT_HOME}
+./install_jbpm.sh ${URL} ${JBPM_PROJECT_SRC} ${JBPM_PROJECT_HOME} ${TOMCAT_HOME} ${AGC_PRODUCTSHOME}
 
 # Update PATH
 MODULES_PATH=${JBPM_PROJECT_SRC}/bin:${AGC_PRODUCTSHOME}/micGenome/unix-noarch/bin:${AGC_PRODUCTSHOME}/micPrestation/unix-noarch/bin:${AGC_PRODUCTSHOME}/micJBPMwrapper/unix-noarch/bin:${AGC_PRODUCTSHOME}/AGCScriptToolMic/unix-noarch/bin:${AGC_PRODUCTSHOME}/micDirecton/linux-noarch/bin:${AGC_PRODUCTSHOME}/bagsub/linux-noarch/bin:${JBPM_PROJECT_SRC}/bin:${PEGASUS_HOME}/bin:${PATH}
