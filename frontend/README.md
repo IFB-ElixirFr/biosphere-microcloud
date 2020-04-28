@@ -51,7 +51,7 @@ The trick is to do it in PHP with an HERE document:
 
 Care must be taken to not mix PHP and bash strings and variables.
 
-## Aliases to `mysql` component
+### Aliases to `mysql` component
 
 Some scripts might assume that the DB server is `mysqlagcdb[.genoscope.cns.fr]`.
 To ease the deployment of a first version, we modify `/etc/hosts` so that `mysqlagcdb[.genoscope.cns.fr]` leads to `mysql_hostname`.
