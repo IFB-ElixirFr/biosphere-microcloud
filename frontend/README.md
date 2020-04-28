@@ -58,7 +58,7 @@ To ease the deployment of a first version, we modify `/etc/hosts` so that `mysql
 
 This is a bad practice as such programs should be fixed.
 
-## Connection to NFS server (04_deployment.sh)
+### Connection to NFS server (04_deployment.sh)
 
 `nfsserver` needs the private IP address of this component to add it to the NFS configuration.
 It waits on `ip_local`.
