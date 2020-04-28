@@ -1,15 +1,16 @@
 #!/bin/sh -xe
-#############################################################################
+###############################################################################################
 # Title: install_jbpm.sh
 # Description: Install jBPM
-# Usage: ./install_jbpm.sh URL JBPM_PROJECT_SRC JBPM_PROJECT_HOME TOMCAT_HOME
+# Usage: ./install_jbpm.sh URL JBPM_PROJECT_SRC JBPM_PROJECT_HOME TOMCAT_HOME AGC_PRODUCTSHOME
 # Date: 2020-04-23
-#############################################################################
+###############################################################################################
 
 URL=$1
 JBPM_PROJECT_SRC=$2
 JBPM_PROJECT_HOME=$3
 TOMCAT_HOME=$4
+AGC_PRODUCTSHOME=$5
 
 mkdir -p ${JBPM_PROJECT_SRC}
 chmod g+s ${JBPM_PROJECT_SRC}
