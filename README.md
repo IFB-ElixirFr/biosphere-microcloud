@@ -58,6 +58,13 @@ Note that `master` and `slave` use different conventions (they were copied from 
 The components are based on [IFB CentOS 7 image](https://nuv.la/module/ifb/examples/images/centos-7-ifb)
 except `master` and `slave` which are based on [IFB Ubuntu 18.04 image](https://nuv.la/module/ifb/examples/images/ubuntu-18.04-ifb).
 
+### Scripts
+
+**Except stated otherwise**, scripts should run with options `e`, `u` and `x`.
+Note that scripts that install the cluster are know to fail with option `e`.
+
+The file `lib.sh` contains some useful functions (mainly NFS related at the time of this writing).
+
 ## TODO
 
   - how are declared service URL from the `MicroCloud` application ?
