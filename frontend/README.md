@@ -5,8 +5,8 @@
 The frontend is based on Apache2, PHP7.1 and phpMyAdmin.
 
 The installation is two-fold:
-* first we need to setup some basics: Apache2, PHP7.1 and phpMyAdmin
-* after we setup MicroScope.
+* first we need to setup some basics (Apache2, PHP7.1 and phpMyAdmin) and mount the shared directory
+* after we setup MicroScope
 
 For the first part, we adapted the procedure described [here](https://www.howtoforge.com/tutorial/centos-lamp-server-apache-mysql-php/) (based on remi repository).
 The [epel repository](https://fedoraproject.org/wiki/EPEL) is already installed on parent image.
@@ -18,13 +18,18 @@ MicroScope installation involve:
 
 ## Parameters
 
+Note: we don't present inputs and outputs inherited from base image.
+
 Inputs:
   - `mysql_hostname`: IP address of the `mysql` component (connected to `mysql:hostname`)
+  - `mysql_root_password`: used to create database tables and insert data (connected to `mysql:mysql_root_password`)
+  - `mysql_is_ready`: used to wait for the `mysql` component is ready (connected to `mysql:is_ready`)
   - `nfsserver_hostname`: IP address of the `nfsserver` component (connected to `nfsserver:hostname`)
   - `nfsserver_is_ready`: used to wait for the `nfsserver` component is ready (connected to `nfsserver:is_ready`)
-  - `mysql_is_ready`: used to wait for the `mysql` component is ready (connected to `mysql:is_ready`)
-  - `mysql_root_password`: used to create database tables and insert data (connected to `mysql:mysql_root_password`)
-  
+  - `permanent_VM_hostname`: IP address of permanent VM (constant: 134.214.33.214)
+  - `permanent_VM_mysql_root_password`: MySQL root password for permanent VM (constant)
+  - `permanent_VM_port`: Permanent VM port to use (constant: 3306)
+
 Outputs:
   - `private_ip`: the local IP address of this component; this output is set in the parent image
     (due to to a bug in slipstream, we have to declare it in `frontend`)
@@ -39,6 +44,8 @@ The following service URL are defined:
   - `http[s]://<IP>/phpMyAdmin` (or `phpmyadmin`): phpMyAdmin
 
 ## Technical notes
+
+The base image is [IFB CentOS 7 image](https://nuv.la/module/ifb/examples/images/centos-7-ifb).
 
 ### Installation of phpMyAdmin (04_deployment.sh)
 
@@ -70,11 +77,14 @@ We wait on `nfsserver_is_ready` after having done almost all configuration.
 
 ### MicroScope installation (04_deployment.sh)
 
-`microscopeRelease.py` is used to create a tar archive `microcloud.tar.gz` with all necessary items to install MicroScope. Then, the latest version of this archive is imported to frontend component and uncompressed. `install_microscope.sh` use these uncompressed files to create the databases, insert the data, and copy web code.
+`microscopeRelease.py` is used to create a tar archive `microcloud.tar.gz` with all necessary items to install MicroScope.
+Then, the latest version of this archive is imported to frontend component and uncompressed.
+`install_microscope.sh` use these uncompressed files to create the databases, insert the data, and copy web code.
 
 ### Copy data for a chosen Oid (04_deployment.sh)
 
-`microscopeCopyOid.py` is used to create a tar archive `microscope_31.tar.gz` that contains minimal data set for a specific Oid. Then, the latest version of this archive is imported to frontend component and data are inserted in backend databases with `import_Oid.sh`.
+`microscopeCopyOid.py` is used to create a tar archive `microscope_31.tar.gz` that contains minimal data set for a specific Oid.
+Then, the latest version of this archive is imported to frontend component and data are inserted in backend databases with `import_Oid.sh`.
 
 ### Create federated links between the mysql server and the permanent VM (04_deployment.sh)
 
@@ -83,10 +93,6 @@ We wait on `nfsserver_is_ready` after having done almost all configuration.
 ## TODO
 Important:
 * Apache error doc (needed for MicroScope)
-
-Security:
-* Use parameter for mysql password
-* Use a non-root mysql user
 
 Things to consider:
 * Remove the alias to `mysql` component

@@ -58,6 +58,8 @@ Note that `master` and `slave` use different conventions (they were copied from 
 The components are based on [IFB CentOS 7 image](https://nuv.la/module/ifb/examples/images/centos-7-ifb)
 except `master` and `slave` which are based on [IFB Ubuntu 18.04 image](https://nuv.la/module/ifb/examples/images/ubuntu-18.04-ifb).
 
+Note that the base image adds some inputs and outputs in particular for IFB share points and to control access.
+
 ### Scripts
 
 **Except stated otherwise**, scripts should run with options `e`, `u` and `x`.
