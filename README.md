@@ -5,9 +5,10 @@
 This repository contains the recipes needed to deploy MicroScope on [IFB Biosphere](https://biosphere.france-bioinformatique.fr/).
 SlipStream components clone this repository and execute scripts from it.
 
-The application connects to a permanent VM (`umr5558-microcloud.univ-lyon1.fr`)
-to create a MySQL federation (port 3306).
-Therefore, it can only be deployed on `ifb-prabi-cloud` (where the permanent VM is accessible).
+The SQL bases representing the banks are on a permanent VM (`umr5558-microcloud.univ-lyon1.fr`).
+The application create a MySQL federation with this permanent VM.
+To do so, we need to access to the VM on port 3306.
+Therefore, the application can only be deployed on `ifb-prabi-cloud` (where the permanent VM is accessible).
 
 ## Components & application
 
