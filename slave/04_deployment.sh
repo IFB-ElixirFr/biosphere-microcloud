@@ -34,15 +34,7 @@ fi
 # Create shared directory /env
 mkdir /env
 
-# Wait for the shared directory /env
-ss-display "Waiting master to mount /env dir"
-shared_dir_ready=$(ss-get --timeout=800 end_mount)
-while [ "$shared_dir_ready" != "true" ]
-do
-    sleep 60;
-    shared_dir_ready=$(ss-get --timeout=800 end_mount)
-done
-
+# Wait for the NFS server and mount shared directory /env
 # NFS_ready
 NFS_ready_microcloud
 

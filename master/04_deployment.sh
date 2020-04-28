@@ -231,8 +231,6 @@ export PATH=${MODULES_PATH}
 
 EOF
 
-# Shared dir is ready
-ss-set end_mount true
 
 ################
 # Start tomcat #
