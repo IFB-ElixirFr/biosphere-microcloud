@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
-<svg width="40cm" height="34cm" viewBox="158 36 783 665" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="40cm" height="31cm" viewBox="158 36 783 618" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="160" y="60" width="780" height="460"/>
   <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00ff00" x="280" y="80" width="640" height="420"/>
   <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="455" y="151">
@@ -30,24 +30,9 @@
     <polygon style="fill: #000000" points="425.081,137.918 427.304,148.876 423.127,145.16 417.649,146.271 "/>
     <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="425.081,137.918 427.304,148.876 423.127,145.16 417.649,146.271 "/>
   </g>
-  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="255" y="651">
-    <tspan x="255" y="651"></tspan>
-  </text>
   <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="180" y="260">
     <tspan x="180" y="260">Permanent</tspan>
     <tspan x="180" y="276">MySQL server</tspan>
-  </text>
-  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="320" y="600">
-    <tspan x="320" y="600"></tspan>
-  </text>
-  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="320" y="620">
-    <tspan x="320" y="620"></tspan>
-  </text>
-  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="320" y="600">
-    <tspan x="320" y="600"></tspan>
-  </text>
-  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="320" y="600">
-    <tspan x="320" y="600"></tspan>
   </text>
   <g>
     <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 4; stroke: #000000" x1="311.2" y1="374.101" x2="265.55" y2="341.093"/>
@@ -347,6 +332,21 @@
     <tspan x="300" y="116.006">network</tspan>
   </text>
   <g>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="255" y="651">
+      <tspan x="255" y="651"></tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="320" y="600">
+      <tspan x="320" y="600"></tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="320" y="620">
+      <tspan x="320" y="620"></tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="320" y="600">
+      <tspan x="320" y="600"></tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="320" y="600">
+      <tspan x="320" y="600"></tspan>
+    </text>
     <g>
       <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 4; stroke: #000000" x1="189.736" y1="560" x2="270.264" y2="560"/>
       <polygon style="fill: #000000" points="182.236,560 192.236,555 189.736,560 192.236,565 "/>
@@ -377,9 +377,11 @@
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="300" y="640">
       <tspan x="300" y="640">SLURM</tspan>
     </text>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00ff00" x="180" y="680" width="100" height="20"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="300" y="680">
-      <tspan x="300" y="680">Temporary VM</tspan>
+  </g>
+  <g>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00ff00" x="460" y="560" width="100" height="20"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="580" y="560">
+      <tspan x="580" y="560">A deployment (temporary VMs)</tspan>
     </text>
   </g>
 </svg>
