@@ -15,10 +15,17 @@ Therefore, the application can only be deployed on `ifb-prabi-cloud` (where the 
 The project currently contains 5 components (see the corresponding folder for more details):
 
   - `nfsserver`: this is the NFS server which exposes storage to the network (under `/var/nfsshare`).
-  - `mysql`: this is the MySQL server; it interacts with a permanent VM.
+  - `mysql`: this is the MySQL server; it interacts with the permanent VM.
   - `master`: this is the head node for the cluster; it also runs `jbpmmicroscope`.
   - `slave`: cluster compute node.
-  - `frontend`: this is the web server; the code is in `frontend` (see notes here); phpMyAdmin is installed on it.
+  - `frontend`: this is the web server for MicroScope; phpMyAdmin is installed on it.
+
+`nfsserver` and `slave` are rather simple and generic components.
+`mysql` is a rather simple component but contains some MicroScope-specific installation (MySQL UDF).
+`frontend` and `master` are the most complex components since they interact with all others components
+and also contain many MicroScope-specific installation:
+`frontend` installs the web, the DB and create links between the `mysql` component and the permanent VM;
+`master` installs `jbpmmicroscope` and dependencies (`pegasus-mpi-cluster`, `bagsub`), `micGenome` and some WF.
 
 The `MicroCloud` application instantiates and connects components (by default, it instantiates 2 `slave` components).
 All components are on the private network except `master` and `frontend`.
