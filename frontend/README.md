@@ -12,8 +12,9 @@ For the first part, we adapted the procedure described [here](https://www.howtof
 The [epel repository](https://fedoraproject.org/wiki/EPEL) is already installed on parent image.
 We also need to install Tcl/TK for password generation.
 
-MicroScope installation involve:
-* creating MySQL users and schema and inserting data 
+MicroScope installation involves:
+* create MySQL user and schema and inserting data
+* insert data from Oid 31 (this is needed because the web doesn't work without data)
 * create federated links to the permanent VM
 
 ## Parameters
