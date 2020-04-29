@@ -167,6 +167,7 @@ systemctl start httpd
 # Add entry points (HTTP and HTTPS)
 old_url_service=$(ss-get url.service)
 # genostack cloud use private IPs
+# Note that we could get rid of this since we can only deploy on ifb-prabi-girofle
 if [ "$(ss-get cloudservice)" == "ifb-genouest-genostack" ]
 then
   URL=openstack-${IP//\./-}.genouest.org
