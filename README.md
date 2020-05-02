@@ -26,6 +26,7 @@ The project currently contains 5 components (see the corresponding folder for mo
 and also contain many MicroScope-specific installation:
 `frontend` installs the web, the DB and create links between the `mysql` component and the permanent VM;
 `master` installs `jbpmmicroscope` and dependencies (`pegasus-mpi-cluster`, `bagsub`), `micGenome` and some WF.
+The files needed to install MicroScope and dependencies are downloaded (during deployment) from Genoscope servers.
 
 The `MicroCloud` application instantiates and connects components (by default, it instantiates 2 `slave` components).
 All components are on the private network except `master` and `frontend`.
