@@ -93,7 +93,7 @@ curl --output ${IG_HOME}/.findproductflavor ${URL}/findproductflavor
 # pegasus-mpi-cluster recipe #
 ##############################
 
-ss-display "Install Pegasus"
+ss-display "Installing Pegasus"
 
 pushd ${AGC_PRODUCTSHOME}
 curl -O ${URL}/pegasus-latest.tar.gz
