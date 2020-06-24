@@ -10,6 +10,8 @@ The application creates a MySQL federation with this permanent VM.
 To do so, we need to access the VM on port 3306.
 Therefore, the application can only be deployed on `ifb-prabi-girofle` cloud (where the permanent VM is accessible).
 
+The `Rapport` folder contains a report on the project.
+
 ## Components & application
 
 The project currently contains 5 components (see the corresponding folder for more details):
