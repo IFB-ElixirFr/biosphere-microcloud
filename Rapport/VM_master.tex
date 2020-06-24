@@ -17,7 +17,7 @@ Puis sourcer le fichier \path{microcloud.profile} dans la VM master :
 source /env/cns/proj/agc/module/profiles/microcloud.profile
 \end{lstlisting}
 
-\subsubsection{Insérer un nouvel organisme (partie Syntactic)}
+\subsection{Insérer un nouvel organisme (partie Syntactic)}
 Il faut avoir créé au préalable un utilisateur admin pour valider la prestation. En cela le script create\_user.sh peut servir.
 Il est dans le répertoire \path{/var/tmp/slipstream/biosphere-microcloud/master}
 
@@ -67,7 +67,7 @@ Quelques problèmes subsistent :
 Le module micPrestation n'est plus à jour : le schéma de la base TAXONOMYDB ayant été mis à jour depuis la MEP 3.14.0, il faudra modifier les scripts du module et supprimer les variables faisant référence aux colonnes O\_Gram, O\_genetic\_code et level.
 \newline
 
-\subsubsection{Déployer un WF}
+\subsection{Déployer un WF}
 Les sources sont dans \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/jbpmmicroscope}
 \newline
 
@@ -86,7 +86,7 @@ USE pkgdb
 UPDATE Sequence SET S_status='inFunctional' WHERE S_status='inProduction';
 \end{lstlisting}
 
-\paragraph{Déployer le WF DIRECTON}
+\subsubsection{Déployer le WF DIRECTON}
 Modules requis : \textbf{bagsub-2.4.3}, \textbf{AGCScriptToolMic-2.0}, \textbf{micGenome-7.0.0}, \textbf{micJBPMwrapper-3.10.8} et \textbf{micPrestation-2.0} et \textbf{micDirecton-1.0}.
 
 \begin{lstlisting}[style=bash]
