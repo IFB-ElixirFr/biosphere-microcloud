@@ -5,8 +5,7 @@ Pour lancer le module MicroCloud :
 module load micWEBdeploy/0-MicroCloud-1.0
 \end{lstlisting}
 
-Répertoire d'export des archives et autres fichiers sur etna0 :
-\textbf{/env/cns/wwwext/html/agc/ftp/MicroCloud/}
+Répertoire d'export des archives et autres fichiers sur etna0 : \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/}.
 
 \subsection{microscopeRelease.py}
 Copie le code du web.
@@ -24,9 +23,9 @@ microscopeRelease.py --version 3.14.0 --output /env/cns/wwwext/html/agc/ftp/Micr
 \subsection{createModulesTarball.py}
 Créé les archives des modules à importer dans MicroCloud.
 \newline
-Créé les liens symboliques dans \textbf{/env/cns/wwwext/html/agc/ftp/MicroCloud}
+Créé les liens symboliques dans \path{/env/cns/wwwext/html/agc/ftp/MicroCloud}
 \newline
-Créé le fichier \textbf{modules.txt} dans \textbf{/env/cns/wwwext/html/agc/ftp/MicroCloud}
+Créé le fichier \path{modules.txt} dans \path{/env/cns/wwwext/html/agc/ftp/MicroCloud}
 \newline
 Puis la VM master importe les modules listés dans modules.txt (cf. \href{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/import_modules.sh}{import\_modules.sh}).
 
@@ -37,7 +36,8 @@ createModulesTarball.py --modules_list bagsub-2.4.3 AGCScriptToolMic-2.0 micGeno
 \subsection{microscopeCopyOid.py}
 Permet de copier les données de l'organisme \textit{Acinetobacter baylyi} O\_id=31. 
 
-\begin{mycolorbox}\textbf{REMARQUE} : pour le moment seules les données concernant l'O\_id 31 peuvent être récupérées avec le script microscopeCopyOid.py car certains organismes ont besoin de tables spécifiques de la base GO\_SPE (typiquement la table acineto\_KO pour Acinetobacter baylyi).
+\begin{mycolorbox}
+	Pour le moment seules les données concernant l'O\_id 31 peuvent être récupérées avec le script microscopeCopyOid.py car certains organismes ont besoin de tables spécifiques de la base GO\_SPE (typiquement la table acineto\_KO pour Acinetobacter baylyi).
 \end{mycolorbox}
 
 \begin{lstlisting}[style=bash]

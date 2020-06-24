@@ -9,7 +9,7 @@ Le service Nuvla prenant fin le 15 mai 2020, l'IFB est en train d'étudier de no
 Dans Nuvla, un composant défini une machine virtuelle. Une fois le composant créé, il faut définir l'\textbf{Application Worflow} c'est-à-dire toutes les étapes qui vont mener à la création de la machine virtuelle.
 L'Application Workflow est découpé en 9 étapes, les 4 premières étant essentielles : \textbf{1. Pre-install}, \textbf{2. Install packages}, \textbf{3. Post-install}, \textbf{4. Deployment}, 5. Reporting, 6. On VM Add, 7. On VM Remove, 8. Pre-Scale \& 9. Post-Scale.\\
 
-Pour MicroCloud, nous avons décidé de reporter le code de chaque étape dans le dépôt \href{https://github.com/IFB-ElixirFr/biosphere-microcloud}{GitHub biosphere-microcloud}. Ainsi, lors du déploiement de la machine, le code est cloné dans le répertoire \textbf{/var/tmp/slipstream/biosphere-microcloud} de la VM puis exécuté.
+Pour MicroCloud, nous avons décidé de reporter le code de chaque étape dans le dépôt \href{https://github.com/IFB-ElixirFr/biosphere-microcloud}{GitHub biosphere-microcloud}. Ainsi, lors du déploiement de la machine, le code est cloné dans le répertoire \path{/var/tmp/slipstream/biosphere-microcloud} de la VM puis exécuté.
 \newline
 
 Les paramètres sont transmis à l'aide des commandes client Slipstream (de type \textbf{ss-*}) entre les différentes VM. Ne pas utiliser \textbf{ss-*} dans les Post-install car cela ne fonctionne pas pour les build. Les mots de passe sont passés en paramètres.
@@ -44,7 +44,7 @@ Il y a 2 serveurs de bases de données dans MicroCloud. Un serveur mysql install
 \subsubsection {VM frontend}
 
 La VM frontend permet de déployer la partie web de la plateforme MicroScope.
-Le code web est dans le répertoire \textbf{/var/www/html/} de la VM.
+Le code web est dans le répertoire \path{/var/www/html/} de la VM.
 L'URL de la plateforme est : \textbf{\$IP\_frontend/home/index.php}\\
 La VM frontend possède un client mariaDB (non pas MySQL du fait de conflits existants entre le dépôt remi-php71 installé et le dépôt IUS qui fournit le client MySQL).
 \newline
@@ -54,7 +54,10 @@ Pour se connecter en ssh à la VM frontend :
 ssh centos@${IP_frontend}
 \end{lstlisting}
 
-\begin{mycolorbox}\textbf{REMARQUE} : Si le message d’erreur \textbf{256} s’affiche, cela signifie simplement qu’il n’y a pas d’organisme en base. De ce fait, la plupart des onglets sont inaccessibles ainsi que le formulaire d’authentification.\end{mycolorbox}
+\begin{mycolorbox}
+	Si le message d’erreur \textbf{256} s’affiche, cela signifie simplement qu’il n’y a pas d’organisme en base.
+	De ce fait, la plupart des onglets sont inaccessibles ainsi que le formulaire d’authentification.
+\end{mycolorbox}
 
 \subsubsection {VM mysql}
 
@@ -112,11 +115,11 @@ mysql -p{MOT_DE_PASSE_SERVEUR_MYSQL_VM_PERMANENTE}
 \end{lstlisting}
 \bigskip
 
-Les mots de passe (serveur mySQL et phpMyAdmin) sont stockés dans le répertoire \textbf{/root} de la VM.
+Les mots de passe (serveur mySQL et phpMyAdmin) sont stockés dans le répertoire \path{/root} de la VM.
 \newline 
 
 Pour copier les données :
-Mieux vaut utiliser rsync et copier les données dans le répertoire \textbf{/var/lib/mysql-files/} de la VM permanente avant insertion en base.\\
+Mieux vaut utiliser rsync et copier les données dans le répertoire \path{/var/lib/mysql-files/} de la VM permanente avant insertion en base.\\
 
 \begin{lstlisting}[style=bash]
 LOAD DATA INFILE '/var/lib/mysql-files/$file.DB' INTO TABLE $table;
@@ -133,10 +136,12 @@ URL Tomcat : \textbf{\$IP\_master}
 \subsection{Lien federated entre la VM mysql et  la VM permanente}
 Les bases DB des banques sont accessibles depuis la VM mysql via des liens \href{https://dev.mysql.com/doc/refman/8.0/en/federated-storage-engine.html}{federated} (frontend : \href{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/frontend/create_federated_links.sh}{create\_federated\_links.sh}).\\
 
-\begin{mycolorbox}\textbf{REMARQUE} : Lorsque les schémas des bases DB de la VM permanente sont mis-à-jour; il faut penser à redéployer MicroCloud pour que les liens federated soient également mis-à-jour.
+\begin{mycolorbox}
+	Lorsque les schémas des bases DB de la VM permanente sont mis-à-jour; il faut penser à redéployer MicroCloud pour que les liens federated soient également mis-à-jour.
 \end{mycolorbox}
 
 \subsection{Partage NFS entre les différentes VM}
-Le répertoire partagé \textbf{/var/nfsshare} du serveur NFS est monté dans le répertoire \textbf{/env}
-des VM frontend, backend, master et slave(s). Le répertoire \textbf{/env} se veut similaire au répertoire de même nom sur l’etna0. 
+Le répertoire partagé \path{/var/nfsshare} du serveur NFS est monté dans le répertoire \path{/env}
+des VM frontend, backend, master et slave(s).
+Le répertoire \path{/env} se veut similaire au répertoire de même nom sur etna0. 
 Les fonctions sont dans le fichier \href{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/lib.sh}{lib.sh}.
