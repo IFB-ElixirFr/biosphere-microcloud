@@ -1,0 +1,13 @@
+\section{Déployer MicroScope dans le cloud}
+
+Exemple : nous souhaitons déployer la version 3.14.0 de MicroScope dans le cloud :
+\begin{lstlisting}[style=bash]
+microscopeRelease.py --version 3.14.0 --output /env/cns/wwwext/html/agc/ftp/MicroCloud/microcloud-3.14.0.tar.gz
+\end{lstlisting}
+\bigskip
+
+Ensuite, mettre à jour le lien symbolique pour qu'il pointe vers la nouvelle archive :
+\begin{lstlisting}[style=bash]
+cd /env/cns/wwwext/html/agc/ftp/MicroCloud
+ln -s microcloud-3.14.0.tar.gz microcloud-latest.tar.gz
+\end{lstlisting}

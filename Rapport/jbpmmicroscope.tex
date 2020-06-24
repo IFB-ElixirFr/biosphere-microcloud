@@ -1,0 +1,52 @@
+\section{Installation de jbpmmicroscope}
+
+Dans cette section JBPMmicroscope peut faire référence à la base de données JBPMmicroscope ou bien à la commande JBPMmicroscope qui permet le déploiement des WF.
+\newline
+
+Il faut générer les fichiers suivants :
+\begin{itemize}
+    \item \textbf{jbpmmicroscope.jar}
+    \item \textbf{SystemActorsLauncher.jar}
+    \item \textbf{jbpmmicroscope-server.war}
+\end{itemize}
+\bigskip
+
+Puis mettre à jour le fichier \textbf{~/.m2/genosphere-settings.xml} :
+\begin{itemize}
+    \item  Mettre à jour le local path
+    \item Supprimer/modifier le login et le mot de passe
+\end{itemize}
+
+Pour créer les .jar dans le répertoire \textbf{jbpmmicroscope-client/target/} faire :
+
+\begin{lstlisting}[style=bash]
+mvn -Pconfig-microcloud -s ~/.m2/genosphere-settings.xml clean install
+\end{lstlisting}
+\bigskip
+
+Il faut ajouter les sources (pour le déploiement des WF) et le script JBPMmicroscope
+\begin{lstlisting}[style=bash]
+jar uf jbpmmicroscope-client/target/jbpmmicroscope.jar -C ./ src/
+jar uf jbpmmicroscope-client/target/jbpmmicroscope.jar -C ./ JBPMmicroscope
+\end{lstlisting}
+\bigskip
+
+Pour créer l'archive \textbf{jbpmmicroscope-server.war} dans le répertoire \textbf{jbpmmicroscope-server/target/} :
+\begin{lstlisting}[style=bash]
+mvn -Pconfig-microcloud -s ~/.m2/genosphere-settings.xml package
+\end{lstlisting}
+\bigskip
+
+Copier le .war et les .jar sur etna0 dans le répertoire \textbf{/env/cns/wwwext/html/agc/ftp/MicroCloud/}
+La VM master importe ces fichiers à l’aide des liens symboliques.
+\newline
+
+Le schéma de la base JBPMmicroscope est créé automatiquement par hibernate (\textbf{hibernate.cfg.xml} voir le paramètre hbm2ddl.auto) lors de la première exécution d'une commande JBPMmicroscope.
+\newline
+
+Les identifiants de connexion à la base JBPMmicroscope (hibernate) sont les suivants :
+login: jbpm et password: jbpm. Ces identifiants peuvent être modifiés dans le composant master : paramètres \textbf{jbpm\_user} et \textbf{jbpm\_password} (penser à mettre à jour le fichier \textbf{hibernate.cfg.xml}, régénérer les .jar et le .war et les copier dans \textbf{/env/cns/wwwext/html/agc/ftp/MicroCloud}).
+\newline
+
+jbpmmicroscope nécessite un serveur Tomcat pour fonctionner. Tomcat 9 est installé dans le composant master : \textbf{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat}. Les identifiants tomcat sont les suivants :
+login: \textbf{tomcat} et password: \textbf{tomcat}. Ces identifiants peuvent être modifiés dans le composant master : paramètres \textbf{tomcat\_user} et \textbf{tomcat\_password}.

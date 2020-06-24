@@ -1,0 +1,10 @@
+\subsection{Méthode de création d'une VM}
+
+Dans Nuvla, un composant défini une machine virtuelle. Une fois le composant créé, il faut définir l'\textbf{Application Worflow} c'est-à-dire toutes les étapes qui vont mener à la création de la machine virtuelle.
+L'Application Workflow est découpé en 9 étapes, les 4 premières étant essentielles : \textbf{1. Pre-install}, \textbf{2. Install packages}, \textbf{3. Post-install}, \textbf{4. Deployment}, 5. Reporting, 6. On VM Add, 7. On VM Remove, 8. Pre-Scale \& 9. Post-Scale.\\
+
+Pour MicroCloud, nous avons décidé de reporter le code de chaque étape dans le dépôt \href{https://github.com/IFB-ElixirFr/biosphere-microcloud}{GitHub biosphere-microcloud}. Ainsi, lors du déploiement de la machine, le code est cloné dans le répertoire \textbf{/var/tmp/slipstream/biosphere-microcloud} de la VM puis exécuté.
+\newline
+
+Les paramètres sont transmis à l'aide des commandes client Slipstream (de type \textbf{ss-*}) entre les différentes VM. Ne pas utiliser \textbf{ss-*} dans les Post-install car cela ne fonctionne pas pour les build. Les mots de passe sont passés en paramètres.
+Pour les versions, il est possible d'utiliser des releases (ou des hash fixes) : ainsi, on peut faire des versions stables des composants et leurs mise à jour demande une nouvelle version des composants.

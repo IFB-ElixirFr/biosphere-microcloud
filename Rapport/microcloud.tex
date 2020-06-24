@@ -1,0 +1,73 @@
+\documentclass{article}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage{layout}
+\usepackage{color}
+\usepackage{tcolorbox}
+\tcbuselibrary{listings,skins}
+\usepackage{pxfonts}
+\usepackage{indentfirst}
+\renewcommand{\contentsname}{Table des matières}
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue
+}
+\urlstyle{same}
+\lstdefinestyle{bash}{
+  language=bash,
+  commentstyle=\color{red},
+  basicstyle=\ttfamily,
+  keywordstyle=\color{green!55!blue}\bfseries,
+  morekeywords={docker, sudo, su, ssh, module, load, mysql, JBPMmicroscope, mysqlagcdb, ln},
+  breaklines=true,
+  frame=trBL
+}
+\lstdefinestyle{SQL}{
+  language=SQL,
+  breaklines=true,
+  frame=trBL
+}
+\newtcolorbox{mycolorbox}
+{
+  colback=red!5!white,
+  colframe=red!75!black,
+  sharp corners=uphill
+}
+
+\title{Documentation MicroCloud}
+\author{L. Burlot}
+\date{Avril 2020}
+\begin{document}
+\maketitle
+\sloppy
+\newpage
+
+\tableofcontents
+\newpage
+
+\input{introduction}
+
+\input{documentation}
+
+\input{installation}
+
+\input{module_microcloud}
+
+\input{jbpmmicroscope}
+
+\input{deploiement}
+
+\input{VM_master}
+
+\input{information_logiciels}
+
+\input{ameliorations}
+
+\input{contacts}
+
+\end{document}
