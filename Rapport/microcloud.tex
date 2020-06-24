@@ -1,4 +1,4 @@
-\documentclass[a4paper]{article}
+\documentclass[a4paper]{report}
 \usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage[frenchb]{babel}
@@ -55,7 +55,19 @@
 \tableofcontents
 \newpage
 
+\part{Vue d'ensemble du projet}
+
 \input{introduction}
+
+\input{perspectives}
+
+\part{Guide d'utilisation}
+
+\input{deploiement_microcloud}
+
+\input{creer_nouvelle_version}
+
+\part{Détails techniques}
 
 \input{installation}
 
@@ -68,7 +80,5 @@
 \input{VM_master}
 
 \input{information_logiciels}
-
-\input{ameliorations}
 
 \end{document}

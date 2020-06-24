@@ -1,0 +1,112 @@
+\chapter{Déployer une instance MicroCloud et l'utiliser}
+
+\section{Déployer l'appliance MicroCloud}
+
+Pour déployer l'appliance MicroCloud, il faut aller sur le site  \href{https://biosphere.france-bioinformatique.fr/catalogue/}{RAINBio}, choisir l’\href{https://biosphere.france-bioinformatique.fr/catalogue/appliance/150/}{Appliance MicroCloud} et cliquer sur \textbf{Lancer} ou \textbf{Déploiement avancé}.
+
+Les déploiements se font sur le cloud prabi-girofle sur lequel est installé la \hyperref[VM permanente]{VM permanente}.
+Un déploiement prend environ 40 minutes.
+Il vaut mieux en lancer 2 en même temps afin d'être sûr d'en avoir au moins un de fonctionnel.
+Les échecs dûs au paquet \textbf{procps} sont assez fréquents.
+
+\section{Insérer un nouvel organisme (partie Syntactic)}
+Il faut avoir créé au préalable un utilisateur admin pour valider la prestation. En cela le script create\_user.sh peut servir.
+Il est dans le répertoire \path{/var/tmp/slipstream/biosphere-microcloud/master}
+
+Nous avons également besoin des données de taxonomie pour ce nouvel organisme. Pour cela, il faut mettre à jour la base TAXONOMYDB de la VM permanente.
+\begin{itemize}
+	\item en copiant les données de prod de TAXONOMYDB et pkgdb.O\_Taxonomy pour cet organisme
+	\item ou en déployant les WF TAXONOMYDB et TAXONOMY
+\end{itemize}
+
+Pour insérer un nouvel organisme, il est possible d’utiliser le module micPrestation.
+
+La procédure à suivre est la suivante :
+\begin{itemize}
+	\item Télécharger un fasta et décompresser l'archive.
+	\item Remplir le fichier Template\_Prestation.csv qui trouve dans le répertoire \path{/env/cns/proj/agc/module/products/micsyntactic/unix-noarch/lib}
+	\item Lancer la création de la prestation
+\end{itemize}
+
+\begin{lstlisting}[style=bash]
+prestaBatch.py --csv Template_Prestation.csv -sd ${working_dir} -A ${Annotator_name} -T genome
+\end{lstlisting}
+
+Il y a un exemple de fichier \href{Template\_Prestation.csv} dans le dossier prestation : \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/prestation}
+\newline
+\begin{mycolorbox}
+	Il faut un utilisateur admin pour accepter la prestation depuis l'interface web (cf. master : \href{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/create_user.sh}{create\_user.sh}).
+\end{mycolorbox}
+\bigskip
+
+Pour valider la prestation sans passer par le web :
+\begin{lstlisting}[style=SQL]
+USE PRESTATIONDB;
+SELECT * FROM Prestation;
+UPDATE Prestation SET PS_status='accepted' WHERE PS_status='inprogress';
+\end{lstlisting}
+\bigskip
+Puis pour insérer la nouvelle séquence en base, utiliser le module micGenome :
+\begin{lstlisting}[style=bash]
+loadGenomeNS.sh -p ${PS_id} -o ${O_id}
+\end{lstlisting}
+
+\begin{mycolorbox}
+	Une fois la prestation validée, reste le problème que les données des banques nécessaires pour le script \textbf{loadGenomeNS.sh} ne sont pas stockées dans la VM permanente actuellement (données des banques gérées par CABRI).
+	Cette étape ne fonctionne donc pas.
+\end{mycolorbox}
+
+Quelques problèmes subsistent :
+Le module micPrestation n'est plus à jour : le schéma de la base TAXONOMYDB ayant été mis à jour depuis la MEP 3.14.0, il faudra modifier les scripts du module et supprimer les variables faisant référence aux colonnes O\_Gram, O\_genetic\_code et level.
+\newline
+
+\section{Déployer un WF}
+Les sources sont dans \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/jbpmmicroscope}
+\newline
+
+Répertoire Tomcat : \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat}
+\newline
+
+Emplacement des modules : \path{/env/cns/proj/agc/module/products}
+\newline
+
+\begin{mycolorbox}
+	Si les données ont été copiées depuis la prod et non pas insérées avec micPrestation, il faut, dans la table pkgdb.Sequence, vérifier que le status des S\_id existants soit 'inFunctional' et non 'inProduction' pour que les WF prennent bien en compte les nouveaux S\_id.
+\end{mycolorbox}
+
+\begin{lstlisting}[style=SQL]
+USE pkgdb
+UPDATE Sequence SET S_status='inFunctional' WHERE S_status='inProduction';
+\end{lstlisting}
+
+\subsection{Déployer le WF DIRECTON}
+Modules requis : \textbf{bagsub-2.4.3}, \textbf{AGCScriptToolMic-2.0}, \textbf{micGenome-7.0.0}, \textbf{micJBPMwrapper-3.10.8} et \textbf{micPrestation-2.0} et \textbf{micDirecton-1.0}.
+
+\begin{lstlisting}[style=bash]
+#### Deploy DIRECTON WF ####
+cd /env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat/
+
+# Deploy WF
+JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl/BagSub/ -defNames DIRECTON
+
+# Deploy and start CRON
+JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl -defNames CRON_DIRECTON
+JBPMmicroscope startCron -names CRON_DIRECTON
+
+# Check CRON and WF status
+JBPMmicroscope showProcessDefinitions
+
+# Force run
+JBPMmicroscope signalCron -names CRON_DIRECTON -signal forceRun; JBPMmicroscope signalProcess -pid 1
+
+JBPMmicroscope showProcessInstances
+
+# Take a look at running processes
+tomcat_logs
+
+# relaunch WF if status is sendmail
+JBPMmicroscope relaunchAnalysis -pidCron 1 -pidWF 2 -signal forceRun
+
+# Check tables pkgdb.Workflow_Jobs, pkgdb.Directon and pkgdb.GO_Directon_CPD
+mysqlagcdb
+\end{lstlisting}
