@@ -1,24 +1,4 @@
 \section {Installation et déploiement des VM}
-Les machines virtuelles ont été créées à l'aide de la plateforme \href{https://github.com/slipstream/SlipStream}{SlipStream} développée par la société \href {https://sixsq.com/}{SixSq}. SlipStream permet la gestion d'applications multi-cloud. Il automatise le cycle de vie complet de la gestion des applications, y compris le déploiement, les tests, la certification et l'optimisation de l'application, au sein des infrastructures cloud IaaS (Infrastructure as a Service). Nous avons utilisé l'interface \href {https://docs.nuvla.io/nuvla}{Nuvla} qui facilite la création et la gestion des applications cloud via SlipStream.
-\newline
-
-Le service Nuvla prenant fin le 15 mai 2020, l'IFB est en train d'étudier de nouvelles solutions comme la solution \href {https://www.hashicorp.com/blog/announcing-terraform-cloud/}{Terraform Cloud} en remplacement (pas de délais annoncés pour le moment, dépendra des ressources humaines disponibles). Quelle que soit la solution retenue, le mode de fonctionnement basé sur des scripts dans un dépôt git restera le même.
-
-\subsection{Méthode de création d'une VM}
-
-Dans Nuvla, un composant défini une machine virtuelle. Une fois le composant créé, il faut définir l'\textbf{Application Workflow} c'est-à-dire toutes les étapes qui vont mener à la création de la machine virtuelle.
-L'Application Workflow est découpé en 9 étapes, les 4 premières étant essentielles : \textbf{1. Pre-install}, \textbf{2. Install packages}, \textbf{3. Post-install}, \textbf{4. Deployment}, 5. Reporting, 6. On VM Add, 7. On VM Remove, 8. Pre-Scale \& 9. Post-Scale.\\
-
-Pour MicroCloud, nous avons décidé de reporter le code de chaque étape dans le dépôt \href{https://github.com/IFB-ElixirFr/biosphere-microcloud}{GitHub biosphere-microcloud}. Ainsi, lors du déploiement de la machine, le code est cloné dans le répertoire \path{/tmp/slipstream/biosphere-microcloud} de la VM puis exécuté.
-\newline
-
-Les paramètres sont transmis à l'aide des commandes client Slipstream (de type \textbf{ss-*}) entre les différentes VM. Ne pas utiliser \textbf{ss-*} dans les Post-install car cela ne fonctionne pas pour les build. Les mots de passe sont passés en paramètres.
-Pour les versions, il est possible d'utiliser des releases (ou des hash fixes) : ainsi, on peut faire des versions stables des composants et leurs mise à jour demande une nouvelle version des composants.
-
-\subsection{Stockage persistant et partagé}
-
-Le stockage partagé est déjà disponible sur certains cloud (exemple de partage de banques de données publiques avec \href{https://biosphere.france-bioinformatique.fr/data/biomaj}{data/biomaj}). Dans les VM l'accès se fait via le répertoire utilisateur \textbf{data}. Par contre, les déploiements doivent être lancés via RAINBio (c’est lui qui passe les liens via la variable \textbf{ifb\_share\_endpoint}).
-Concernant le stockage persistant, la solution est en cours d’évaluation (1 dossier/utilisateur et 1 dossier/groupe) mais pas de délais.
 
 \subsection{Déployer l'appliance MicroCloud}
 
