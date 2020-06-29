@@ -1,4 +1,5 @@
 \documentclass[a4paper]{report}
+
 \usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage[frenchb]{babel}
@@ -6,19 +7,29 @@
 \usepackage{layout}
 \usepackage{color}
 \usepackage{tcolorbox}
-\tcbuselibrary{listings,skins}
 \usepackage{pxfonts}
 \usepackage{indentfirst}
-\renewcommand{\contentsname}{Table des matières}
+\usepackage{hyperref}
+\usepackage{xifthen}% provides \isempty test
+
+%
+% Config
+%
 \setcounter{secnumdepth}{4}
 \setcounter{tocdepth}{4}
-\usepackage{hyperref}
+
+% hyperref
 \hypersetup{
     colorlinks=true,
     linkcolor=black,
     urlcolor=blue
 }
+
 \urlstyle{same}
+
+% tcolorox
+\tcbuselibrary{listings,skins}
+
 \lstdefinestyle{bash}{
   language=bash,
   commentstyle=\color{red},
@@ -28,11 +39,13 @@
   breaklines=true,
   frame=trBL
 }
+
 \lstdefinestyle{SQL}{
   language=SQL,
   breaklines=true,
   frame=trBL
 }
+
 \newtcolorbox{mycolorbox}
 {
   colback=red!5!white,
@@ -42,7 +55,19 @@
   title=\textsc{Attention}
 }
 
-\title{Documentation MicroCloud}
+% Commands
+\newcommand{\filename}[1]{\textbf{#1}}
+\newcommand{\script}[1]{\textbf{#1}}
+\newcommand{\module}[2][]{
+	\texttt{#2\ifthenelse{\isempty{#1}}%
+		{}% if version is empty
+		{/#1}% if version is not empty}}
+	}
+}
+\newcommand{\micWEBdeploy}{\module{micWEBdeploy}}
+\newcommand{\micWEBdeployVer}{\module[0-MicroCloud-1.0]{micWEBdeploy}}
+
+\title{MicroCloud}
 \author{Laura Burlot \and Mathieu Dubois}
 \date{\today}
 
