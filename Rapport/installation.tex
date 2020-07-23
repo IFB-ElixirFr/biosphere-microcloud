@@ -132,6 +132,22 @@ Pour la VM slave voir les dossiers correspondants.\newline
 
 URL Tomcat : \textbf{\$IP\_master}
 
+\subsubsection{VM NFS server} \label{nfsserver}
+
+Le composant nfsserver a été créé en s'inspirant du travail de Stéphane Delmotte.
+Il permet de fournir un serveur partagé entre les différentes VM.
+L'image de base est une image CentOS 7.
+Le code est dans le dossier nfsserver voir  \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/tree/master/nfsserver/}.
+Le composant slipstream est dans le dossier nfsserver voir
+\url{https://nuv.la/module/ifb/devzone/MicroCloud/nfsserver/}.
+
+\subsection{Partage NFS entre les différentes VM}
+
+Le répertoire partagé \textbf{/var/nfsshare} du serveur NFS est monté dans le répertoire \textbf{/env}
+des VM frontend, backend, master et slave(s).
+Le répertoire \textbf{/env} se veut similaire au répertoire de même nom sur l’etna0. 
+Les fonctions permettant la création du répertoire partagé sont dans le fichier \href{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/lib.sh}{lib.sh}.
+
 \subsection{Lien federated entre la VM mysql et  la VM permanente}
 Les bases DB des banques sont accessibles depuis la VM mysql via des liens \href{https://dev.mysql.com/doc/refman/8.0/en/federated-storage-engine.html}{federated} (frontend : \href{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/frontend/create_federated_links.sh}{create\_federated\_links.sh}).\\
 
@@ -139,16 +155,3 @@ Les bases DB des banques sont accessibles depuis la VM mysql via des liens \href
 	Lorsque les schémas des bases DB de la VM permanente sont mis-à-jour, il faut penser à redéployer MicroCloud pour que les liens federated soient également mis-à-jour.
 \end{mycolorbox}
 
-\subsection{Partage NFS entre les différentes VM}
-
-\label{nfsserver} Le composant nfsserver a été créé en s'inspirant du travail de Stéphane Delmotte.
-Il permet de fournir un serveur partagé entre les différentes VM.
-L'image de base est une image CentOS 7.
-Le code est dans le dossier nfsserver voir  \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/tree/master/nfsserver/}.
-Le composant slipstream est dans le dossier nfsserver voir
-\url{https://nuv.la/module/ifb/devzone/MicroCloud/nfsserver/}.
-
-Le répertoire partagé \textbf{/var/nfsshare} du serveur NFS est monté dans le répertoire \textbf{/env}
-des VM frontend, backend, master et slave(s).
-Le répertoire \textbf{/env} se veut similaire au répertoire de même nom sur l’etna0. 
-Les fonctions permettant la création du répertoire partagé sont dans le fichier \href{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/lib.sh}{lib.sh}.
