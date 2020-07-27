@@ -31,8 +31,8 @@ La VM frontend permet de déployer la partie web de la plateforme MicroScope.
 L'image de base est une image CentOS 7.
 \bigskip
 
-Le code est dans le dossier frontend voir \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/tree/master/frontend/}.
-Le composant slipstream est dans le dossier frontend voir \url{https://nuv.la/module/ifb/devzone/MicroCloud/frontend/}.
+Le code est dans le dossier frontend; voir \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/tree/master/frontend/}.
+Le composant slipstream est dans le dossier frontend; voir \url{https://nuv.la/module/ifb/devzone/MicroCloud/frontend/}.
 \bigskip
 
 Lors du déploiement de la VM le code web copié dans le répertoire \textbf{/var/www/html/} de la VM.
@@ -55,6 +55,7 @@ Le code est dans le dossier mysql voir \url{https://github.com/IFB-ElixirFr/bios
 Le composant slipstream est dans le dossier mysql voir \url{https://nuv.la/module/ifb/devzone/MicroCloud/mysql/}.
 \bigskip
 
+L'image de base est une image CentOS 7. La VM mysql possède un serveur MySQL installé via Docker sur lequel on retrouve les bases de données pkgdb, GO\_CPD, GO\_Conf, GO\_RES, PUB\_CPD, REFSEQDB, JBPMmicroscope et PRESTATIONDB.
 \bigskip
 
 Les tables nécessaires à l'installation de MicroScope sont également listées dans le wiki redmine dédié : \url{https://intranet.genoscope.cns.fr/agc/redmine/projects/microcloud/wiki/Tables_necessaires_a_installation}.
@@ -132,12 +133,12 @@ Le code est basé sur les travaux de Jonathan Lorenzo et Bryan Brancotte.
 Les composants slurm master et slaves ont été copiés depuis l'appliance Slurm\_Cluster\_ubuntu18 voir \url{https://nuv.la/module/ifb/devzone/jlorenzo/cluster/Slurm_Cluster_ubuntu18}.
 \bigskip
 
-Concernant la VM master, le code est dans le dossier master voir
+Concernant la VM master, le code est dans le dossier master; voir
 \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/tree/master/master/}.
-Le code du composant slipstream est dans le dossier master voir \url{https://nuv.la/module/ifb/devzone/MicroCloud/master/}.
+Le code du composant slipstream est dans le dossier master; voir \url{https://nuv.la/module/ifb/devzone/MicroCloud/master/}.
 \bigskip
 
-Pour la VM slave voir les dossiers correspondants.\newline
+Pour la VM slave, voir les dossiers correspondants.\newline
 
 URL Tomcat : \textbf{\$IP\_master}
 
@@ -161,6 +162,6 @@ Les fonctions permettant la création du répertoire partagé sont dans le fichi
 Les bases DB des banques sont accessibles depuis la VM mysql via des liens federated (voir la documentation : \url{https://dev.mysql.com/doc/refman/8.0/en/federated-storage-engine.html}). Le script  \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/frontend/create_federated_links.sh} permet de créer les liens federated entre la VM mysql et la VM permanente depuis le frontend.\\
 
 \begin{mycolorbox}
-	Lorsque les schémas des bases DB de la VM permanente sont mis-à-jour, il faut penser à redéployer MicroCloud pour que les liens federated soient également mis-à-jour.
+	Lorsque les schémas des bases DB de la VM permanente sont mis-à-jour, il faut penser à redéployer MicroCloud afin de mettre à jour les liens federated.
 \end{mycolorbox}
 
