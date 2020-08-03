@@ -1,10 +1,80 @@
-\chapter{Limites et améliorations}
+\chapter{Bilan et perspectives}
+
+\section{Bilan}
+
+\subsection{Un prototype fonctionnel}
+
+Le projet a permis de déployer une instance de MicroScope sur le cloud IFB
+comprenant la partie web, les BD et les WF de calcul.
+Le prototype permet faire tourner un WF simple (DIRECTON).
+
+Pour cela, nous avons réalisé un script d'installation de MicroScope.
+Ainsi, nous avons pu mieux comprendre les interactions entre les composants.
+Ceci a été en particulier utile pour le composant \component{jbpmmicroscope} dont l'installation et la configuration
+se sont avérées très délicates.
+
+\todo[inline]{Il faut sans doute rajouter des choses dans cette partie.}
+
+\subsection{Prise en main de BioMAJ et améliorations}
+
+Un des objectifs du projet était d'utiliser \href{https://biomaj.genouest.org/}{BioMAJ}
+pour la mise à jour des banques dans le cloud.
+
+Le projet nous a permis de prendre en main le logiciel ce qui est intéressant car
+il est utilisé dans le projet PanGBank.
+De plus, il envisagé pour la copie des banques au Genoscope en remplaçant de Cabri.
+
+Au cours du projet, nous avons ajouté plusieurs fonctionnalités à BioMAJ:
+\begin{itemize}
+	\item Utilisation des hardlinks lors de la mise à jour d'une banque (ce qui est plus rapide et consomme moins de place).
+	\item Ajout d'options SSL (pour configurer l'accès aux ressources FTPS/HTTPS).
+	\item Refactoring des downloaders (nettoyage du code).
+	\item Possibilité de configurer le comportement en cas d'échec du téléchargement (combien de temps attendre et combien de fois ré-essayer).
+\end{itemize}
+
+Ce travail bénéficie à toute la communauté.
+
+\subsection{Identification de limites dans l'architecture de MicroScope}
+
+\todo[inline]{Fonctionnement sans données, frontières entre composants peu claires, dépendances.}
+
+\subsection{Identification de limites de l'architecture cloud}
+
+Le projet a aussi permis d'identifier un certains nombre de limites des architectures cloud.
+Ces limites concernent principalement le stockage.
+
+En effet, on ne veut pas reconstituer les banques pour chaque instance de MicroCloud.
+Pour cela, nous  avons déployé une VM permanente dans le cloud \cloudInstance{ifb-prabi-girofle}
+qui héberge les BD MySQL représentant les banques.\todo{Lien vers une section qui donne les détails techniques.}
+Cependant, nous n'avons pas suffisamment de place pour télécharger toutes les banques de MicroScope sur la VM permanente.
+À l'heure actuelle, seule la banque UNIPROTKBDB est disponible.
+
+Une solution partielle est le stockage permanent et partagé mis en place par l'IFB
+qui est utilisé pour mettre à disposition les banques sur toutes les VM (ces banques sont mises à jour avec BioMAJ).
+On pourrait alors utiliser les WF de mise à jour des banques de MicroScope.
+Cependant ceci n'est pas encore disponible sur \cloudInstance{ifb-prabi-girofle} (sur lequel tourne la VM permanente).
 
 \section{Limites}
 
+Outre les limites évoquées plus haut, le prototype a plusieurs limites:
+\begin{itemize}
+	\item La version de MicroScope n'est pas fixée: les scripts d'installation incluent la dernière version disponible sur les serveurs du Genoscope.
+	\item À cause des ces limites, MicroCloud ne tourne que le cloud \cloudInstance{ifb-prabi-girofle}.
+	\item Du fait que les banques sont mises-à-jour manuellement sur la VM permanente, on peut avoir un décalage entre la version de MicroScope déployée dans le cloud
+	et la version des banques sur la VM.
+\end{itemize}
+
 \section{Améliorations}
 
+Les principales améliorations au prototype sont:
 \begin{itemize}
-    \item Améliorations du côté de biosphère-commons (option -e) 
-    \item Certains scripts sont 'sourcés' avec une option
+	\item Résoudre le problèmes des banques. Ceci passe sans doute par l'améliorations de l'infrastructure de Biosphere.
+	\item Améliorer l'installation des dépendances pour les WF.
+\end{itemize}
+
+D'un point de vue technique, les améliorations sont:
+\begin{itemize}
+    \item Améliorations du côté de biosphère-commons (option -e).
+    \item Certains scripts sont sourcés avec une option (ce qui est valide en bash mais n'est pas portable).
+    \item Paralléliser les scripts pour diminuer le temps de déploiement (en particulier pouvoir faire le maximum de choses avant d'attendre les signaux des autres composants).
 \end{itemize}
