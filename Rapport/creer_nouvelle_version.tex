@@ -9,6 +9,7 @@ du code et des données qui seront déployées sur le cloud.
 Ces opérations utilisent le module \micWEBdeployVer
 et doivent être effectuées au Genoscope.
 Par convention le répertoire d'export des archives et autres fichiers sur etna0: \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/}.
+\bigskip
 
 Pour charger le module \micWEBdeployVer:
 \begin{lstlisting}[style=bash]
@@ -19,14 +20,14 @@ module load micWEBdeploy/0-MicroCloud-1.0
 
 Pour créer une nouvelle version du code du web et des bases de données:
 \begin{lstlisting}[style=bash]
-MICVERSION=3.14.0
-microscopeRelease.py --version ${MICVERSION} --output /env/cns/wwwext/html/agc/ftp/MicroCloud/microcloud-${MICVERSION}.tar.gz
+$ MICVERSION=3.14.0
+$ microscopeRelease.py --version ${MICVERSION} --output /env/cns/wwwext/html/agc/ftp/MicroCloud/microcloud-${MICVERSION}.tar.gz
 \end{lstlisting}
 
 Ensuite, mettre à jour le lien symbolique pour qu'il pointe vers la nouvelle archive :
 \begin{lstlisting}[style=bash]
-cd /env/cns/wwwext/html/agc/ftp/MicroCloud
-ln -s microcloud-${MICVERSION}.tar.gz microcloud-latest.tar.gz
+$ cd /env/cns/wwwext/html/agc/ftp/MicroCloud
+$ ln -s microcloud-${MICVERSION}.tar.gz microcloud-latest.tar.gz
 \end{lstlisting}
 
 \section{Copier les données d'un organisme}
@@ -38,7 +39,15 @@ Permet de copier les données de l'organisme \textit{Acinetobacter baylyi} (O\_i
 \end{mycolorbox}
 
 \begin{lstlisting}[style=bash]
-microscopeCopyOid.py --oid 31 --output /env/cns/wwwext/html/agc/ftp/MicroCloud/microscope_31.tar.gz
+$ Oid=31
+$ microscopeCopyOid.py --oid ${Oid} --output /env/cns/wwwext/html/agc/ftp/MicroCloud/microscope_${Oid}.tar.gz
+\end{lstlisting}
+
+Ensuite, mettre à jour le lien symbolique pour qu'il pointe vers la nouvelle archive :
+\begin{lstlisting}[style=bash]
+$ Oid=31
+$ cd /env/cns/wwwext/html/agc/ftp/MicroCloud
+$ ln -s microscope_${Oid}.tar.gz microscope_${Oid}-latest.tar.gz
 \end{lstlisting}
 
 \section{Mettre à jour jbpmmicroscope}
@@ -93,3 +102,13 @@ login: jbpm et password: jbpm. Ces identifiants peuvent être modifiés dans le 
 
 jbpmmicroscope nécessite un serveur Tomcat pour fonctionner. Tomcat 9 est installé dans le composant master : \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat}. Les identifiants tomcat sont les suivants : login: \textbf{tomcat} et password: \textbf{tomcat}.
 Ces identifiants peuvent être modifiés dans le composant master : paramètres \textbf{tomcat\_user} et \textbf{tomcat\_password}.
+
+\section{Mettre à jour la VM permanente}
+\todo{compléter cette partie}
+Pour cela s'inspirer du script microscopeCreateDBschemas.py, copier les fichiers ainsi générés sur la VM permanente et les insérés en base.
+
+\section{Mettre à jour les scripts côtés serveur}
+
+Mettre à jour (si besoin) les scripts \textbf{import\_Oid.sh} et \textbf{install\_microscope.sh}.
+
+\section{Mettre à jour les scripts côtés serveur}

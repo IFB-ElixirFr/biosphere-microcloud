@@ -14,28 +14,26 @@ Il est constitué des scripts suivants:
 
 \section{\script{microscopeRelease.py}}
 
-Les schémas copiés sont: pkgdb, REFSEQDB, GO\_Conf, GO\_RES, GO\_CPD, PUB\_CPD et PRESTATIONDB.
+Les schémas copiés sont : pkgdb, REFSEQDB, GO\_Conf, GO\_RES, GO\_CPD, PUB\_CPD et PRESTATIONDB.
+\newline
 
-Les données copiées sont: pkgdb (tables : Maintenance, Country, Amiga\_Params,
+Les données copiées sont : pkgdb (tables : Maintenance, Country, Amiga\_Params,
 Annotator pour A\_name='guest', Sequence\_Checkpoint\_Desc et Sid\_Config), GO\_RES (tables : ORGCLUST\_clustering\_param et ORGCLUST\_distance\_param.
-) et GO\_Conf (prendre les données de toutes les tables).
+) et GO\_Conf (prendre les données de toutes les tables). Voir page wiki : \url{https://intranet.genoscope.cns.fr/agc/redmine/projects/microcloud/wiki/Tables_necessaires_a_installation}
 
-
-.\todo{Préciser les données copiées + lien vers la page wiki}
 
 \section{\script{createModulesTarball.py}}
 
 Créé les liens symboliques dans \path{/env/cns/wwwext/html/agc/ftp/MicroCloud}.
+Créé le fichier \path{modules.txt} dans \path{/env/cns/wwwext/html/agc/ftp/MicroCloud}.
 \newline
-Créé le fichier \path{modules.txt} dans \path{/env/cns/wwwext/html/agc/ftp/MicroCloud}
-\newline
-Puis la VM master importe les modules listés dans modules.txt (voir \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/import_modules.sh}).
+Puis, la VM master importe les modules listés dans modules.txt (voir \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/import_modules.sh}).
 
 \begin{lstlisting}[style=bash]
 createModulesTarball.py --modules_list bagsub-2.4.3 AGCScriptToolMic-2.0 micGenome-7.0.0 micJBPMwrapper-3.10.8 micPrestation-2.0 micDirecton-1.0
 \end{lstlisting}
 
-\section{microscopeCopyOid.py}
+\section{\script{microscopeCopyOid.py}}
 
 \begin{mycolorbox}
 	Pour le moment seules les données concernant l'O\_id 31 peuvent être récupérées avec le script microscopeCopyOid.py car certains organismes ont besoin de tables spécifiques de la base GO\_SPE (typiquement la table acineto\_KO pour Acinetobacter baylyi).
@@ -45,16 +43,26 @@ createModulesTarball.py --modules_list bagsub-2.4.3 AGCScriptToolMic-2.0 micGeno
 microscopeCopyOid.py --oid 31 --output /env/cns/wwwext/html/agc/ftp/MicroCloud/microscope_31.tar.gz
 \end{lstlisting}
 
-\section{microscopeCreateDBschemas.py}
+\section{\script{microscopeCreateDBschemas.py}}
 A permis de générer les .sql utilisés pour créer les schémas des bases de données dans la VM permanente.
 
 \begin{lstlisting}[style=bash]
 microscopeCreateDBschemas.py --output /env/cns/wwwext/html/agc/ftp/MicroCloud/DBschemas.tar.gz
 \end{lstlisting}
 
-\section{taxonomyDBCopyTaxId.py}
+\section{\script{taxonomyDBCopyTaxId.py}}
 Permet de copier les données de la base TAXONOMYDB pour un tax\_id donné.
 
 \begin{lstlisting}[style=bash]
 taxonomyDBCopyTaxId.py --tax_id 202950 --output /env/cns/wwwext/html/agc/ftp/MicroCloud/taxonomyDBCopyTaxId.tar.gz
 \end{lstlisting}
+
+\section{Les scripts côtés server}
+
+Ils sont accessibles à l'adresse : \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/tree/master/frontend} et sont exécutés sur la VM frontend.
+\begin{description}
+	\item[\script{install\_microscope.sh}] :  ce script contient les commandes SQL permettant de créer les schémas des bases de données et d'insérer les données dans le serveur de la VM mysql. Il utilise les fichiers générés par le script microscopeRelease.py.
+	\item[\script{create\_federated\_links.sh}] : ce script permet de créer des liens federated entre le serveur de la VM mysql et le serveur de la VM permanente.
+	\item[\script{import\_Oid.sh}] : ce script sert à insérer les données récupérées à l'aide du script microscopeCopyOid.py. Il permet de copier les web\_data dans le répertoire approprié.
+\end{description}
+
