@@ -2,8 +2,8 @@
 
 \subsection{Déployer l'appliance MicroCloud}
 
-Pour déployer l'appliance MicroCloud, il faut aller sur le site  \href{https://biosphere.france-bioinformatique.fr/catalogue/}{RAINBio}, choisir l’\href{https://biosphere.france-bioinformatique.fr/catalogue/appliance/150/}{Appliance MicroCloud} et cliquer sur \textbf{Lancer} ou \textbf{Déploiement avancé}.
-
+L'appliance MicroCloud est disponible dans le catalogue RAINBio (\url{https://biosphere.france-bioinformatique.fr/catalogue/}) de l'IFB.
+Pour la déployer rapidement, cliquer sur l'icône clé à molette permettant de configurer le déploiement puis lancer ce dernier à l'aide de l'icône éclair. Sinon, il est possible de le faire depuis la page de présentation de l'appliance qui se trouve à l'adresse : \url{https://biosphere.france-bioinformatique.fr/catalogue/appliance/150/}.
 Les déploiements se font sur le cloud prabi-girofle sur lequel est installé la \hyperref[VM permanente]{VM permanente}.
 Un déploiement prend environ 40 minutes.
 Il vaut mieux en lancer 2 en même temps afin d'être sûr d'en avoir au moins un de fonctionnel.
@@ -21,7 +21,7 @@ Le code des VM est dans le dépôt biosphere-microcloud (\url{https://github.com
 	\item master et slave voir section \ref{master&slave}
 	\item nfsserver voir section \ref{nfsserver}
 \end{itemize}
-
+\bigskip
 Il y a 2 serveurs de bases de données dans MicroCloud. Un serveur MySQL installé via Docker dans la VM MySQL et un serveur MySQL sur la VM permanente.
 Pour se connecter aux VM voir la doc : \url{https://intranet.genoscope.cns.fr/agc/redmine/projects/microcloud/wiki/Connexion_aux_VM}
 
@@ -29,12 +29,15 @@ Pour se connecter aux VM voir la doc : \url{https://intranet.genoscope.cns.fr/ag
 
 La VM frontend permet de déployer la partie web de la plateforme MicroScope.
 L'image de base est une image CentOS 7.
+\bigskip
 
-Le code est dans le dossier frontend voir \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/tree/master/frontend/}.
-Le composant slipstream est dans le dossier frontend voir \url{https://nuv.la/module/ifb/devzone/MicroCloud/frontend/}.
+Le code est dans le dossier frontend; voir \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/tree/master/frontend/}.
+Le composant slipstream est dans le dossier frontend; voir \url{https://nuv.la/module/ifb/devzone/MicroCloud/frontend/}.
+\bigskip
 
 Lors du déploiement de la VM le code web copié dans le répertoire \textbf{/var/www/html/} de la VM.
 L'URL de la plateforme est : \textbf{\$IP\_frontend/home/index.php}.
+\bigskip
 
 La VM frontend possède un client mariaDB (et non pas MySQL du fait de conflits existants entre le dépôt remi-php71 installé et le dépôt IUS qui fournit le client MySQL).\newline
 
@@ -50,11 +53,12 @@ ssh centos@${IP_frontend}
 
 Le code est dans le dossier mysql voir \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/tree/master/mysql/}.
 Le composant slipstream est dans le dossier mysql voir \url{https://nuv.la/module/ifb/devzone/MicroCloud/mysql/}.
+\bigskip
 
-L'image de base est une image CentOS 7.
-La VM mysql possède un serveur MySQL installé via Docker sur lequel on retrouve les bases de données pkgdb, GO\_CPD, GO\_Conf, GO\_RES, PUB\_CPD, REFSEQDB, JBPMmicroscope et PRESTATIONDB.
-\newline
-Les tables nécessaires à l'installation de MicroScope sont également listées \href{https://intranet.genoscope.cns.fr/agc/redmine/projects/microcloud/wiki/Tables_necessaires_a_installation}{ici}.
+L'image de base est une image CentOS 7. La VM mysql possède un serveur MySQL installé via Docker sur lequel on retrouve les bases de données pkgdb, GO\_CPD, GO\_Conf, GO\_RES, PUB\_CPD, REFSEQDB, JBPMmicroscope et PRESTATIONDB.
+\bigskip
+
+Les tables nécessaires à l'installation de MicroScope sont également listées dans le wiki redmine dédié : \url{https://intranet.genoscope.cns.fr/agc/redmine/projects/microcloud/wiki/Tables_necessaires_a_installation}.
 \newline
 
 Pour se connecter à la VM mysql, il faut passer par le frontend :
@@ -74,6 +78,7 @@ docker start ${ID_container}
 \subsubsection {VM permanente}\label{VMpermanente}
 
 C'est une VM OpenStack (\textbf{umr5558-microcloud.univ-lyon1.fr}) du cloud prabi-girofle disposant de 200 Go de stockage et 8 Go de RAM (elle est actuellement sous-dimensionnée par rapport à nos besoins). La machine a été installée avec Sylvain Bonneval. L'image de base est une image Debian 9.8.
+\bigskip
 
 La machine permanente n'est accessible depuis l'extérieur qu'en SSH donc nous ne pouvons pas y accéder en MySQL (port 3306) depuis un autre cloud.
 \newline
@@ -84,7 +89,7 @@ La procédure d'installation est dans le fichier \textbf{Installation.md} du ré
 Logiciels installés : serveur mysql, rsync, phpMyAdmin (installé mais non configuré). 
 \newline
 
-A terme, il serait utile d'avoir un système de gestion des banques tel que \href{https://biomaj.genouest.org/}{BioMaJ} installé sur cette machine.
+A terme, il serait utile d'avoir un système de gestion des banques tel que BioMaJ (\url{https://biomaj.genouest.org/}) installé sur cette machine.
 
 Pour se connecter : 
 \begin{lstlisting}[style=bash]
@@ -93,12 +98,15 @@ ssh root@134.214.33.214
 \bigskip
 
 Sur le serveur MySQL, il y a les schémas des bases DB et une partie des données de la base pour les tests (nous avons testés les onglets \textbf{Genome Browser}, \textbf{Identical Gene Names}) :
+\bigskip
+
 \begin{itemize}
 	\item les bases ANTISMASHDB, CARDDB, COGDB, EGGNOGDB, ENZYMEDB, ESSDB, FIGFAMDB, INTERPRODATADB, KEGGDB, RHEADB, TAXONOMYDB, TIGRFAMDB, UNIFIREDB, UNIPROTKBDB, VIRULENCEDB, microcyc, DBWorkflow
 	\item les données (en partie) de la base UNIPROTKBDB pour les tests
 	\item les données de DBWORKFLOW
 	\item les données de l'organisme \textit{Acinetobacter} dans la base TAXONOMYDB (taxon id 202950)
 \end{itemize}
+\bigskip
 
 Le script \textbf{microscopeDBschema.py} du module MicroCloud a été utilisé pour créer les schémas.
 \newline
@@ -119,36 +127,41 @@ LOAD DATA INFILE '/var/lib/mysql-files/$file.DB' INTO TABLE $table;
 
 \subsubsection{VM master et VM slave(s)} \label{master&slave}
 
-Il y a un cluster Slurm installé sur ces VM pour faire tourner les WF. Le code d’installation de ces VM est dans le dépôt \href{https://github.com/IFB-ElixirFr/biosphere-commons}{biosphere-commons}.
+Il y a un cluster Slurm installé sur ces VM pour faire tourner les WF. Le code d’installation de ces VM est dans le dépôt biosphere-commons : \url{https://github.com/IFB-ElixirFr/biosphere-commons}.
 L'image de base est une image Ubuntu 18.
 Le code est basé sur les travaux de Jonathan Lorenzo et Bryan Brancotte.
 Les composants slurm master et slaves ont été copiés depuis l'appliance Slurm\_Cluster\_ubuntu18 voir \url{https://nuv.la/module/ifb/devzone/jlorenzo/cluster/Slurm_Cluster_ubuntu18}.
+\bigskip
 
-Concernant la VM master, le code est dans le dossier master voir
+Concernant la VM master, le code est dans le dossier master; voir
 \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/tree/master/master/}.
-Le code du composant slipstream est dans le dossier master voir \url{https://nuv.la/module/ifb/devzone/MicroCloud/master/}.
+Le code du composant slipstream est dans le dossier master; voir \url{https://nuv.la/module/ifb/devzone/MicroCloud/master/}.
+\bigskip
 
-Pour la VM slave voir les dossiers correspondants.\newline
+Pour la VM slave, voir les dossiers correspondants.\newline
 
 URL Tomcat : \textbf{\$IP\_master}
 
-\subsection{Lien federated entre la VM mysql et  la VM permanente}
-Les bases DB des banques sont accessibles depuis la VM mysql via des liens \href{https://dev.mysql.com/doc/refman/8.0/en/federated-storage-engine.html}{federated} (frontend : \href{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/frontend/create_federated_links.sh}{create\_federated\_links.sh}).\\
+\subsubsection{VM NFS server} \label{nfsserver}
 
-\begin{mycolorbox}
-	Lorsque les schémas des bases DB de la VM permanente sont mis-à-jour, il faut penser à redéployer MicroCloud pour que les liens federated soient également mis-à-jour.
-\end{mycolorbox}
-
-\subsection{Partage NFS entre les différentes VM}
-
-\label{nfsserver} Le composant nfsserver a été créé en s'inspirant du travail de Stéphane Delmotte.
+Le composant nfsserver a été créé en s'inspirant du travail de Stéphane Delmotte.
 Il permet de fournir un serveur partagé entre les différentes VM.
 L'image de base est une image CentOS 7.
-Le code est dans le dossier nfsserver voir  \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/tree/master/nfsserver/}.
-Le composant slipstream est dans le dossier nfsserver voir
+Le code est dans le dossier nfsserver; voir  \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/tree/master/nfsserver/}.
+Le composant slipstream est dans le dossier nfsserver; voir
 \url{https://nuv.la/module/ifb/devzone/MicroCloud/nfsserver/}.
+
+\subsection{Partage NFS entre les différentes VM}
 
 Le répertoire partagé \textbf{/var/nfsshare} du serveur NFS est monté dans le répertoire \textbf{/env}
 des VM frontend, backend, master et slave(s).
 Le répertoire \textbf{/env} se veut similaire au répertoire de même nom sur l’etna0. 
-Les fonctions permettant la création du répertoire partagé sont dans le fichier \href{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/lib.sh}{lib.sh}.
+Les fonctions permettant la création du répertoire partagé sont dans le fichier \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/lib.sh}.
+
+\subsection{Lien federated entre la VM mysql et  la VM permanente}
+Les bases DB des banques sont accessibles depuis la VM mysql via des liens federated (voir la documentation : \url{https://dev.mysql.com/doc/refman/8.0/en/federated-storage-engine.html}). Le script  \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/frontend/create_federated_links.sh} permet de créer les liens federated entre la VM mysql et la VM permanente depuis le frontend.\\
+
+\begin{mycolorbox}
+	Lorsque les schémas des bases DB de la VM permanente sont mis-à-jour, il faut penser à redéployer MicroCloud afin de mettre à jour les liens federated.
+\end{mycolorbox}
+

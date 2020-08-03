@@ -1,15 +1,15 @@
 \section{VM master}
 
 \subsection{Importation des modules}
-Faire la liste de tous les modules nécessaires à la création de la nouvelle instance MicroCloud.
-Utiliser le script \textbf{createModulesTarball.py} du module MicroCloud.
+En premier lieu, faire la liste de tous les modules nécessaires à la création de la nouvelle instance MicroCloud.
+Puis, utiliser le script \textbf{createModulesTarball.py} du module MicroCloud.
+\bigskip
 
-Mise à jour de l'environnement des modules :
-actuellement l'environnement de MicroCloud ne permet d'utiliser que les modules \textbf{bagsub-2.4.3}, \textbf{AGCScriptToolMic-2.0}, \textbf{micGenome-7.0.0}, \textbf{micJBPMwrapper-3.10.8}, \textbf{micPrestation-2.0} et \textbf{micDirecton-1.0}.
+Actuellement, l'environnement de MicroCloud ne permet d'utiliser que les modules \textbf{bagsub-2.4.3}, \textbf{AGCScriptToolMic-2.0}, \textbf{micGenome-7.0.0}, \textbf{micJBPMwrapper-3.10.8}, \textbf{micPrestation-2.0} et \textbf{micDirecton-1.0}.
 \newline
 
 \begin{mycolorbox}
-	Pour tout ajout de nouveaux modules, il faut mettre à jour le fichier \path{microcloud.profile} et créer les répertoires nécessaires (master : \href{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/04_deployment.sh}{04\_deployment.sh}).
+	Pour tout ajout de nouveaux modules, il faut mettre à jour le fichier \path{microcloud.profile} et créer les répertoires nécessaires (master : \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/04_deployment.sh}).
 \end{mycolorbox}
 
 Puis sourcer le fichier \path{microcloud.profile} dans la VM master :
@@ -20,16 +20,15 @@ source /env/cns/proj/agc/module/profiles/microcloud.profile
 \subsection{Insérer un nouvel organisme (partie Syntactic)}
 Il faut avoir créé au préalable un utilisateur admin pour valider la prestation. En cela le script create\_user.sh peut servir.
 Il est dans le répertoire \path{/var/tmp/slipstream/biosphere-microcloud/master}
-
-Nous avons également besoin des données de taxonomie pour ce nouvel organisme. Pour cela, il faut mettre à jour la base TAXONOMYDB de la VM permanente.
+\newline
+\newline
+Nous avons également besoin des données de taxonomie pour ce nouvel organisme. Pour cela, il faut mettre à jour la base TAXONOMYDB de la VM permanente :
 \begin{itemize}
     \item en copiant les données de prod de TAXONOMYDB et pkgdb.O\_Taxonomy pour cet organisme
     \item ou en déployant les WF TAXONOMYDB et TAXONOMY
 \end{itemize}
-
-Pour insérer un nouvel organisme, il est possible d’utiliser le module micPrestation.
-
-La procédure à suivre est la suivante :
+\bigskip
+Pour insérer un nouvel organisme, il est possible d’utiliser le module micPrestation. La procédure à suivre est la suivante :
 \begin{itemize}
     \item Télécharger un fasta et décompresser l'archive.
     \item Remplir le fichier Template\_Prestation.csv qui trouve dans le répertoire \path{/env/cns/proj/agc/module/products/micsyntactic/unix-noarch/lib}
@@ -39,10 +38,10 @@ La procédure à suivre est la suivante :
 \begin{lstlisting}[style=bash]
 prestaBatch.py --csv Template_Prestation.csv -sd ${working_dir} -A ${Annotator_name} -T genome
 \end{lstlisting}
-Il y a un exemple de fichier \href{Template\_Prestation.csv} dans le dossier prestation : \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/prestation}
+Il y a un exemple de fichier Template\_Prestation.csv dans le dossier prestation : \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/prestation}
 \newline
 \begin{mycolorbox}
-	Il faut un utilisateur admin pour accepter la prestation depuis l'interface web (cf. master : \href{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/create_user.sh}{create\_user.sh}).
+	Il faut un utilisateur admin pour accepter la prestation depuis l'interface web (cf. master : \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/create_user.sh}).
 \end{mycolorbox}
 \bigskip
 
@@ -63,8 +62,7 @@ loadGenomeNS.sh -p ${PS_id} -o ${O_id}
 	Cette étape ne fonctionne donc pas.
 \end{mycolorbox}
 
-Quelques problèmes subsistent :
-Le module micPrestation n'est plus à jour : le schéma de la base TAXONOMYDB ayant été mis à jour depuis la MEP 3.14.0, il faudra modifier les scripts du module et supprimer les variables faisant référence aux colonnes O\_Gram, O\_genetic\_code et level.
+Le module micPrestation n'est plus à jour. Le schéma de la base TAXONOMYDB ayant été mis à jour depuis la MEP 3.14.0, il faudra modifier les scripts du module et supprimer les variables faisant référence aux colonnes O\_Gram, O\_genetic\_code et level.
 \newline
 
 \subsection{Déployer un WF}

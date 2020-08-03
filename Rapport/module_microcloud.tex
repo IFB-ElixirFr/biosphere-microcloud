@@ -8,33 +8,32 @@ module load micWEBdeploy/0-MicroCloud-1.0
 Répertoire d'export des archives et autres fichiers sur etna0 : \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/}.
 
 \subsection{microscopeRelease.py}
-Copie le code du web.
-\newline
+\begin{itemize}
+\item Copie le code du web.
 Créé les schémas des bases pkgdb, REFSEQDB, GO\_Conf, GO\_RES, GO\_CPD, PUB\_CPD et PRESTATIONDB.
-\newline
-Copie les données minimales de pkgdb, GO\_RES et GO\_Conf.
-\newline
-Lance le script \textbf{microscopeCompileJS.sh} qui compile le code JS. Les scripts \textbf{instanceWEBdeploy.sh} et \textbf{microscopeWEBdeploy.sh} ont servis à écrire le script \textbf{microscopeCompileJS.sh}.
-
+\item Copie les données minimales de pkgdb, GO\_RES et GO\_Conf.
+\item Lance le script \textbf{microscopeCompileJS.sh} qui compile le code JS. Les scripts \textbf{instanceWEBdeploy.sh} et \textbf{microscopeWEBdeploy.sh} ont servis à écrire le script \textbf{microscopeCompileJS.sh}.
+\end{itemize}
 \begin{lstlisting}[style=bash]
 microscopeRelease.py --version 3.14.0 --output /env/cns/wwwext/html/agc/ftp/MicroCloud/microcloud-3.14.0.tar.gz
 \end{lstlisting}
 
 \subsection{createModulesTarball.py}
-Créé les archives des modules à importer dans MicroCloud.
-\newline
-Créé les liens symboliques dans \path{/env/cns/wwwext/html/agc/ftp/MicroCloud}
-\newline
-Créé le fichier \path{modules.txt} dans \path{/env/cns/wwwext/html/agc/ftp/MicroCloud}
-\newline
-Puis la VM master importe les modules listés dans modules.txt (cf. \href{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/import_modules.sh}{import\_modules.sh}).
+\begin{itemize}
+\item Créé les archives des modules à importer dans MicroCloud.
+\item Créé les liens symboliques dans \path{/env/cns/wwwext/html/agc/ftp/MicroCloud}
+\item Créé le fichier \path{modules.txt} dans \path{/env/cns/wwwext/html/agc/ftp/MicroCloud}
+\end{itemize}
 
 \begin{lstlisting}[style=bash]
 createModulesTarball.py --modules_list bagsub-2.4.3 AGCScriptToolMic-2.0 micGenome-7.0.0 micJBPMwrapper-3.10.8 micPrestation-2.0 micDirecton-1.0
 \end{lstlisting}
+\bigskip
+
+Puis, on importe la liste des modules \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/import_modules.sh} dans la VM master.
 
 \subsection{microscopeCopyOid.py}
-Permet de copier les données de l'organisme \textit{Acinetobacter baylyi} O\_id=31. 
+Permet de copier les données de l'organisme \textit{Acinetobacter baylyi} (O\_id=31).
 
 \begin{mycolorbox}
 	Pour le moment seules les données concernant l'O\_id 31 peuvent être récupérées avec le script microscopeCopyOid.py car certains organismes ont besoin de tables spécifiques de la base GO\_SPE (typiquement la table acineto\_KO pour Acinetobacter baylyi).

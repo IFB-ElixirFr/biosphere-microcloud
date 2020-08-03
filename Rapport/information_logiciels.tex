@@ -1,19 +1,23 @@
 \section{Informations logiciels}
 
 \subsection{Tomcat}
-Version de Tomcat installée : \href {http://mirrors.ircam.fr/pub/apache/tomcat/tomcat-9/v9.0.31/bin/apache-tomcat-9.0.31.tar.gz}{tomcat-9.0.31}
+Version de Tomcat installée : tomcat-9.0.31 \url {http://mirrors.ircam.fr/pub/apache/tomcat/tomcat-9/v9.0.31/bin/apache-tomcat-9.0.31.tar.gz}
 
 \subsection{Pegasus-mpi-cluster}
-La liste des releases est disponible \href{https://github.com/pegasus-isi/pegasus/releases}{ici}.
-C'est la version \href {https://github.com/pegasus-isi/pegasus/archive/4.9.2.zip}{4.9.2} qui est installée dans MicroCloud (version 4.6.2 dans MicroScope).
-\newline
-La librairie libnuma pose problème lors de l'installation de pegasus-mpi-cluster mais celle-ci n'est pas nécessaire pour les architectures non NUMA (cf. master : \href{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/04_deployment.sh}{04\_deployment.sh}).
+Liste des release : \url{https://github.com/pegasus-isi/pegasus/releases}.
+C'est la version 4.9.2 \url {https://github.com/pegasus-isi/pegasus/archive/4.9.2.zip} qui est installée dans MicroCloud (version 4.6.2 dans MicroScope).
+La librairie libnuma pose problème lors de l'installation de pegasus-mpi-cluster mais celle-ci n'est pas nécessaire pour les architectures non NUMA (cf. master : \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/04_deployment.sh}).
 
 \subsection{Bagsub}
-Le script \href {https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/import_modules.sh}{import\_modules.sh} modifie le module bagsub, en supprimant l'option ulimit qui ne fonctionne pas en Dash, et, en ajoutant le paramètre MCA btl\_tcp\_if\_exclude pour exclure les interfaces réseaux docker0 et lo qui peuvent engendrer des conflits lors du lancement de jobs slurm.
+Le script import\_modules.sh \url {https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/import_modules.sh} modifie le module bagsub, en supprimant l'option ulimit qui ne fonctionne pas en Dash, et, en ajoutant le paramètre MCA btl\_tcp\_if\_exclude pour exclure les interfaces réseaux docker0 et lo qui peuvent engendrer des conflits lors du lancement de jobs slurm.
 
 \subsection{JBPM}
-Voir les documents \href{https://docs.google.com/document/d/1jKhNCV0Po0t0Z1Zru7Qe2KnJA8_8yIjictccrYvGksU/edit#heading=h.7uty8jgvcw4i}{Bilan jBPM} et \href{https://docs.google.com/document/d/1kCW1xjsifGyQiZYWtgj2ul9jX6FdCF7xknBirS-gB5k/edit}{Installation jBPM}.
+Voir les documents :
+\begin{itemize}
+\item Bilan jBPM
+ \url{https://docs.google.com/document/d/1jKhNCV0Po0t0Z1Zru7Qe2KnJA8_8yIjictccrYvGksU/edit#heading=h.7uty8jgvcw4i} 
+\item Installation jBPM \url{https://docs.google.com/document/d/1kCW1xjsifGyQiZYWtgj2ul9jX6FdCF7xknBirS-gB5k/edit}{}.
+\end{itemize}
 
 \subsection{BioMAJ}
 
@@ -24,8 +28,10 @@ Nous avons implémenté un certain nombre de chose dans BioMAJ, notamment dans l
     \item Refactoring des downloaders
     \item Retry plus intelligent lors des téléchargements
 \end{itemize}
+\bigskip
+
 Actuellement nous n'avons pas suffisamment de place pour installer BioMaJ sur la VM permanente.
-Certaines banques sont déjà accessibles depuis les autres cloud mais pas depuis prabi-girofle (qui nous donnée accès à la VM permanente).
+Certaines banques sont déjà accessibles depuis les autres cloud mais pas depuis prabi-girofle (qui nous donne accès à la VM permanente).
 
 \subsection{Conda}
 À l'heure actuelle, \textbf{conda} ne me semble pas totalement adapté à nos besoins.
