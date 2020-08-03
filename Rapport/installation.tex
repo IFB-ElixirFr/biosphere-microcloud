@@ -110,10 +110,10 @@ LOAD DATA INFILE '/var/lib/mysql-files/$file.DB' INTO TABLE $table;
 
 \subsection{VM master et VM slave(s)} \label{master&slave}
 
-Il y a un cluster Slurm installé sur ces VM pour faire tourner les WF. Le code d’installation de ces VM est dans le dépôt de biosphere-commons : \url{https://github.com/IFB-ElixirFr/biosphere-commons}.
-L'image de base est une image Ubuntu 18.
-Le code est basé sur les travaux de Jonathan Lorenzo et Bryan Brancotte.
-Les composants slurm master et slaves ont été copiés depuis l'appliance Slurm\_Cluster\_ubuntu18 voir \url{https://nuv.la/module/ifb/devzone/jlorenzo/cluster/Slurm_Cluster_ubuntu18}.
+Le code d’installation de ces VM est dans le dépôt de biosphere-commons : \url{https://github.com/IFB-ElixirFr/biosphere-commons}.
+L'image de base est une image Ubuntu 18. Le code slipstream est basé sur les travaux de Jonathan Lorenzo et Bryan Brancotte. 
+
+Les composants slurm master et slave ont été copiés depuis l'appliance Slurm\_Cluster\_ubuntu18 voir \url{https://nuv.la/module/ifb/devzone/jlorenzo/cluster/Slurm_Cluster_ubuntu18}.
 
 Concernant la VM master, le code est dans le dossier master; voir
 \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/tree/master/master/}.
@@ -121,7 +121,15 @@ Le code du composant slipstream est dans le dossier master voir; \url{https://nu
 
 Pour la VM slave, voir les dossiers correspondants.\newline
 
-URL Tomcat : \textbf{\$IP\_master}
+Nous avons installé le moteur de workflow jBPM couplé avec un cluster Slurm sur la VM master.
+
+Le serveur d'application Tomcat est installé (version tomcat-9.0.31 : \url{http://mirrors.ircam.fr/pub/apache/tomcat/tomcat-9/v9.0.31/bin/apache-tomcat-9.0.31.tar.gz}).
+Il est utilisé comme serveur par jBPM (pour accéder à Tomcat : http://\$IP\_master).
+
+Nous avons également eu besoin d'installer Pegasus-mpi-cluster (version 4.9.2 : \url{https://github.com/pegasus-isi/pegasus/archive/4.9.2.zip}) en complément de jBPM. Lors de l'installation de pegasus-mpi-cluster, la librairie libnuma a posé problème mais celle-ci n'est pas nécessaire pour les architectures non NUMA (voir \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/04_deployment.sh}).
+
+Le lancement des workflows se fait à l'aide du module bagsub lui-même lancé par jBPM. Nous avons fait quelques modifications du module bagsub afin qu'il puisse être utilisé dans la VM master.
+Le script \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/import_modules.sh} modifie le module bagsub, en supprimant l'option ulimit qui ne fonctionne pas en Dash, et, en ajoutant le paramètre MCA btl\_tcp\_if\_exclude pour exclure les interfaces réseaux docker0 et lo qui peuvent engendrer des conflits lors du lancement de jobs slurm.
 
 \section{Lien federated entre la VM mysql et  la VM permanente}
 Les bases DB des banques sont accessibles depuis la VM mysql via des liens federated \url{https://dev.mysql.com/doc/refman/8.0/en/federated-storage-engine.html}( 

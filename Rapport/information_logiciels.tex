@@ -2,19 +2,6 @@
 
 \todo[inline]{Ce chapitre est-il utile ?}
 
-\section{Tomcat}
-C'est la version tomcat-9.0.31 qui est installée (\url{http://mirrors.ircam.fr/pub/apache/tomcat/tomcat-9/v9.0.31/bin/apache-tomcat-9.0.31.tar.gz})
-
-\section{Pegasus-mpi-cluster}
-C'est la version 4.9.2 qui est installée dans MicroCloud (\url{https://github.com/pegasus-isi/pegasus/archive/4.9.2.zip}).
-La version actuelle dans MicroScope est la 4.6.2.
-La liste des releases est disponible à cette adresse \url{https://github.com/pegasus-isi/pegasus/releases}.
-\bigskip
-
-La librairie libnuma pose problème lors de l'installation de pegasus-mpi-cluster mais celle-ci n'est pas nécessaire pour les architectures non NUMA (voir \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/04_deployment.sh}).
-
-\section{Bagsub}
-Le script \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/import_modules.sh} modifie le module bagsub, en supprimant l'option ulimit qui ne fonctionne pas en Dash, et, en ajoutant le paramètre MCA btl\_tcp\_if\_exclude pour exclure les interfaces réseaux docker0 et lo qui peuvent engendrer des conflits lors du lancement de jobs slurm.
 
 \section{JBPM}
 
