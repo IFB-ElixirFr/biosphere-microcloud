@@ -43,8 +43,7 @@ ssh centos@${IP_frontend}
 Le code est dans le dossier mysql voir \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/tree/master/mysql/}.
 Le composant slipstream est dans le dossier mysql voir \url{https://nuv.la/module/ifb/devzone/MicroCloud/mysql/}.
 
-L'image de base est une image CentOS 7.
-La VM mysql possède un serveur MySQL installé via Docker sur lequel on retrouve les bases de données pkgdb, GO\_CPD, GO\_Conf, GO\_RES, PUB\_CPD, REFSEQDB, JBPMmicroscope et PRESTATIONDB.
+L'image de base est une image CentOS 7. La VM mysql possède un serveur MySQL installé via Docker sur lequel on retrouve les bases de données pkgdb, GO\_CPD, GO\_Conf, GO\_RES, PUB\_CPD, REFSEQDB, JBPMmicroscope et PRESTATIONDB.
 \newline
 Les tables nécessaires à l'installation de MicroScope sont également listées \url{https://intranet.genoscope.cns.fr/agc/redmine/projects/microcloud/wiki/Tables_necessaires_a_installation}.
 \newline
@@ -130,7 +129,7 @@ voir \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/front
 \bigskip
 
 \begin{mycolorbox}
-	Lorsque les schémas des bases DB de la VM permanente sont mis-à-jour, il faut penser à redéployer MicroCloud pour que les liens federated soient également mis-à-jour.
+	Lorsque les schémas des bases DB de la VM permanente sont mis-à-jour, il faut penser à redéployer MicroCloud afin de mettre à jour les liens federated.
 \end{mycolorbox}
 
 \section{Partage NFS entre les différentes VM}
@@ -150,8 +149,8 @@ Les fonctions permettant la création du répertoire partagé sont dans le fichi
 \section{VM master}
 
 \subsection{Importation des modules}
-Faire la liste de tous les modules nécessaires à la création de la nouvelle instance MicroCloud.
-Utiliser le script \textbf{createModulesTarball.py} du module MicroCloud.
+En premier lieu, faire la liste de tous les modules nécessaires à la création de la nouvelle instance MicroCloud.
+Puis, utiliser le script \textbf{createModulesTarball.py} du module MicroCloud.
 
 Mise à jour de l'environnement des modules :
 actuellement l'environnement de MicroCloud ne permet d'utiliser que les modules \textbf{bagsub-2.4.3}, \textbf{AGCScriptToolMic-2.0}, \textbf{micGenome-7.0.0}, \textbf{micJBPMwrapper-3.10.8}, \textbf{micPrestation-2.0} et \textbf{micDirecton-1.0}.
