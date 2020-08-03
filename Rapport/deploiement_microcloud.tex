@@ -12,15 +12,16 @@ Les échecs dûs au paquet \textbf{procps} sont assez fréquents.
 \section{Insérer un nouvel organisme (partie Syntactic)}
 Il faut avoir créé au préalable un utilisateur admin pour valider la prestation. En cela le script create\_user.sh peut servir.
 Il est dans le répertoire \path{/var/tmp/slipstream/biosphere-microcloud/master}
+\bigskip
 
 Nous avons également besoin des données de taxonomie pour ce nouvel organisme. Pour cela, il faut mettre à jour la base TAXONOMYDB de la VM permanente :
 \begin{itemize}
 	\item en copiant les données de prod de TAXONOMYDB et pkgdb.O\_Taxonomy pour cet organisme
 	\item ou en déployant les WF TAXONOMYDB et TAXONOMY
 \end{itemize}
+\bigskip
 
-Pour insérer un nouvel organisme, il est possible d’utiliser le module micPrestation. La procédure à suivre est la suivante :
-
+Pour insérer un nouvel organisme, il est possible d’utiliser le module micPrestation.
 La procédure à suivre est la suivante :
 \begin{itemize}
 	\item Télécharger un fasta et décompresser l'archive.
@@ -32,21 +33,21 @@ La procédure à suivre est la suivante :
 prestaBatch.py --csv Template_Prestation.csv -sd ${working_dir} -A ${Annotator_name} -T genome
 \end{lstlisting}
 
-Il y a un exemple de fichier Template\_Prestation.csv dans le dossier prestation : \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/prestation}
+Il y a un exemple de fichier Template\_Prestation.csv dans le dossier prestation : \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/prestation}.
 \newline
 \begin{mycolorbox}
 	Il faut un utilisateur admin pour accepter la prestation depuis l'interface web (voir le fichier : \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/create_user.sh}).
 \end{mycolorbox}
 \bigskip
 
-Pour valider la prestation sans passer par le web :
+Pour valider la prestation sans passer par le web faire :
 \begin{lstlisting}[style=SQL]
 USE PRESTATIONDB;
 SELECT * FROM Prestation;
 UPDATE Prestation SET PS_status='accepted' WHERE PS_status='inprogress';
 \end{lstlisting}
 \bigskip
-Puis pour insérer la nouvelle séquence en base, utiliser le module micGenome :
+Puis, pour insérer la nouvelle séquence en base, utiliser le module micGenome :
 \begin{lstlisting}[style=bash]
 loadGenomeNS.sh -p ${PS_id} -o ${O_id}
 \end{lstlisting}
@@ -63,7 +64,7 @@ Le module micPrestation n'est plus à jour. Le schéma de la base TAXONOMYDB aya
 Les sources sont dans \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/jbpmmicroscope}
 \newline
 
-Répertoire Tomcat : \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat}
+Répertoire de travail Tomcat : \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat}
 \newline
 
 Emplacement des modules : \path{/env/cns/proj/agc/module/products}
