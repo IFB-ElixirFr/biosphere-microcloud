@@ -10,18 +10,6 @@
 \item Installation jBPM : voir \url{https://docs.google.com/document/d/1kCW1xjsifGyQiZYWtgj2ul9jX6FdCF7xknBirS-gB5k/edit}
 \end{itemize}
 
-\section{BioMAJ}
-
-Nous avons implémenté un certain nombre de chose dans BioMAJ, notamment dans le cadre du projet PANGBANK :
-\begin{itemize}
-    \item Utilisation des hardlinks lors de la mise à jour d'une banque
-    \item Ajout d'options SSL
-    \item Refactoring des downloaders
-    \item Retry plus intelligent lors des téléchargements
-\end{itemize}
-Actuellement nous n'avons pas suffisamment de place pour installer BioMaJ sur la VM permanente.
-Certaines banques sont déjà accessibles depuis les autres cloud mais pas depuis prabi-girofle (qui nous donne accès à la VM permanente).
-
 \section{Conda}
 À l'heure actuelle, \textbf{conda} ne me semble pas totalement adapté à nos besoins.
 En effet, installer un environnement par WF est lourd (plusieurs centaines de Mo/environnement); l'autre possibilité est d'installer un environnement pour chaque groupe d'outils compatibles mais on doit gérer ça manuellement.
