@@ -3,19 +3,25 @@
 \todo[inline]{Ce chapitre est-il utile ?}
 
 \section{Tomcat}
-Version de Tomcat installée : \href {http://mirrors.ircam.fr/pub/apache/tomcat/tomcat-9/v9.0.31/bin/apache-tomcat-9.0.31.tar.gz}{tomcat-9.0.31}
+C'est la version tomcat-9.0.31 qui est installée (\url{http://mirrors.ircam.fr/pub/apache/tomcat/tomcat-9/v9.0.31/bin/apache-tomcat-9.0.31.tar.gz})
 
 \section{Pegasus-mpi-cluster}
-La liste des releases est disponible \href{https://github.com/pegasus-isi/pegasus/releases}{ici}.
-C'est la version \href {https://github.com/pegasus-isi/pegasus/archive/4.9.2.zip}{4.9.2} qui est installée dans MicroCloud (version 4.6.2 dans MicroScope).
-\newline
-La librairie libnuma pose problème lors de l'installation de pegasus-mpi-cluster mais celle-ci n'est pas nécessaire pour les architectures non NUMA (cf. master : \href{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/04_deployment.sh}{04\_deployment.sh}).
+C'est la version 4.9.2 qui est installée dans MicroCloud (\url{https://github.com/pegasus-isi/pegasus/archive/4.9.2.zip}).
+La version actuelle dans MicroScope est la 4.6.2.
+La liste des releases est disponible à cette adresse \url{https://github.com/pegasus-isi/pegasus/releases}.
+\bigskip
+
+La librairie libnuma pose problème lors de l'installation de pegasus-mpi-cluster mais celle-ci n'est pas nécessaire pour les architectures non NUMA (voir \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/04_deployment.sh}).
 
 \section{Bagsub}
-Le script \href {https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/import_modules.sh}{import\_modules.sh} modifie le module bagsub, en supprimant l'option ulimit qui ne fonctionne pas en Dash, et, en ajoutant le paramètre MCA btl\_tcp\_if\_exclude pour exclure les interfaces réseaux docker0 et lo qui peuvent engendrer des conflits lors du lancement de jobs slurm.
+Le script \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/import_modules.sh} modifie le module bagsub, en supprimant l'option ulimit qui ne fonctionne pas en Dash, et, en ajoutant le paramètre MCA btl\_tcp\_if\_exclude pour exclure les interfaces réseaux docker0 et lo qui peuvent engendrer des conflits lors du lancement de jobs slurm.
 
 \section{JBPM}
-Voir les documents \href{https://docs.google.com/document/d/1jKhNCV0Po0t0Z1Zru7Qe2KnJA8_8yIjictccrYvGksU/edit#heading=h.7uty8jgvcw4i}{Bilan jBPM} et \href{https://docs.google.com/document/d/1kCW1xjsifGyQiZYWtgj2ul9jX6FdCF7xknBirS-gB5k/edit}{Installation jBPM}.
+
+\begin{itemize}
+\item Bilan jBPM : voir \url{https://docs.google.com/document/d/1jKhNCV0Po0t0Z1Zru7Qe2KnJA8_8yIjictccrYvGksU/edit#heading=h.7uty8jgvcw4i}
+\item Installation jBPM : voir \url{https://docs.google.com/document/d/1kCW1xjsifGyQiZYWtgj2ul9jX6FdCF7xknBirS-gB5k/edit}
+\end{itemize}
 
 \section{BioMAJ}
 
