@@ -57,9 +57,9 @@ Dans cette section JBPMmicroscope peut faire référence à la base de données 
 
 Il faut générer les fichiers suivants :
 \begin{itemize}
-	\item \textbf{jbpmmicroscope.jar}
-	\item \textbf{SystemActorsLauncher.jar}
-	\item \textbf{jbpmmicroscope-server.war}
+	\item \script{jbpmmicroscope.jar}
+	\item \script{SystemActorsLauncher.jar}
+	\item \script{jbpmmicroscope-server.war}
 \end{itemize}
 \bigskip
 
@@ -93,11 +93,11 @@ Copier le .war et les .jar sur etna0 dans le répertoire \path{/env/cns/wwwext/h
 La VM master importe ces fichiers à l’aide des liens symboliques.
 \newline
 
-Le schéma de la base JBPMmicroscope est créé automatiquement par hibernate (\path{hibernate.cfg.xml} voir le paramètre hbm2ddl.auto) lors de la première exécution d'une commande JBPMmicroscope.
+Le schéma de la base JBPMmicroscope est créé automatiquement par hibernate (\script{hibernate.cfg.xml} voir le paramètre \textbf{hbm2ddl.auto}) lors de la première exécution d'une commande JBPMmicroscope.
 \newline
 
 Les identifiants de connexion à la base JBPMmicroscope (hibernate) sont les suivants :
-login: jbpm et password: jbpm. Ces identifiants peuvent être modifiés dans le composant master : paramètres \textbf{jbpm\_user} et \textbf{jbpm\_password} (penser à mettre à jour le fichier \path{hibernate.cfg.xml}, régénérer les .jar et le .war et les copier dans \path{/env/cns/wwwext/html/agc/ftp/MicroCloud}).
+login: \textbf{jbpm} et password: \textbf{jbpm}. Ces identifiants peuvent être modifiés dans le composant master, ils correspondent aux paramètres \textbf{jbpm\_user} et \textbf{jbpm\_password} (penser à mettre à jour le fichier \path{hibernate.cfg.xml}, régénérer les .jar et le .war et les copier dans \path{/env/cns/wwwext/html/agc/ftp/MicroCloud}).
 \newline
 
 jbpmmicroscope nécessite un serveur Tomcat pour fonctionner. Tomcat 9 est installé dans le composant master : \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat}. Les identifiants tomcat sont les suivants : login: \textbf{tomcat} et password: \textbf{tomcat}.
@@ -105,10 +105,8 @@ Ces identifiants peuvent être modifiés dans le composant master : paramètres 
 
 \section{Mettre à jour la VM permanente}
 \todo{compléter cette partie}
-Pour cela s'inspirer du script microscopeCreateDBschemas.py, copier les fichiers ainsi générés sur la VM permanente et les insérés en base.
+Pour cela s'inspirer du script \script{microscopeCreateDBschemas.py}, copier les fichiers ainsi générés sur la VM permanente et les insérer en base.
 
 \section{Mettre à jour les scripts côtés serveur}
 
-Mettre à jour (si besoin) les scripts \textbf{import\_Oid.sh} et \textbf{install\_microscope.sh}.
-
-\section{Mettre à jour les scripts côtés serveur}
+Mettre à jour (si besoin) les scripts \script{import\_Oid.sh} et \script{install\_microscope.sh}.
