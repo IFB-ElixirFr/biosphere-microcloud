@@ -32,7 +32,7 @@ La VM frontend possède un client mariaDB (et non pas MySQL du fait de conflits 
 
 Pour se connecter en ssh à la VM frontend : 
 \begin{lstlisting}[style=Bash]
-ssh centos@${IP_frontend}
+$ ssh centos@${IP_frontend}
 \end{lstlisting}
 
 \begin{mycolorbox}Si le message d’erreur \textbf{256} s’affiche, cela signifie simplement qu’il n’y a pas d’organisme en base. De ce fait, la plupart des onglets sont inaccessibles ainsi que le formulaire d’authentification.
@@ -50,16 +50,16 @@ Les tables nécessaires à l'installation de MicroScope sont également listées
 
 Pour se connecter à la VM mysql, il faut passer par le frontend :
 \begin{lstlisting}[style=bash]
-ssh -A centos@${IP_mysql} -J centos@${IP_frontend}
+$ ssh -A centos@${IP_mysql} -J centos@${IP_frontend}
 \end{lstlisting}
 \bigskip
 
 Si le serveur ne répond pas, il faut aller voir si le docker n'a pas planté (cela arrive pour des requêtes SQL trop gourmandes en RAM).
 Pour relancer le docker :
 \begin{lstlisting}[style=bash]
-sudo su
-docker ps -a
-docker start ${ID_container}
+$ sudo su
+$ docker ps -a
+$ docker start ${ID_container}
 \end{lstlisting}
 
 \subsection {VM permanente}\label{VMpermanente}
@@ -79,7 +79,7 @@ A terme, il serait utile d'avoir un système de gestion des banques tel que BioM
 
 Pour se connecter : 
 \begin{lstlisting}[style=bash]
-ssh root@134.214.33.214
+$ ssh root@134.214.33.214
 \end{lstlisting}
 \bigskip
 
@@ -96,7 +96,7 @@ Le script \textbf{microscopeDBschema.py} du module MicroCloud a été utilisé p
 
 Pour se connecter au serveur MySQL :
 \begin{lstlisting}[style=bash]
-mysql -p{MOT_DE_PASSE_SERVEUR_MYSQL_VM_PERMANENTE}
+$ mysql -p{MOT_DE_PASSE_SERVEUR_MYSQL_VM_PERMANENTE}
 \end{lstlisting}
 
 Les mots de passe (serveur mySQL et phpMyAdmin) sont stockés dans le répertoire \textbf{/root} de la VM.
@@ -105,7 +105,7 @@ Les mots de passe (serveur mySQL et phpMyAdmin) sont stockés dans le répertoir
 Pour copier les données, mieux vaut utiliser rsync et copier les données dans le répertoire \textbf{/var/lib/mysql-files/} de la VM permanente avant insertion en base.
 
 \begin{lstlisting}[style=bash]
-LOAD DATA INFILE '/var/lib/mysql-files/$file.DB' INTO TABLE $table;
+$ LOAD DATA INFILE '/var/lib/mysql-files/$file.DB' INTO TABLE $table;
 \end{lstlisting}
 
 \subsection{VM master et VM slave(s)} \label{master&slave}
@@ -170,6 +170,6 @@ actuellement l'environnement de MicroCloud ne permet d'utiliser que les modules 
 
 Puis sourcer le fichier \path{microcloud.profile} dans la VM master :
 \begin{lstlisting}[style=bash]
-source /env/cns/proj/agc/module/profiles/microcloud.profile
+$ source /env/cns/proj/agc/module/profiles/microcloud.profile
 \end{lstlisting}
 

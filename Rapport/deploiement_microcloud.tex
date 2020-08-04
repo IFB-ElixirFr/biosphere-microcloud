@@ -30,7 +30,7 @@ La procédure à suivre est la suivante :
 \end{itemize}
 
 \begin{lstlisting}[style=bash]
-prestaBatch.py --csv Template_Prestation.csv -sd ${working_dir} -A ${Annotator_name} -T genome
+$ prestaBatch.py --csv Template_Prestation.csv -sd ${working_dir} -A ${Annotator_name} -T genome
 \end{lstlisting}
 
 Il y a un exemple de fichier Template\_Prestation.csv dans le dossier prestation : \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/prestation}.
@@ -75,8 +75,8 @@ Emplacement des modules : \path{/env/cns/proj/agc/module/products}
 \end{mycolorbox}
 
 \begin{lstlisting}[style=SQL]
-USE pkgdb;
-UPDATE Sequence SET S_status='inFunctional' WHERE S_status='inProduction';
+$ USE pkgdb;
+$ UPDATE Sequence SET S_status='inFunctional' WHERE S_status='inProduction';
 \end{lstlisting}
 
 \subsection{Déployer le WF DIRECTON}
@@ -84,29 +84,29 @@ Modules requis : \textbf{bagsub-2.4.3}, \textbf{AGCScriptToolMic-2.0}, \textbf{m
 
 \begin{lstlisting}[style=bash]
 #### Deploy DIRECTON WF ####
-cd /env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat/
+$ cd /env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat/
 
 # Deploy WF
-JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl/BagSub/ -defNames DIRECTON
+$ JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl/BagSub/ -defNames DIRECTON
 
 # Deploy and start CRON
-JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl -defNames CRON_DIRECTON
+$ JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl -defNames CRON_DIRECTON
 JBPMmicroscope startCron -names CRON_DIRECTON
 
 # Check CRON and WF status
-JBPMmicroscope showProcessDefinitions
+$ JBPMmicroscope showProcessDefinitions
 
 # Force run
-JBPMmicroscope signalCron -names CRON_DIRECTON -signal forceRun; JBPMmicroscope signalProcess -pid 1
+$ JBPMmicroscope signalCron -names CRON_DIRECTON -signal forceRun; JBPMmicroscope signalProcess -pid 1
 
-JBPMmicroscope showProcessInstances
+$ JBPMmicroscope showProcessInstances
 
 # Take a look at running processes
-tomcat_logs
+$ tomcat_logs
 
 # relaunch WF if status is sendmail
-JBPMmicroscope relaunchAnalysis -pidCron 1 -pidWF 2 -signal forceRun
+$ JBPMmicroscope relaunchAnalysis -pidCron 1 -pidWF 2 -signal forceRun
 
 # Check tables pkgdb.Workflow_Jobs, pkgdb.Directon and pkgdb.GO_Directon_CPD
-mysqlagcdb
+$ mysqlagcdb
 \end{lstlisting}

@@ -13,7 +13,7 @@ Par convention le répertoire d'export des archives et autres fichiers sur etna0
 
 Pour charger le module \micWEBdeployVer:
 \begin{lstlisting}[style=bash]
-module load micWEBdeploy/0-MicroCloud-1.0
+$ module load micWEBdeploy/0-MicroCloud-1.0
 \end{lstlisting}
 
 \section{Créer une nouvelle release du code web}
@@ -72,20 +72,20 @@ Puis mettre à jour le fichier \path{~/.m2/genosphere-settings.xml} :
 Pour créer les .jar dans le répertoire \path{jbpmmicroscope-client/target/} faire :
 
 \begin{lstlisting}[style=bash]
-mvn -Pconfig-microcloud -s ~/.m2/genosphere-settings.xml clean install
+$ mvn -Pconfig-microcloud -s ~/.m2/genosphere-settings.xml clean install
 \end{lstlisting}
 \bigskip
 
 Il faut ajouter les sources (pour le déploiement des WF) et le script JBPMmicroscope
 \begin{lstlisting}[style=bash]
-jar uf jbpmmicroscope-client/target/jbpmmicroscope.jar -C ./ src/
-jar uf jbpmmicroscope-client/target/jbpmmicroscope.jar -C ./ JBPMmicroscope
+$ jar uf jbpmmicroscope-client/target/jbpmmicroscope.jar -C ./ src/
+$ jar uf jbpmmicroscope-client/target/jbpmmicroscope.jar -C ./ JBPMmicroscope
 \end{lstlisting}
 \bigskip
 
 Pour créer l'archive \path{jbpmmicroscope-server.war} dans le répertoire \path{jbpmmicroscope-server/target/} :
 \begin{lstlisting}[style=bash]
-mvn -Pconfig-microcloud -s ~/.m2/genosphere-settings.xml package
+$ mvn -Pconfig-microcloud -s ~/.m2/genosphere-settings.xml package
 \end{lstlisting}
 \bigskip
 
