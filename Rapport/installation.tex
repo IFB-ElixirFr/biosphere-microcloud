@@ -121,7 +121,7 @@ Le code du composant slipstream est dans le dossier master voir; \url{https://nu
 
 Pour la VM slave, voir les dossiers correspondants.\newline
 
-Nous avons installé le moteur de workflow jBPM couplé avec un cluster Slurm sur la VM master.
+Nous avons installé le moteur de workflow jBPM couplé avec un cluster slurm sur la VM master. L'ordonnancement des wokflows est ensuite géré à l'aide du cluster slurm. La VM master étant considérée comme la machine maître et les VM slaves comme noeuds de calcul.
 
 Le serveur d'application Tomcat est installé (version tomcat-9.0.31 : \url{http://mirrors.ircam.fr/pub/apache/tomcat/tomcat-9/v9.0.31/bin/apache-tomcat-9.0.31.tar.gz}).
 Il est utilisé comme serveur par jBPM (pour accéder à Tomcat : http://\$IP\_master).
