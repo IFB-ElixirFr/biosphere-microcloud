@@ -1,14 +1,12 @@
 \chapter{Module \micWEBdeployVer} 
 
-\todo[inline]{Ajouter une section sur les scripts côté serveur qui permettent d'installer le logiciel.}
-
 Ce module contient les scripts utilisés pour gérer les logiciels et les données nécessaires pour déployer MicroCloud (voir~\autoref{chap:creer_nouvelle_version}).
 C'est une version de développement basée sur \module[1.0]{micWEBdeploy}.
 
-Il est constitué des scripts suivants:
+Il est constitué des scripts suivants :
 \begin{description}
-	\item[\script{microscopeRelease.py}]: copie le code du web, compile le code JavaScript (avec \script{microscopeCompileJS.sh}), copie les schémas de certaines bases et les données minimales de certaines bases.
-	\item[\script{microscopeCopyOid.py}]: permet de copier les données de l'organisme \textit{Acinetobacter baylyi} (O\_id=31)
+	\item[\script{microscopeRelease.py}] : copie le code du web, compile le code JavaScript (avec \script{microscopeCompileJS.sh}), copie les schémas de certaines bases et les données minimales de certaines bases.
+	\item[\script{microscopeCopyOid.py}] : permet de copier les données de l'organisme \textit{Acinetobacter baylyi} (O\_id=31)
 	\item[\script{createModulesTarball.py}]: créé les archives des modules à importer dans MicroCloud.
 \end{description}
 

@@ -128,6 +128,7 @@ Il est utilisé comme serveur par jBPM (pour accéder à Tomcat : http://\$IP\_m
 
 Nous avons également eu besoin d'installer Pegasus-mpi-cluster (version 4.9.2 : \url{https://github.com/pegasus-isi/pegasus/archive/4.9.2.zip}) en complément de jBPM. Lors de l'installation de pegasus-mpi-cluster, la librairie libnuma a posé problème mais celle-ci n'est pas nécessaire pour les architectures non NUMA (voir \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/04_deployment.sh}).
 
+\bigskip
 Le lancement des workflows se fait à l'aide du module bagsub lui-même lancé par jBPM. Nous avons fait quelques modifications du module bagsub afin qu'il puisse être utilisé dans la VM master.
 Le script \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/import_modules.sh} modifie le module bagsub, en supprimant l'option ulimit qui ne fonctionne pas en Dash, et, en ajoutant le paramètre MCA btl\_tcp\_if\_exclude pour exclure les interfaces réseaux docker0 et lo qui peuvent engendrer des conflits lors du lancement de jobs slurm.
 
@@ -149,12 +150,10 @@ Le code est dans le dossier nfsserver voir  \url{https://github.com/IFB-ElixirFr
 Le composant slipstream est dans le dossier nfsserver voir
 \url{https://nuv.la/module/ifb/devzone/MicroCloud/nfsserver/}.
 
-Le répertoire partagé \textbf{/var/nfsshare} du serveur NFS est monté dans le répertoire \textbf{/env}
+Le répertoire partagé \path{/var/nfsshare} du serveur NFS est monté dans le répertoire \path{/env}
 des VM frontend, backend, master et slave(s).
-Le répertoire \textbf{/env} se veut similaire au répertoire de même nom sur l’etna0. 
+Le répertoire \path{/env} se veut similaire au répertoire de même nom sur l’etna0. 
 Les fonctions permettant la création du répertoire partagé sont dans le fichier \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/lib.sh}.
-
-\section{VM master}
 
 \subsection{Importation des modules}
 En premier lieu, faire la liste de tous les modules nécessaires à la création de la nouvelle instance MicroCloud.
