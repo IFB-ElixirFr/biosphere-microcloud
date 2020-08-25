@@ -39,7 +39,6 @@ Il y a un exemple de fichier Template\_Prestation.csv dans le dossier prestation
 	Il faut un utilisateur admin pour accepter la prestation depuis l'interface web (voir le fichier : \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/create_user.sh}).
 \end{mycolorbox}
 \bigskip
-
 Pour valider la prestation sans passer par le web faire :
 \begin{lstlisting}[style=SQL]
 USE PRESTATIONDB;
@@ -53,7 +52,7 @@ $ loadGenomeNS.sh -p ${PS_id} -o ${O_id}
 \end{lstlisting}
 
 \begin{mycolorbox}
-	Une fois la prestation validée, reste le problème que les données des banques nécessaires pour le script \textbf{loadGenomeNS.sh} ne sont pas stockées dans la VM permanente actuellement (données des banques gérées par CABRI).
+	Une fois la prestation validée, il reste un problème : les données des banques nécessaires pour le script \textbf{loadGenomeNS.sh} ne sont pas stockées dans la VM permanente actuellement (données des banques gérées par CABRI).
 	Cette étape ne fonctionne donc pas.
 \end{mycolorbox}
 
@@ -61,17 +60,14 @@ Le module micPrestation n'est plus à jour. Le schéma de la base TAXONOMYDB aya
 \newline
 
 \section{Déployer un WF}
-Les sources sont dans \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/jbpmmicroscope}
-\newline
 
-Répertoire de travail Tomcat : \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat}
-\newline
-
-Emplacement des modules : \path{/env/cns/proj/agc/module/products}
+Les workflows sont déployés sur la VM master. A ce jour nous n'avons pu tester que le workflow DIRECTON. Les sources du moteur de workflow jBPM sont dans le répertoire \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/jbpmmicroscope}.
+Le répertoire de travail Tomcat est le suivant : \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat}.
+Les modules sont localisés dans le répertorie : \path{/env/cns/proj/agc/module/products}
 \newline
 
 \begin{mycolorbox}
-	Si les données ont été copiées depuis la prod et non pas insérées avec micPrestation, il faut, dans la table pkgdb.Sequence, vérifier que le status des S\_id existants soit 'inFunctional' et non 'inProduction' pour que les WF prennent bien en compte les nouveaux S\_id.
+	Si les données ont été copiées depuis la prod et insérées telles quelles (sans micPrestation), il faut, dans la table pkgdb.Sequence, vérifier que le status des S\_id existants soit 'inFunctional' et non 'inProduction' pour que les WF prennent bien en compte les nouveaux S\_id.
 \end{mycolorbox}
 
 \begin{lstlisting}[style=SQL]
@@ -80,7 +76,7 @@ UPDATE Sequence SET S_status='inFunctional' WHERE S_status='inProduction';
 \end{lstlisting}
 
 \subsection{Déployer le WF DIRECTON}
-Modules requis : \textbf{bagsub-2.4.3}, \textbf{AGCScriptToolMic-2.0}, \textbf{micGenome-7.0.0}, \textbf{micJBPMwrapper-3.10.8} et \textbf{micPrestation-2.0} et \textbf{micDirecton-1.0}.
+Les modules requis pour le bon déploiement de ce workflow sont les suivants : \textbf{bagsub-2.4.3}, \textbf{AGCScriptToolMic-2.0}, \textbf{micGenome-7.0.0}, \textbf{micJBPMwrapper-3.10.8} et \textbf{micPrestation-2.0} et \textbf{micDirecton-1.0}.
 
 \begin{lstlisting}[style=bash]
 #### Deploy DIRECTON WF ####
