@@ -38,7 +38,8 @@ $ createModulesTarball.py --modules_list bagsub-2.4.3 AGCScriptToolMic-2.0 micGe
 \end{mycolorbox}
 
 \begin{lstlisting}[style=bash]
-$ microscopeCopyOid.py --oid 31 --output /env/cns/wwwext/html/agc/ftp/MicroCloud/microscope_31.tar.gz
+$ Oid=31
+$ microscopeCopyOid.py --oid ${Oid} --output /env/cns/wwwext/html/agc/ftp/MicroCloud/microscope_${Oid}.tar.gz
 \end{lstlisting}
 
 \section{\script{microscopeCreateDBschemas.py}}
