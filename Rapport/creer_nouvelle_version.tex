@@ -1,9 +1,5 @@
 \chapter{Mettre à jour des composants pour MicroCloud} \label{chap:creer_nouvelle_version}
 
-\begin{mycolorbox}
-	METTRE ICI LES COMMANDES POUR CRÉER DES RELEASES, COPIER DES BASES, etc.
-\end{mycolorbox}
-
 Ce chapitre présente les commandes utilisées pour créer une nouvelle version
 du code et des données qui seront déployées sur le cloud.
 Ces opérations utilisent le module \micWEBdeployVer
@@ -18,7 +14,7 @@ $ module load micWEBdeploy/0-MicroCloud-1.0
 
 \section{Créer une nouvelle release du code web}
 
-Pour créer une nouvelle version du code du web et des bases de données:
+Pour créer une nouvelle version du code du web et des bases de données, choisir la version de MicroScope à déployer puis lancer le script \script{microscopeRelease.py} :
 \begin{lstlisting}[style=bash]
 $ MICVERSION=3.14.0
 $ microscopeRelease.py --version ${MICVERSION} --output /env/cns/wwwext/html/agc/ftp/MicroCloud/microcloud-${MICVERSION}.tar.gz
@@ -32,16 +28,16 @@ $ ln -s microcloud-${MICVERSION}.tar.gz microcloud-latest.tar.gz
 
 \section{Copier les données d'un organisme}
 
-Permet de copier les données de l'organisme \textit{Acinetobacter baylyi} (O\_id=31).
-
-\begin{mycolorbox}
-	Pour le moment seules les données concernant l'O\_id 31 peuvent être récupérées avec le script microscopeCopyOid.py car certains organismes ont besoin de tables spécifiques de la base GO\_SPE (typiquement la table acineto\_KO pour Acinetobacter baylyi).
-\end{mycolorbox}
+Il faut ensuite récupérer les données minimales pour le bon fonctionnement de la plateforme. Nous avons choisi l'organisme \textit{Acinetobacter baylyi} (O\_id=31) considéré comme étant l'organisme de référence de MicroScope. Pour copier les données, utiliser le script \script{microscopeCopyOid.py} de la manière suivante :
 
 \begin{lstlisting}[style=bash]
 $ Oid=31
 $ microscopeCopyOid.py --oid ${Oid} --output /env/cns/wwwext/html/agc/ftp/MicroCloud/microscope_${Oid}.tar.gz
 \end{lstlisting}
+
+\begin{mycolorbox}
+	Pour le moment seules les données concernant l'O\_id 31 peuvent être récupérées avec le script microscopeCopyOid.py car certains organismes ont besoin de tables spécifiques de la base GO\_SPE (typiquement la table acineto\_KO pour Acinetobacter baylyi).
+\end{mycolorbox}
 
 Ensuite, mettre à jour le lien symbolique pour qu'il pointe vers la nouvelle archive :
 \begin{lstlisting}[style=bash]
@@ -50,12 +46,32 @@ $ cd /env/cns/wwwext/html/agc/ftp/MicroCloud
 $ ln -s microscope_${Oid}.tar.gz microscope_${Oid}-latest.tar.gz
 \end{lstlisting}
 
-\section{Mettre à jour jbpmmicroscope}
+\section{Mettre à jour la liste des modules}
 
-Dans cette section JBPMmicroscope peut faire référence à la base de données JBPMmicroscope ou bien à la commande JBPMmicroscope qui permet le déploiement des WF.
+En premier lieu, faire la liste de tous les modules nécessaires à la création de la nouvelle instance MicroCloud et utiliser le script \script{createModulesTarball.py} du module MicroCloud pour générer les archives de ces modules.
+
+\begin{lstlisting}[style=bash]
+$ createModulesTarball.py --modules_list bagsub-2.4.3 AGCScriptToolMic-2.0 micGenome-7.0.0 micJBPMwrapper-3.10.8 micPrestation-2.0 micDirecton-1.0
+\end{lstlisting}
+
+Actuellement l'environnement de MicroCloud ne permet d'utiliser que les modules \textbf{bagsub-2.4.3}, \textbf{AGCScriptToolMic-2.0}, \textbf{micGenome-7.0.0}, \textbf{micJBPMwrapper-3.10.8}, \textbf{micPrestation-2.0} et \textbf{micDirecton-1.0}.
 \newline
 
-Il faut générer les fichiers suivants :
+\begin{mycolorbox}
+	Lors de tout ajout de nouveaux modules, il faut mettre à jour le fichier \path{microcloud.profile} et créer les variables d'environnement utilisées par les modules (voir \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/04_deployment.sh}).
+\end{mycolorbox}
+
+Puis sourcer le fichier \path{microcloud.profile} dans la VM master :
+\begin{lstlisting}[style=bash]
+$ source /env/cns/proj/agc/module/profiles/microcloud.profile
+\end{lstlisting}
+
+\section{Mettre à jour jbpmmicroscope}
+
+Dans cette section JBPMmicroscope peut faire référence à la base de données JBPMmicroscope ou bien à la commande JBPMmicroscope qui permet le déploiement des workflows.
+\newline
+
+Pour mettre à jour jbpmmicroscope, il faut avant tout récupérer le projet jbpmmicroscope depuis le dépôt SVN puis regénérer les fichiers suivants :
 \begin{itemize}
 	\item \script{jbpmmicroscope.jar}
 	\item \script{SystemActorsLauncher.jar}
@@ -63,20 +79,21 @@ Il faut générer les fichiers suivants :
 \end{itemize}
 \bigskip
 
-Puis mettre à jour le fichier \path{~/.m2/genosphere-settings.xml} :
+Pour ce faire, il faut déjà mettre à jour le fichier \path{~/.m2/genosphere-settings.xml} :
 \begin{itemize}
-	\item  Mettre à jour le local path
+	\item Mettre à jour le local path
 	\item Supprimer/modifier le login et le mot de passe
 \end{itemize}
+\bigskip
 
-Pour créer les .jar dans le répertoire \path{jbpmmicroscope-client/target/} faire :
+Ensuite, pour créer les .jar dans le répertoire \path{jbpmmicroscope-client/target/} faire :
 
 \begin{lstlisting}[style=bash]
 $ mvn -Pconfig-microcloud -s ~/.m2/genosphere-settings.xml clean install
 \end{lstlisting}
 \bigskip
 
-Il faut ajouter les sources (pour le déploiement des WF) et le script JBPMmicroscope
+Il faut ajouter les sources (qui sont nécessaires pour le déploiement des workflows dans les VM) et le script JBPMmicroscope (qui permet de lancer bagsub) :
 \begin{lstlisting}[style=bash]
 $ jar uf jbpmmicroscope-client/target/jbpmmicroscope.jar -C ./ src/
 $ jar uf jbpmmicroscope-client/target/jbpmmicroscope.jar -C ./ JBPMmicroscope
@@ -89,23 +106,31 @@ $ mvn -Pconfig-microcloud -s ~/.m2/genosphere-settings.xml package
 \end{lstlisting}
 \bigskip
 
-Copier le .war et les .jar sur etna0 dans le répertoire \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/}
+Copier le .war et les .jar sur etna0 dans le répertoire \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/}.
 La VM master importe ces fichiers à l’aide des liens symboliques.
 \newline
 
 Le schéma de la base JBPMmicroscope est créé automatiquement par hibernate (\script{hibernate.cfg.xml} voir le paramètre \textbf{hbm2ddl.auto}) lors de la première exécution d'une commande JBPMmicroscope.
 \newline
 
-Les identifiants de connexion à la base JBPMmicroscope (hibernate) sont les suivants :
-login: \textbf{jbpm} et password: \textbf{jbpm}. Ces identifiants peuvent être modifiés dans le composant master, ils correspondent aux paramètres \textbf{jbpm\_user} et \textbf{jbpm\_password} (penser à mettre à jour le fichier \path{hibernate.cfg.xml}, régénérer les .jar et le .war et les copier dans \path{/env/cns/wwwext/html/agc/ftp/MicroCloud}).
+Les identifiants de connexion à la base JBPMmicroscope (via hibernate) sont les suivants :
+login=\textbf{jbpm} et password=\textbf{jbpm}. Ces identifiants peuvent être modifiés dans le composant master, ils correspondent aux paramètres \textbf{jbpm\_user} et \textbf{jbpm\_password} (si vous souhaitez modifier ces identifiants, il faut bien penser à mettre à jour le fichier \path{hibernate.cfg.xml}, régénérer les .jar et le .war et les copier dans \path{/env/cns/wwwext/html/agc/ftp/MicroCloud}).
 \newline
 
-jbpmmicroscope nécessite un serveur Tomcat pour fonctionner. Tomcat 9 est installé dans le composant master : \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat}. Les identifiants tomcat sont les suivants : login: \textbf{tomcat} et password: \textbf{tomcat}.
+jbpmmicroscope nécessite un serveur Tomcat pour fonctionner. Tomcat 9 est installé dans le composant master : \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat}. Les identifiants tomcat sont les suivants : login=\textbf{tomcat} et password=\textbf{tomcat}.
 Ces identifiants peuvent être modifiés dans le composant master, ils correspondent aux paramètres \textbf{tomcat\_user} et \textbf{tomcat\_password}.
 
 \section{Mettre à jour la VM permanente}
 Il faut penser à mettre à jour les tables de la VM permanente en fonction des besoins. Pour cela, s'inspirer du script \script{microscopeCreateDBschemas.py}, par exemple, et utiliser les fichiers de données ainsi générés.
+\bigskip
+
+Pour copier les données, mieux vaut utiliser rsync et copier les données dans le répertoire \textbf{/var/lib/mysql-files/} de la VM permanente avant insertion en base :
+\begin{lstlisting}[style=bash]
+$ LOAD DATA INFILE '/var/lib/mysql-files/$file.DB' INTO TABLE $table;
+\end{lstlisting}
 
 \section{Mettre à jour les scripts côté serveur}
 
-Mettre à jour (si besoin) les scripts \script{import\_Oid.sh} et \script{install\_microscope.sh}.
+Mettre à jour le script \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/04_deployment.sh} comme indiqué précédemment (en particulier la partie du code qui permet de créer le fichier de profile).
+
+
