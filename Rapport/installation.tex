@@ -12,14 +12,16 @@ Le code des VM est dans le dépôt biosphere-microcloud (\url{https://github.com
 	\item master et slave voir section \ref{master&slave}
 	\item nfsserver voir section \ref{nfsserver}
 \end{itemize}
+\bigskip
 
 Il y a 2 serveurs de bases de données dans MicroCloud. Un serveur MySQL installé via Docker dans la VM MySQL et un serveur MySQL sur la VM permanente.
+\bigskip
+
 Pour se connecter aux VM voir la doc : \url{https://intranet.genoscope.cns.fr/agc/redmine/projects/microcloud/wiki/Connexion_aux_VM}
 
 \subsection {VM frontend}\label{frontend}
 
-La VM frontend permet de déployer la partie web de la plateforme MicroScope.
-L'image de base est une image CentOS 7.
+La VM frontend permet de déployer la partie web de la plateforme MicroScope. L'image de base est une image CentOS 7.
 
 Le code est dans le dossier frontend; voir \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/tree/master/frontend/}.
 Le composant slipstream est dans le dossier frontend; voir \url{https://nuv.la/module/ifb/devzone/MicroCloud/frontend/}.
@@ -43,9 +45,7 @@ $ ssh centos@${IP_frontend}
 Le code est dans le dossier mysql voir \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/tree/master/mysql/}.
 Le composant slipstream est dans le dossier mysql voir \url{https://nuv.la/module/ifb/devzone/MicroCloud/mysql/}.
 
-L'image de base est une image CentOS 7. La VM mysql possède un serveur MySQL installé via Docker sur lequel on retrouve les bases de données pkgdb, GO\_CPD, GO\_Conf, GO\_RES, PUB\_CPD, REFSEQDB, JBPMmicroscope et PRESTATIONDB.
-\newline
-Les tables nécessaires à l'installation de MicroScope sont également listées dans le wiki : \url{https://intranet.genoscope.cns.fr/agc/redmine/projects/microcloud/wiki/Tables_necessaires_a_installation}.
+L'image de base est une image CentOS 7. La VM mysql possède un serveur MySQL installé via Docker sur lequel on retrouve les bases de données pkgdb, GO\_CPD, GO\_Conf, GO\_RES, PUB\_CPD, REFSEQDB, JBPMmicroscope et PRESTATIONDB. Les tables nécessaires à l'installation de MicroScope sont également listées dans le wiki : \url{https://intranet.genoscope.cns.fr/agc/redmine/projects/microcloud/wiki/Tables_necessaires_a_installation}.
 \newline
 
 Pour se connecter à la VM mysql, il faut passer par le frontend :
@@ -122,15 +122,18 @@ Le code du composant slipstream est dans le dossier master voir; \url{https://nu
 Pour la VM slave, voir les dossiers correspondants.\newline
 
 Nous avons installé le moteur de workflow jBPM couplé avec un cluster slurm sur la VM master. L'ordonnancement des wokflows est ensuite géré à l'aide du cluster slurm. La VM master étant considérée comme la machine maître et les VM slaves comme noeuds de calcul.
+\bigskip
 
 Le serveur d'application Tomcat est installé (version tomcat-9.0.31 : \url{http://mirrors.ircam.fr/pub/apache/tomcat/tomcat-9/v9.0.31/bin/apache-tomcat-9.0.31.tar.gz}).
 Il est utilisé comme serveur par jBPM (pour accéder à Tomcat : http://\$IP\_master).
+\bigskip
 
 Nous avons également eu besoin d'installer Pegasus-mpi-cluster (version 4.9.2 : \url{https://github.com/pegasus-isi/pegasus/archive/4.9.2.zip}) en complément de jBPM. Lors de l'installation de pegasus-mpi-cluster, la librairie libnuma a posé problème mais celle-ci n'est pas nécessaire pour les architectures non NUMA (voir \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/04_deployment.sh}).
 
 \bigskip
-Le lancement des workflows se fait à l'aide du module bagsub lui-même lancé par jBPM. Nous avons fait quelques modifications du module bagsub afin qu'il puisse être utilisé dans la VM master.
-Le script \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/import_modules.sh} modifie le module bagsub, en supprimant l'option ulimit qui ne fonctionne pas en Dash, et, en ajoutant le paramètre MCA btl\_tcp\_if\_exclude pour exclure les interfaces réseaux docker0 et lo qui peuvent engendrer des conflits lors du lancement de jobs slurm.
+Chaque workflow fait appel à différents modules qu'il faut installer au préalable sur la VM master. Le script \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/import_modules.sh} permet d'importer les archives des différents modules nécessaires au fonctionnement des workflows (WF DIRECTON principalement).
+Le lancement des workflows se fait à l'aide du module bagsub lui-même lancé par jBPM. Nous avons fait quelques modifications du module bagsub afin qu'il puisse être utilisé dans l'environnement fourni par la VM master. Le script \script{import\_modules.sh} modifie le module bagsub, en supprimant l'option ulimit qui ne fonctionne pas en Dash, et, en ajoutant le paramètre MCA btl\_tcp\_if\_exclude pour exclure les interfaces réseaux docker0 et lo qui peuvent engendrer des conflits lors du lancement de jobs slurm.
+
 
 \section{Lien federated entre la VM mysql et  la VM permanente}
 Les bases DB des banques sont accessibles depuis la VM mysql via des liens federated \url{https://dev.mysql.com/doc/refman/8.0/en/federated-storage-engine.html}( 
@@ -154,21 +157,4 @@ Le répertoire partagé \path{/var/nfsshare} du serveur NFS est monté dans le r
 des VM frontend, backend, master et slave(s).
 Le répertoire \path{/env} se veut similaire au répertoire de même nom sur l’etna0. 
 Les fonctions permettant la création du répertoire partagé sont dans le fichier \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/lib.sh}.
-
-\subsection{Importation des modules}
-En premier lieu, faire la liste de tous les modules nécessaires à la création de la nouvelle instance MicroCloud.
-Puis, utiliser le script \script{createModulesTarball.py} du module MicroCloud.
-
-Mise à jour de l'environnement des modules :
-actuellement l'environnement de MicroCloud ne permet d'utiliser que les modules \textbf{bagsub-2.4.3}, \textbf{AGCScriptToolMic-2.0}, \textbf{micGenome-7.0.0}, \textbf{micJBPMwrapper-3.10.8}, \textbf{micPrestation-2.0} et \textbf{micDirecton-1.0}.
-\newline
-
-\begin{mycolorbox}
-	Pour tout ajout de nouveaux modules, il faut mettre à jour le fichier \path{microcloud.profile} et créer les répertoires nécessaires (voir \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/04_deployment.sh}).
-\end{mycolorbox}
-
-Puis sourcer le fichier \path{microcloud.profile} dans la VM master :
-\begin{lstlisting}[style=bash]
-$ source /env/cns/proj/agc/module/profiles/microcloud.profile
-\end{lstlisting}
 
