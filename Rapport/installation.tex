@@ -1,10 +1,39 @@
-\chapter {Installation et déploiement des VM}
+\chapter{Architecture}
 
-\section {Description des VM}
+\section{Vue d'ensemble}
 
-Il y 6 machines virtuelles (VM) au total dont 5 conçues depuis Nuvla et 1 machine OpenStack déployée sur le cloud prabi-girofle.
-Le code des VM est dans le dépôt biosphere-microcloud (\url{https://github.com/IFB-ElixirFr/biosphere-microcloud/}); il y a un dossier par VM:
+La vue d'ensemble de l'architecture est présentée dans la~\autoref{fig:architecture}.
+Il y 6 machines virtuelles (VM) au total dont 5 conçues depuis Nuvla et
+1 VM permanente déployée sur le cloud \cloudInstance{ifb-prabi-girofle}.
 
+\begin{figure}[htp]
+	\centering
+	\includegraphics[width=\linewidth]{../Logical_Architecture}
+	\caption{Schéma de l'architecture de MicroCloud.}
+	\label{fig:architecture}
+\end{figure}
+
+Un des buts est de mimer ce qui est fait au Genoscope
+c'est-à-dire que:
+\begin{enumerate}
+	\item Les différents composants (serveur web, serveur de BD) tournent sur des machines séparées.
+	\item Les calculs tournent sur des machines séparées: l'architecture contient donc un cluster (basé sur SLURM).
+\end{enumerate}
+Une des seules différences est que le serveur \component{jbpmmicroscope} tourne
+sur la machine frontale du cluster.
+
+Il y a 2 serveurs de bases de données dans MicroCloud:
+\begin{itemize}
+	\item Un serveur MySQL installé via Docker dans la VM MySQL.
+	\item Un serveur MySQL sur la VM permanente.
+\end{itemize}
+
+\section {Installation et déploiement des VM}
+
+Le code des VM Nuvla est dans le dépôt biosphere-microcloud (\url{https://github.com/IFB-ElixirFr/biosphere-microcloud/}).
+Il y a un dossier par VM et un fichier \filename{README.md} dans chaque dossier qui explique des détails.
+
+Les sections suivantes présentent quelques détails sur les VM:
 \begin{itemize}
 	\item frontend voir section \ref{frontend}
 	\item mysql voir section \ref{mysql}
@@ -12,9 +41,6 @@ Le code des VM est dans le dépôt biosphere-microcloud (\url{https://github.com
 	\item master et slave voir section \ref{master&slave}
 	\item nfsserver voir section \ref{nfsserver}
 \end{itemize}
-
-Il y a 2 serveurs de bases de données dans MicroCloud. Un serveur MySQL installé via Docker dans la VM MySQL et un serveur MySQL sur la VM permanente.
-Pour se connecter aux VM voir la doc : \url{https://intranet.genoscope.cns.fr/agc/redmine/projects/microcloud/wiki/Connexion_aux_VM}
 
 \subsection {VM frontend}\label{frontend}
 
@@ -131,19 +157,11 @@ Nous avons également eu besoin d'installer Pegasus-mpi-cluster (version 4.9.2 :
 Le lancement des workflows se fait à l'aide du module bagsub lui-même lancé par jBPM. Nous avons fait quelques modifications du module bagsub afin qu'il puisse être utilisé dans la VM master.
 Le script \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/import_modules.sh} modifie le module bagsub, en supprimant l'option ulimit qui ne fonctionne pas en Dash, et, en ajoutant le paramètre MCA btl\_tcp\_if\_exclude pour exclure les interfaces réseaux docker0 et lo qui peuvent engendrer des conflits lors du lancement de jobs slurm.
 
-\section{Lien federated entre la VM mysql et  la VM permanente}
-Les bases DB des banques sont accessibles depuis la VM mysql via des liens federated \url{https://dev.mysql.com/doc/refman/8.0/en/federated-storage-engine.html}( 
-voir \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/frontend/create_federated_links.sh}).
-\bigskip
+\subsection{Partage NFS entre les différentes VM} \label{nfsserver}
 
-\begin{mycolorbox}
-	Lorsque les schémas des bases DB de la VM permanente sont mis-à-jour, il faut penser à redéployer MicroCloud afin de mettre à jour les liens federated.
-\end{mycolorbox}
+Le composant nfsserver a été créé en s'inspirant du travail de Stéphane Delmotte.
+Il permet de fournir un dossier partagé entre les différentes VM.
 
-\section{Partage NFS entre les différentes VM}
-
-\label{nfsserver} Le composant nfsserver a été créé en s'inspirant du travail de Stéphane Delmotte.
-Il permet de fournir un serveur partagé entre les différentes VM.
 L'image de base est une image CentOS 7.
 Le code est dans le dossier nfsserver voir  \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/tree/master/nfsserver/}.
 Le composant slipstream est dans le dossier nfsserver voir
@@ -151,8 +169,17 @@ Le composant slipstream est dans le dossier nfsserver voir
 
 Le répertoire partagé \textbf{/var/nfsshare} du serveur NFS est monté dans le répertoire \textbf{/env}
 des VM frontend, backend, master et slave(s).
-Le répertoire \textbf{/env} se veut similaire au répertoire de même nom sur l’etna0. 
+Le répertoire \textbf{/env} se veut similaire au répertoire de même nom sur le cluster etna. 
 Les fonctions permettant la création du répertoire partagé sont dans le fichier \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/lib.sh}.
+
+\section{Lien federated entre la VM mysql et  la VM permanente}
+
+Les bases DB des banques sont accessibles depuis la VM mysql via des liens federated \url{https://dev.mysql.com/doc/refman/8.0/en/federated-storage-engine.html}( 
+voir \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/frontend/create_federated_links.sh}).
+
+\begin{mycolorbox}
+	Lorsque les schémas des bases DB de la VM permanente sont mis-à-jour, il faut penser à redéployer MicroCloud afin de mettre à jour les liens federated.
+\end{mycolorbox}
 
 \section{VM master}
 
