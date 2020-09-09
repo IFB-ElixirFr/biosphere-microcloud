@@ -169,7 +169,7 @@ Chaque workflow fait appel à différents modules qu'il faut installer au préal
 Le lancement des workflows se fait à l'aide du module bagsub lui-même lancé par jBPM. Nous avons fait quelques modifications du module bagsub afin qu'il puisse être utilisé dans l'environnement fourni par la VM master. Le script \script{import\_modules.sh} modifie le module bagsub, en supprimant l'option ulimit qui ne fonctionne pas en Dash, et, en ajoutant le paramètre MCA btl\_tcp\_if\_exclude pour exclure les interfaces réseaux docker0 et lo qui peuvent engendrer des conflits lors du lancement de jobs slurm.
 
 
-\subsection{Partage NFS entre les différentes VM} \label{nfsserver}
+\subsection{VM nfsserver} \label{nfsserver}
 
 Le composant nfsserver a été créé en s'inspirant du travail de Stéphane Delmotte.
 Il permet de fournir un dossier partagé entre les différentes VM.
@@ -179,7 +179,7 @@ Le code est dans le dossier nfsserver voir  \url{https://github.com/IFB-ElixirFr
 Le composant slipstream est dans le dossier nfsserver voir
 \url{https://nuv.la/module/ifb/devzone/MicroCloud/nfsserver/}.
 
-Le répertoire partagé \path{/var/nfsshare} du serveur NFS est monté dans le répertoire \path{/env}
+Le répertoire \path{/var/nfsshare} du serveur NFS est monté dans le répertoire \path{/env}
 des VM frontend, backend, master et slave(s).
 Le répertoire \textbf{/env} se veut similaire au répertoire de même nom sur le cluster etna. 
 Les fonctions permettant la création du répertoire partagé sont dans le fichier \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/lib.sh}.
