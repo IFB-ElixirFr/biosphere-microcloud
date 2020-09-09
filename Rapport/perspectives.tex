@@ -2,50 +2,50 @@
 
 \section{Bilan}
 
-\subsection{Un prototype fonctionnel}
+Le projet a globalement atteint ses objectifs car il permet de déployer une instance de MicroScope dans le cloud IFB (cf.~\autoref{subsec:prototype}).
 
-Le projet a permis de déployer une instance de MicroScope sur le cloud IFB
-comprenant la partie web, les BD et les WF de calcul.
+De plus, le travail sur ce projet a permis d'identifier des limites (au niveau de l'architecture ou du code) dans MicroScope (cf~\autoref{subsec:limites_microscope})
+et dans les architectures cloud (cf~\autoref{subsec:limites_coud}).
+
+Un des effets de bord du projet est que nous avons travaillé avec et sur BioMAJ (cf.\autoref{subsec:biomaj}).
+
+\subsection{Le prototype fonctionnel} \label{subsec:prototype}
+
+Le projet permet de déployer une instance de MicroScope
+comprenant la partie web, les BD et les WF de calcul
+sur le cloud IFB.
 Le prototype permet faire tourner un WF simple (DIRECTON).
+Les instructions pour le déployer sont dans le~\autoref{chap:deploiement}.
 
 Pour cela, nous avons réalisé un script d'installation de MicroScope.
 Ainsi, nous avons pu mieux comprendre les interactions entre les composants.
 Ceci a été en particulier utile pour le composant \component{jbpmmicroscope} dont l'installation et la configuration
-se sont avérées très délicates.
+se sont avérées très délicates\todo[inline]{faire une section sur ça.}.
 
-\todo[inline]{Il faut sans doute rajouter des choses dans cette partie.}
+\subsection{Identification de limites dans MicroScope} \label{subsec:limites_microscope}
 
-\subsection{Prise en main de BioMAJ et améliorations}
+Les principales limites dans l'architecture et la code de MicroScope sont:
+\begin{enumerate}
+	\item \emph{Fonctionnement sans données:} La première limite est
+	qu'il est très difficile (voire impossible) de faire tourner MicroScope sans au moins une séquence.
+	Ceci est lié au fait que beaucoup de pages font appel à des fonctions qui utilisent la séquence stockée dans la session.
+	\item \emph{Frontières entre les composants peu claires:} Une difficulté pour l'installation est que MicroScope est organisé en couches (DB, web, worfklow) et non en modules.
+	Ainsi, si on installe \component{micJBPMwrapper}, on a tous les WF mais il faut alors créer toutes les bases.
+	On ne peut pas installer juste un WF.
+	\item \emph{Dépendances:} MicroScope a de nombreuses dépendances mais elles ne sont pas listées.
+\end{enumerate}
 
-Un des objectifs du projet était d'utiliser \href{https://biomaj.genouest.org/}{BioMAJ}
-pour la mise à jour des banques dans le cloud.
-
-Le projet nous a permis de prendre en main le logiciel ce qui est intéressant car
-il est utilisé dans le projet PanGBank.
-De plus, il envisagé pour la copie des banques au Genoscope en remplaçant de Cabri.
-
-Au cours du projet, nous avons ajouté plusieurs fonctionnalités à BioMAJ:
-\begin{itemize}
-	\item Utilisation des hardlinks lors de la mise à jour d'une banque (ce qui est plus rapide et consomme moins de place).
-	\item Ajout d'options SSL (pour configurer l'accès aux ressources FTPS/HTTPS).
-	\item Refactoring des downloaders (nettoyage du code).
-	\item Possibilité de configurer le comportement en cas d'échec du téléchargement (combien de temps attendre et combien de fois ré-essayer).
-\end{itemize}
-
-Ce travail bénéficie à toute la communauté.
-
-\subsection{Identification de limites dans l'architecture de MicroScope}
-
-\todo[inline]{Fonctionnement sans données, frontières entre composants peu claires, dépendances.}
-
-\subsection{Identification de limites de l'architecture cloud}
+\subsection{Identification de limites de l'architecture cloud} \label{subsec:limites_coud}
 
 Le projet a aussi permis d'identifier un certains nombre de limites des architectures cloud.
 Ces limites concernent principalement le stockage.
 
 En effet, on ne veut pas reconstituer les banques pour chaque instance de MicroCloud.
 Pour cela, nous  avons déployé une VM permanente dans le cloud \cloudInstance{ifb-prabi-girofle}
-qui héberge les BD MySQL représentant les banques.\todo{Lien vers une section qui donne les détails techniques.}
+qui héberge les BD MySQL représentant les banques.
+Pour des raisons techniques, seules les VM déployées dans le cloud \cloudInstance{ifb-prabi-girofle}
+peuvent accéder à cette VM
+Ainsi MicroCloud ne peut être déployé que sur le cloud \cloudInstance{ifb-prabi-girofle}.\todo{Lien vers une section qui donne les détails techniques.}
 Cependant, nous n'avons pas suffisamment de place pour télécharger toutes les banques de MicroScope sur la VM permanente.
 À l'heure actuelle, seule la banque UNIPROTKBDB est disponible.
 
@@ -54,30 +54,58 @@ qui est utilisé pour mettre à disposition les banques sur toutes les VM (ces b
 On pourrait alors utiliser les WF de mise à jour des banques de MicroScope.
 Cependant ceci n'est pas encore disponible sur \cloudInstance{ifb-prabi-girofle} (sur lequel tourne la VM permanente).
 
+\subsection{Prise en main de BioMAJ et améliorations}\label{subsec:biomaj}
+
+Un des objectifs du projet était d'utiliser \href{https://biomaj.genouest.org/}{BioMAJ}
+pour la mise à jour des banques dans le cloud.\\
+
+Bien que cette partie n'est pas été abordée, le projet nous a permis de prendre en main le logiciel
+ce qui est intéressant car il est utilisé dans le projet PanGBank.
+De plus, il envisagé en remplaçant de Cabri pour la copie des banques au Genoscope.\\
+
+Au cours du projet, nous avons ajouté plusieurs fonctionnalités à BioMAJ:
+\begin{itemize}
+	\item Utilisation des hardlinks lors de la mise à jour d'une banque (ce qui est plus rapide et consomme moins de place).
+	\item Ajout d'options SSL (pour configurer l'accès aux ressources FTPS/HTTPS).
+	\item Refactoring des downloaders (nettoyage du code).
+	\item Possibilité de configurer le comportement en cas d'échec du téléchargement (temps d'attente entre les essais, nombre d'essais).
+\end{itemize}
+
+Ce travail bénéficie à toute la communauté.
+
 \section{Limites}
 
 Outre les limites évoquées plus haut, le prototype a plusieurs limites:
 \begin{itemize}
 	\item La version de MicroScope n'est pas fixée: les scripts d'installation incluent la dernière version disponible sur les serveurs du Genoscope.
-	\item À cause des ces limites, MicroCloud ne tourne que le cloud \cloudInstance{ifb-prabi-girofle}.
+	\item Comme expliqué plus haut, MicroCloud ne tourne que le cloud \cloudInstance{ifb-prabi-girofle}.
 	\item Du fait que les banques sont mises-à-jour manuellement sur la VM permanente, on peut avoir un décalage entre la version de MicroScope déployée dans le cloud
-	et la version des banques sur la VM.
+	      et la version des banques sur la VM.
 \end{itemize}
 
 \section{Améliorations}
 
 Les principales améliorations au prototype sont:
 \begin{itemize}
-	\item Résoudre le problèmes des banques. Ceci passe sans doute par l'améliorations de l'infrastructure de Biosphere.
+	\item Résoudre le problèmes des banques.
+	      Ceci passe sans doute par l'améliorations de l'infrastructure de Biosphere.
 	\item Améliorer l'installation des dépendances pour les WF.
 \end{itemize}
 
+\bigskip
+
 D'un point de vue technique, les améliorations sont:
 \begin{itemize}
+	\item Certains déploiements échouent.
+	      Il semble que ces problèmes soient dus à l'installation du paquet \textbf{procps}.
+	      Il vaut mieux en lancer 2 en même temps afin d'être sûr d'en avoir au moins un de fonctionnel.
     \item Améliorations du côté de biosphère-commons (option -e).
     \item Certains scripts sont sourcés avec une option (ce qui est valide en bash mais n'est pas portable).
     \item Paralléliser les scripts pour diminuer le temps de déploiement (en particulier pouvoir faire le maximum de choses avant d'attendre les signaux des autres composants).
-    \item le module \module{micPrestation} (utilisé pour insérer des organismes sans faire de prestation) ne fonctionne pas suite aux modifications du schéma de TAXONOMYDB.
+    \item L'insertion de séquences ne fonctionne pas.
+          \todo[inline]{Clarifier ça. Voir~\autoref{chap:deploiement}}
+    \item Le module \module{micPrestation} (utilisé pour insérer des organismes sans faire de prestation) ne fonctionne pas suite aux modifications du schéma de TAXONOMYDB réalisée dans \href{https://intranet.genoscope.cns.fr/agc/redmine/versions/142}{MicroScope Web 3.14.0}.
+          Il faudra modifier les scripts du module et supprimer les variables faisant référence aux colonnes O\_Gram, O\_genetic\_code et level.
 \end{itemize}
 
 Le code de déploiement des VM contient une liste d'améliorations (voir le fichier \filename{README.md} dans le répertoire de chaque composant sur le dépôt \href{https://github.com/IFB-ElixirFr/biosphere-commons}{GitHub biosphere-commons}).

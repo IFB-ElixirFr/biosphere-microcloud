@@ -1,64 +1,92 @@
-\chapter{Déployer une instance MicroCloud et l'utiliser}
+\chapter{Déployer une instance MicroCloud et l'utiliser} \label{chap:deploiement}
+
+Ce chapitre décrit l'utilisation de MicroCloud d'un point de vue utilisateur.
+Le lecteur est invité à lire la documentation sur le cloud IFB
+(voir \href{https://intranet.genoscope.cns.fr/agc/redmine/documents/86}{les documents de la formation IFB},
+\href{https://intranet.genoscope.cns.fr/agc/redmine/issues/6010}{la demande liée}
+et la page \href{https://intranet.genoscope.cns.fr/agc/redmine/projects/microcloud/wiki/Principes_de_fonctionnement_du_cloud_IFB}{[[Principes de fonctionnement du cloud IFB]]}
+dans le projet Redmine).
 
 \section{Déployer l'appliance MicroCloud}
 
-L'appliance MicroCloud est disponible dans le catalogue RAINBio \url{https://biosphere.france-bioinformatique.fr/catalogue/appliance/150/}. Pour déployer l'appliance, cliquer sur \textbf{Lancer} ou \textbf{Déploiement avancé}.
+L'appliance MicroCloud est disponible dans le catalogue RAINBio \url{https://biosphere.france-bioinformatique.fr/catalogue/appliance/150/}.
+Pour déployer l'appliance, cliquer sur \textbf{Lancer}.
+En utilisant \textbf{Déploiement avancé}, on peut choisir le nombre de nœuds de calculs.
 
-Les déploiements se font sur le cloud prabi-girofle sur lequel est installé la \hyperref[VM permanente]{VM permanente}.
+Les déploiements se font sur le cloud \cloudInstance{ifb-prabi-girofle} sur lequel est installé la \hyperref[VM permanente]{VM permanente}.
 Un déploiement prend environ 40 minutes.
-Il vaut mieux en lancer 2 en même temps afin d'être sûr d'en avoir au moins un de fonctionnel.
-Les échecs dûs au paquet \textbf{procps} sont assez fréquents.
+
+Il y a 2 points d'entrée du déploiement:
+\begin{enumerate}
+	\item \emph{L'interface web:} L'URL de la plateforme est: \nolinkurl{https://${IP_frontend}/home/index.php} où \nolinkurl{${IP_frontend}}
+	      est l'IP de la machine frontend.
+	      Cette URL est reporté dans l'interface RAINBio.
+	\item \emph{La machine frontale du cluster:} On peut aussi se connecter en SSH à la machine frontale du cluster
+	      dont l'IP est aussi reportée dans l'interface de RAINBio.
+	      Cette machine comprend les modules nécessaire au travail avec une instance (\module{micGenome}, \module{micJBPMwrapper}, etc.)
+	      et \component{jbpmmicroscope} pour déployer les WF.
+	      La plupart des chemins sont identique
+\end{enumerate}
+L'instance fournie contient les données de \textit{Acinetobacter baylyi} ADP1.
+Cependant, l'instance fournie ne contient pas d'utilisateur
+et aucun WF n'est configuré sur l'instance.
+De plus, les logiciels métier des WF ne sont pas installés.
+
+\section{Créer un nouvel utilisateur admin}
+
+Une fois l'instance déployée, on peut créer un utilisateur admin.
+
+Pour cela, il faut se connecter en ssh à la frontale puis exécuter le script \script{create\_user.sh}:
+\begin{lstlisting}[style=Bash]
+	ssh centos@${IP_master}
+	cd \path{/var/tmp/slipstream/biosphere-microcloud/master}
+	./create_user.sh LOGIN EMAIL admin
+\end{lstlisting}
+Le script demande le mot de passe à utiliser et crée l'utilisateur
 
 \section{Insérer un nouvel organisme (partie Syntactic)}
-Il faut avoir créé au préalable un utilisateur admin pour valider la prestation. En cela le script create\_user.sh peut servir.
-Il est dans le répertoire \path{/var/tmp/slipstream/biosphere-microcloud/master}
-\bigskip
 
-Nous avons également besoin des données de taxonomie pour ce nouvel organisme. Pour cela, il faut mettre à jour la base TAXONOMYDB de la VM permanente :
+La première étape est d'ajouter les données de taxonomie pour ce nouvel organisme.
+Pour cela, il faut mettre à jour la base TAXONOMYDB de la VM permanente :
 \begin{itemize}
 	\item en copiant les données de prod de TAXONOMYDB et pkgdb.O\_Taxonomy pour cet organisme
 	\item ou en déployant les WF TAXONOMYDB et TAXONOMY
 \end{itemize}
 \bigskip
 
-Pour insérer un nouvel organisme, il est possible d’utiliser le module micPrestation.
+Pour insérer un nouvel organisme, on utilise le module \module{micPrestation}.
 La procédure à suivre est la suivante :
 \begin{itemize}
 	\item Télécharger un fasta et décompresser l'archive.
 	\item Remplir le fichier Template\_Prestation.csv qui trouve dans le répertoire \path{/env/cns/proj/agc/module/products/micsyntactic/unix-noarch/lib}
-	\item Lancer la création de la prestation
-\end{itemize}
-
+	\item Lancer la création de la prestation:
 \begin{lstlisting}[style=bash]
 prestaBatch.py --csv Template_Prestation.csv -sd ${working_dir} -A ${Annotator_name} -T genome
 \end{lstlisting}
+        Il y a un exemple de fichier Template\_Prestation.csv dans le dossier prestation : \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/prestation}.
+    \item Accepter la prestation:
+    \begin{itemize}
+    	\item Depuis le web (avec l'utilisateur admin crée à la section précédente).
+    	\item Pour valider la prestation sans passer par le web faire :
+    	\begin{lstlisting}[style=SQL]
+    		USE PRESTATIONDB;
+    		SELECT * FROM Prestation;
+    		UPDATE Prestation SET PS_status='accepted' WHERE PS_status='inprogress';
+    	\end{lstlisting}
+    \end{itemize} 
+\end{itemize}
 
-Il y a un exemple de fichier Template\_Prestation.csv dans le dossier prestation : \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/prestation}.
-\newline
-\begin{mycolorbox}
-	Il faut un utilisateur admin pour accepter la prestation depuis l'interface web (voir le fichier : \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/create_user.sh}).
-\end{mycolorbox}
-\bigskip
 
-Pour valider la prestation sans passer par le web faire :
-\begin{lstlisting}[style=SQL]
-USE PRESTATIONDB;
-SELECT * FROM Prestation;
-UPDATE Prestation SET PS_status='accepted' WHERE PS_status='inprogress';
-\end{lstlisting}
-\bigskip
-Puis, pour insérer la nouvelle séquence en base, utiliser le module micGenome :
+Puis, pour insérer la nouvelle séquence en base, utiliser le module \module{micGenome}:
 \begin{lstlisting}[style=bash]
 loadGenomeNS.sh -p ${PS_id} -o ${O_id}
 \end{lstlisting}
 
 \begin{mycolorbox}
-	Une fois la prestation validée, reste le problème que les données des banques nécessaires pour le script \textbf{loadGenomeNS.sh} ne sont pas stockées dans la VM permanente actuellement (données des banques gérées par CABRI).
+	Les données des banques nécessaires pour le script \textbf{loadGenomeNS.sh} ne sont pas stockées dans la VM permanente actuellement (données des banques gérées par CABRI).
 	Cette étape ne fonctionne donc pas.
 \end{mycolorbox}
-
-Le module micPrestation n'est plus à jour. Le schéma de la base TAXONOMYDB ayant été mis à jour depuis la MEP 3.14.0, il faudra modifier les scripts du module et supprimer les variables faisant référence aux colonnes O\_Gram, O\_genetic\_code et level.
-\newline
+\todo[inline]{Quelles banques ? TAXONOMY ? Mettre à jour la référence dans les limites}
 
 \section{Déployer un WF}
 Les sources sont dans \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/jbpmmicroscope}

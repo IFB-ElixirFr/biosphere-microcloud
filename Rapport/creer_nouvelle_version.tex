@@ -105,7 +105,13 @@ Ces identifiants peuvent être modifiés dans le composant master : paramètres 
 
 \section{Mettre à jour la VM permanente}
 \todo{compléter cette partie}
-Pour cela s'inspirer du script microscopeCreateDBschemas.py, copier les fichiers ainsi générés sur la VM permanente et les insérés en base.
+
+\begin{mycolorbox}
+	Lorsque les schémas des bases DB de la VM permanente sont mis-à-jour, il faut penser à redéployer MicroCloud afin de mettre à jour les liens federated.
+\end{mycolorbox}
+
+
+Pour cela s'inspirer du script microscopeCreateDBschemas.py, copier les fichiers ainsi générés sur la VM permanente et les insérer en base.
 
 \section{Mettre à jour les scripts côtés serveur}
 
