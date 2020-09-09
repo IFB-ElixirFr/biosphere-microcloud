@@ -9,8 +9,8 @@ dans le projet Redmine).
 
 \section{Déployer l'appliance MicroCloud}
 
-L'appliance MicroCloud est disponible dans le catalogue RAINBio \url{https://biosphere.france-bioinformatique.fr/catalogue/appliance/150/}.
-Pour déployer l'appliance, cliquer sur \textbf{Lancer}.
+\href{https://biosphere.france-bioinformatique.fr/catalogue/appliance/150/}{L'appliance MicroCloud} est disponible dans le catalogue RAINBio.
+Pour la déployer, cliquer sur \textbf{Lancer}.
 En utilisant \textbf{Déploiement avancé}, on peut choisir le nombre de nœuds de calculs.
 
 Les déploiements se font sur le cloud \cloudInstance{ifb-prabi-girofle} sur lequel est installé la \hyperref[VM permanente]{VM permanente}.
@@ -20,29 +20,34 @@ Un déploiement prend environ 40 minutes.
 
 Il y a 2 points d'entrée du déploiement:
 \begin{enumerate}
-    \item \emph{L'interface web:} L'URL de la plateforme est: \nolinkurl{https://${IP_frontend}/home/index.php} où \nolinkurl{${IP_frontend}}
+    \item \emph{L'interface web}. L'URL de la plateforme est: \nolinkurl{https://${IP_frontend}/home/index.php} où \nolinkurl{${IP_frontend}}
           est l'IP de la machine frontend.
           Cette URL est reporté dans l'interface RAINBio.
-    \item \emph{La machine frontale du cluster:} On peut aussi se connecter en SSH à la machine frontale du cluster
+    \item \emph{La machine frontale du cluster}. On peut aussi se connecter en SSH à la machine frontale du cluster
           dont l'IP est aussi reportée dans l'interface de RAINBio.
           Cette machine comprend les modules nécessaire au travail avec une instance (\module{micGenome}, \module{micJBPMwrapper}, etc.)
           et \component{jbpmmicroscope} pour déployer les WF.
-          La plupart des chemins sont identique
+          Pour accéder aux modules, il faut sourcer le fichier \path{microcloud.profile} dans la VM master:
+          \begin{lstlisting}[style=bash,gobble=14]
+              $ source /env/cns/proj/agc/module/profiles/microcloud.profile
+          \end{lstlisting}
+            Le répertoire \path{/env/cns/} est identique à celui du Genoscope.
 \end{enumerate}
 L'instance fournie contient les données de \textit{Acinetobacter baylyi} ADP1.
 Cependant, l'instance fournie ne contient pas d'utilisateur
 et aucun WF n'est configuré sur l'instance.
-De plus, les logiciels métier des WF ne sont pas installés.
+De plus, les logiciels métier des WF ne sont pas installés
+sauf pour DIRECTON.
 
 \section{Créer un nouvel utilisateur admin}
 
 Une fois l'instance déployée, il faut créer un utilisateur admin.
 
 Pour cela, il faut se connecter en ssh à la frontale puis exécuter le script \script{create\_user.sh}:
-\begin{lstlisting}[style=Bash]
-    ssh centos@${IP_master}
-    cd \path{/var/tmp/slipstream/biosphere-microcloud/master}
-    ./create_user.sh LOGIN EMAIL admin
+\begin{lstlisting}[style=Bash,gobble=4]
+    $ ssh centos@${IP_master}
+    $ cd \path{/var/tmp/slipstream/biosphere-microcloud/master}
+    $ ./create_user.sh LOGIN EMAIL admin
 \end{lstlisting}
 Le script demande le mot de passe à utiliser et crée l'utilisateur
 
@@ -62,25 +67,25 @@ La procédure à suivre est la suivante :
     \item Télécharger un fasta et décompresser l'archive.
     \item Remplir le fichier Template\_Prestation.csv qui trouve dans le répertoire \path{/env/cns/proj/agc/module/products/micsyntactic/unix-noarch/lib}.
     \item Lancer la création de la prestation:
-          \begin{lstlisting}[style=bash]
-            $ prestaBatch.py --csv Template_Prestation.csv -sd ${working_dir} -A ${Annotator_name} -T genome
+          \begin{lstlisting}[style=bash,gobble=14]
+              $ prestaBatch.py --csv Template_Prestation.csv -sd ${working_dir} -A ${Annotator_name} -T genome
           \end{lstlisting}
           Il y a un exemple de fichier Template\_Prestation.csv dans le dossier prestation : \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/prestation}.
     \item Accepter la prestation:
           \begin{itemize}
               \item Depuis le web (avec l'utilisateur admin crée à la section précédente).
               \item Pour valider la prestation sans passer par le web faire :
-                    \begin{lstlisting}[style=SQL]
-                        USE PRESTATIONDB;
-                        SELECT * FROM Prestation;
-                        UPDATE Prestation SET PS_status='accepted' WHERE PS_status='inprogress';
+                    \begin{lstlisting}[style=SQL,gobble=22]
+                      USE PRESTATIONDB;
+                      SELECT * FROM Prestation;
+                      UPDATE Prestation SET PS_status='accepted' WHERE PS_status='inprogress';
                   \end{lstlisting}
-           \end{itemize} 
+           \end{itemize}
 \end{enumerate}
 
 Puis, pour insérer la nouvelle séquence en base, utiliser le module \module{micGenome}:
-\begin{lstlisting}[style=bash]
-  $ loadGenomeNS.sh -p ${PS_id} -o ${O_id}
+\begin{lstlisting}[style=bash,gobble=4]
+    $ loadGenomeNS.sh -p ${PS_id} -o ${O_id}
 \end{lstlisting}
 
 \begin{mycolorbox}
@@ -89,7 +94,7 @@ Puis, pour insérer la nouvelle séquence en base, utiliser le module \module{mi
 \end{mycolorbox}
 \todo[inline]{Quelles banques ? TAXONOMY ? Mettre à jour la référence dans les limites}
 
-\section{Déployer un WF}
+\section{Déployer un WF} \label{sec:deployer_wf}
 
 Les workflows sont déployés sur la VM master.
 À ce jour nous n'avons pu tester que le workflow DIRECTON.
