@@ -61,7 +61,7 @@ La procédure à suivre est la suivante :
 	\item Remplir le fichier Template\_Prestation.csv qui trouve dans le répertoire \path{/env/cns/proj/agc/module/products/micsyntactic/unix-noarch/lib}
 	\item Lancer la création de la prestation:
 \begin{lstlisting}[style=bash]
-prestaBatch.py --csv Template_Prestation.csv -sd ${working_dir} -A ${Annotator_name} -T genome
+$ prestaBatch.py --csv Template_Prestation.csv -sd ${working_dir} -A ${Annotator_name} -T genome
 \end{lstlisting}
         Il y a un exemple de fichier Template\_Prestation.csv dans le dossier prestation : \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/prestation}.
     \item Accepter la prestation:
@@ -77,9 +77,8 @@ prestaBatch.py --csv Template_Prestation.csv -sd ${working_dir} -A ${Annotator_n
 \end{itemize}
 
 
-Puis, pour insérer la nouvelle séquence en base, utiliser le module \module{micGenome}:
 \begin{lstlisting}[style=bash]
-loadGenomeNS.sh -p ${PS_id} -o ${O_id}
+$ loadGenomeNS.sh -p ${PS_id} -o ${O_id}
 \end{lstlisting}
 
 \begin{mycolorbox}
@@ -89,17 +88,14 @@ loadGenomeNS.sh -p ${PS_id} -o ${O_id}
 \todo[inline]{Quelles banques ? TAXONOMY ? Mettre à jour la référence dans les limites}
 
 \section{Déployer un WF}
-Les sources sont dans \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/jbpmmicroscope}
-\newline
 
-Répertoire de travail Tomcat : \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat}
-\newline
-
-Emplacement des modules : \path{/env/cns/proj/agc/module/products}
+Les workflows sont déployés sur la VM master. A ce jour nous n'avons pu tester que le workflow DIRECTON. Les sources du moteur de workflow jBPM sont dans le répertoire \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/jbpmmicroscope}.
+Le répertoire de travail Tomcat est le suivant : \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat}.
+Les modules sont localisés dans le répertorie : \path{/env/cns/proj/agc/module/products}
 \newline
 
 \begin{mycolorbox}
-	Si les données ont été copiées depuis la prod et non pas insérées avec micPrestation, il faut, dans la table pkgdb.Sequence, vérifier que le status des S\_id existants soit 'inFunctional' et non 'inProduction' pour que les WF prennent bien en compte les nouveaux S\_id.
+	Si les données ont été copiées depuis la prod et insérées telles quelles (sans micPrestation), il faut, dans la table pkgdb.Sequence, vérifier que le status des S\_id existants soit 'inFunctional' et non 'inProduction' pour que les WF prennent bien en compte les nouveaux S\_id.
 \end{mycolorbox}
 
 \begin{lstlisting}[style=SQL]
@@ -108,33 +104,33 @@ UPDATE Sequence SET S_status='inFunctional' WHERE S_status='inProduction';
 \end{lstlisting}
 
 \subsection{Déployer le WF DIRECTON}
-Modules requis : \textbf{bagsub-2.4.3}, \textbf{AGCScriptToolMic-2.0}, \textbf{micGenome-7.0.0}, \textbf{micJBPMwrapper-3.10.8} et \textbf{micPrestation-2.0} et \textbf{micDirecton-1.0}.
+Les modules requis pour le bon déploiement de ce workflow sont les suivants : \textbf{bagsub-2.4.3}, \textbf{AGCScriptToolMic-2.0}, \textbf{micGenome-7.0.0}, \textbf{micJBPMwrapper-3.10.8} et \textbf{micPrestation-2.0} et \textbf{micDirecton-1.0}.
 
 \begin{lstlisting}[style=bash]
 #### Deploy DIRECTON WF ####
-cd /env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat/
+$ cd /env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat/
 
 # Deploy WF
-JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl/BagSub/ -defNames DIRECTON
+$ JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl/BagSub/ -defNames DIRECTON
 
 # Deploy and start CRON
-JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl -defNames CRON_DIRECTON
+$ JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl -defNames CRON_DIRECTON
 JBPMmicroscope startCron -names CRON_DIRECTON
 
 # Check CRON and WF status
-JBPMmicroscope showProcessDefinitions
+$ JBPMmicroscope showProcessDefinitions
 
 # Force run
-JBPMmicroscope signalCron -names CRON_DIRECTON -signal forceRun; JBPMmicroscope signalProcess -pid 1
+$ JBPMmicroscope signalCron -names CRON_DIRECTON -signal forceRun; JBPMmicroscope signalProcess -pid 1
 
-JBPMmicroscope showProcessInstances
+$ JBPMmicroscope showProcessInstances
 
 # Take a look at running processes
-tomcat_logs
+$ tomcat_logs
 
 # relaunch WF if status is sendmail
-JBPMmicroscope relaunchAnalysis -pidCron 1 -pidWF 2 -signal forceRun
+$ JBPMmicroscope relaunchAnalysis -pidCron 1 -pidWF 2 -signal forceRun
 
 # Check tables pkgdb.Workflow_Jobs, pkgdb.Directon and pkgdb.GO_Directon_CPD
-mysqlagcdb
+$ mysqlagcdb
 \end{lstlisting}

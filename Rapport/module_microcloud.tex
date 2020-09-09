@@ -3,10 +3,10 @@
 Ce module contient les scripts utilisés côté Genoscope pour gérer les fichiers (logiciels et les données) nécessaires pour déployer MicroCloud (voir~\autoref{chap:creer_nouvelle_version}).
 C'est une version de développement basée sur \module[1.0]{micWEBdeploy}.
 
-Il est constitué des scripts suivants:
+Il est constitué des scripts suivants :
 \begin{description}
-	\item[\script{microscopeRelease.py}]: copie le code du web, compile le code JavaScript (avec \script{microscopeCompileJS.sh}), copie les schémas de certaines bases et les données minimales de certaines bases.
-	\item[\script{microscopeCopyOid.py}]: permet de copier les données de l'organisme \textit{Acinetobacter baylyi} (O\_id=31)
+	\item[\script{microscopeRelease.py}] : copie le code du web, compile le code JavaScript (avec \script{microscopeCompileJS.sh}), copie les schémas de certaines bases et les données minimales de certaines bases.
+	\item[\script{microscopeCopyOid.py}] : permet de copier les données de l'organisme \textit{Acinetobacter baylyi} (O\_id=31)
 	\item[\script{createModulesTarball.py}]: créé les archives des modules à importer dans MicroCloud.
 \end{description}
 
@@ -28,7 +28,7 @@ Créé le fichier \path{modules.txt} dans \path{/env/cns/wwwext/html/agc/ftp/Mic
 Puis, la VM master importe les modules listés dans modules.txt (voir \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/import_modules.sh}).
 
 \begin{lstlisting}[style=bash]
-createModulesTarball.py --modules_list bagsub-2.4.3 AGCScriptToolMic-2.0 micGenome-7.0.0 micJBPMwrapper-3.10.8 micPrestation-2.0 micDirecton-1.0
+$ createModulesTarball.py --modules_list bagsub-2.4.3 AGCScriptToolMic-2.0 micGenome-7.0.0 micJBPMwrapper-3.10.8 micPrestation-2.0 micDirecton-1.0
 \end{lstlisting}
 
 \section{\script{microscopeCopyOid.py}}
@@ -38,29 +38,42 @@ createModulesTarball.py --modules_list bagsub-2.4.3 AGCScriptToolMic-2.0 micGeno
 \end{mycolorbox}
 
 \begin{lstlisting}[style=bash]
-microscopeCopyOid.py --oid 31 --output /env/cns/wwwext/html/agc/ftp/MicroCloud/microscope_31.tar.gz
+$ Oid=31
+$ microscopeCopyOid.py --oid ${Oid} --output /env/cns/wwwext/html/agc/ftp/MicroCloud/microscope_${Oid}.tar.gz
 \end{lstlisting}
 
 \section{\script{microscopeCreateDBschemas.py}}
 A permis de générer les .sql utilisés pour créer les schémas des bases de données dans la VM permanente.
 
 \begin{lstlisting}[style=bash]
-microscopeCreateDBschemas.py --output /env/cns/wwwext/html/agc/ftp/MicroCloud/DBschemas.tar.gz
+$ microscopeCreateDBschemas.py --output /env/cns/wwwext/html/agc/ftp/MicroCloud/DBschemas.tar.gz
 \end{lstlisting}
 
 \section{\script{taxonomyDBCopyTaxId.py}}
 Permet de copier les données de la base TAXONOMYDB pour un tax\_id donné.
 
 \begin{lstlisting}[style=bash]
-taxonomyDBCopyTaxId.py --tax_id 202950 --output /env/cns/wwwext/html/agc/ftp/MicroCloud/taxonomyDBCopyTaxId.tar.gz
+$ taxonomyDBCopyTaxId.py --tax_id 202950 --output /env/cns/wwwext/html/agc/ftp/MicroCloud/taxonomyDBCopyTaxId.tar.gz
 \end{lstlisting}
 
-\section{Les scripts côtés server}
+\section{Les scripts côté serveur}
 
-Ils sont accessibles à l'adresse : \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/tree/master/frontend} et sont exécutés sur la VM frontend.
+Les scripts coté serveur importent et utilisent les fichiers générés par le module \micWEBdeployVer.
+\bigskip
+
+Les scripts concernant l'installation de MicroScope sont dans le dossier \textbf{frontend} \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master} :
 \begin{description}
-	\item[\script{install\_microscope.sh}] :  ce script contient les commandes SQL permettant de créer les schémas des bases de données et d'insérer les données dans le serveur de la VM mysql. Il utilise les fichiers générés par le script microscopeRelease.py.
-	\item[\script{create\_federated\_links.sh}] : ce script permet de créer des liens federated entre le serveur de la VM mysql et le serveur de la VM permanente.
-	\item[\script{import\_Oid.sh}] : ce script sert à insérer les données récupérées à l'aide du script microscopeCopyOid.py. Il permet de copier les web\_data dans le répertoire approprié.
+	\item[\script{install\_microscope.sh}] Le frontend est basé sur Apache2, PHP7.1 et phpMyAdmin. L'installation est double : il faut d'abord configurer quelques bases (Apache2, PHP7.1 et phpMyAdmin) et monter le répertoire partagé après avoir configuré MicroScope.
+	\item[\script{import\_Oid.sh}] permet de créer un utilisateur et un schéma MySQL et d'insérer les données de l'Oid 31 (cela est nécessaire car le Web ne fonctionne pas sans données), et il permet aussi de copier les web\_data dans le répertoire approprié.
+	\item[\script{create\_federated\_links.sh}] permet de créer des liens fédérés depuis la VM mysql vers la VM permanente.
 \end{description}
+\bigskip
 
+Les scripts concernant l'installation de jBPM sont dans le dossier \textbf{master} \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master}. Ces scripts sont décrits ci-dessous. Ils permettent de configurer l'environnement du moteur de workflows jBPM et de lancer un workflow simple (DIRECTON). L'ordonnancement des wokflows est ensuite géré à l'aide du cluster SLURM installé sur les VM master et slaves.
+
+\begin{description}
+	\item[\script{install\_jbpm.sh}] : fait l'installation du moteur de workflow jBPM et du server d'application Tomcat.
+	\item[\script{config\_jbpm.sh}] : gère la création du schéma de la base de données JBPMmicroscope ainsi que les configurations de base.
+	\item[\script{create\_user.sh}] : est utilisé pour créer un utilisateur MicroScope avoir à passer par l'interface.
+	\item[\script{import\_modules.sh}] : permet d'importer et d'installer les modules de MicroScope (bagsub, AGCScriptToolMic, micGenome, micJBPMwrapper, micPrestation, micDirecton, ...).
+\end{description}
