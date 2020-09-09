@@ -26,13 +26,13 @@ se sont avérées très délicates\todo{faire une section sur ça.}.
 
 Les principales limites dans l'architecture et la code de MicroScope sont:
 \begin{enumerate}
-	\item \emph{Fonctionnement sans données:} La première limite est
-	qu'il est très difficile (voire impossible) de faire tourner MicroScope sans au moins une séquence.
-	Ceci est lié au fait que beaucoup de pages font appel à des fonctions qui utilisent la séquence stockée dans la session.
-	\item \emph{Frontières entre les composants peu claires:} Une difficulté pour l'installation est que MicroScope est organisé en couches (DB, web, worfklow) et non en modules.
-	Ainsi, si on installe \component{micJBPMwrapper}, on a tous les WF mais il faut alors créer toutes les bases.
-	On ne peut pas installer juste un WF.
-	\item \emph{Dépendances:} MicroScope a de nombreuses dépendances mais elles ne sont pas listées.
+    \item \emph{Fonctionnement sans données:} La première limite est
+    qu'il est très difficile (voire impossible) de faire tourner MicroScope sans au moins une séquence.
+    Ceci est lié au fait que beaucoup de pages font appel à des fonctions qui utilisent la séquence stockée dans la session.
+    \item \emph{Frontières entre les composants peu claires:} Une difficulté pour l'installation est que MicroScope est organisé en couches (DB, web, worfklow) et non en modules.
+    Ainsi, si on installe \component{micJBPMwrapper}, on a tous les WF mais il faut alors créer toutes les bases.
+    On ne peut pas installer juste un WF.
+    \item \emph{Dépendances:} MicroScope a de nombreuses dépendances mais elles ne sont pas listées.
 \end{enumerate}
 
 \subsection{Identification de limites de l'architecture cloud} \label{subsec:limites_coud}
@@ -65,10 +65,10 @@ De plus, il envisagé en remplaçant de CABRI pour la copie des banques au Genos
 
 Au cours du projet, nous avons ajouté plusieurs fonctionnalités à BioMAJ:
 \begin{itemize}
-	\item Utilisation des hardlinks lors de la mise à jour d'une banque (ce qui est plus rapide et consomme moins de place).
-	\item Ajout d'options SSL (pour configurer l'accès aux ressources FTPS/HTTPS).
-	\item Refactoring des downloaders (nettoyage du code).
-	\item Possibilité de configurer le comportement en cas d'échec du téléchargement (temps d'attente entre les essais, nombre d'essais).
+    \item Utilisation des hardlinks lors de la mise à jour d'une banque (ce qui est plus rapide et consomme moins de place).
+    \item Ajout d'options SSL (pour configurer l'accès aux ressources FTPS/HTTPS).
+    \item Refactoring des downloaders (nettoyage du code).
+    \item Possibilité de configurer le comportement en cas d'échec du téléchargement (temps d'attente entre les essais, nombre d'essais).
 \end{itemize}
 
 Ce travail bénéficie à toute la communauté.
@@ -77,19 +77,19 @@ Ce travail bénéficie à toute la communauté.
 
 Outre les limites évoquées plus haut, le prototype a plusieurs limites:
 \begin{itemize}
-	\item La version de MicroScope n'est pas fixée: les scripts d'installation incluent la dernière version disponible sur les serveurs du Genoscope.
-	\item Comme expliqué plus haut, MicroCloud ne tourne que le cloud \cloudInstance{ifb-prabi-girofle}.
-	\item Du fait que les banques sont mises-à-jour manuellement sur la VM permanente, on peut avoir un décalage entre la version de MicroScope déployée dans le cloud
-	      et la version des banques sur la VM.
+    \item La version de MicroScope n'est pas fixée: les scripts d'installation incluent la dernière version disponible sur les serveurs du Genoscope.
+    \item Comme expliqué plus haut, MicroCloud ne tourne que le cloud \cloudInstance{ifb-prabi-girofle}.
+    \item Du fait que les banques sont mises-à-jour manuellement sur la VM permanente, on peut avoir un décalage entre la version de MicroScope déployée dans le cloud
+          et la version des banques sur la VM.
 \end{itemize}
 
 \section{Améliorations}
 
 Les principales améliorations au prototype sont:
 \begin{itemize}
-	\item Résoudre le problèmes des banques.
-	      Ceci passe sans doute par l'améliorations de l'infrastructure de Biosphere.
-	\item Améliorer l'installation des dépendances pour les WF.
+    \item Résoudre le problèmes des banques.
+          Ceci passe sans doute par l'améliorations de l'infrastructure de Biosphere.
+    \item Améliorer l'installation des dépendances pour les WF.
 \end{itemize}
 \bigskip
 
@@ -97,9 +97,9 @@ Les principales améliorations au prototype sont:
 
 D'un point de vue technique, les améliorations sont:
 \begin{itemize}
-	\item Certains déploiements échouent.
-	      Il semble que ces problèmes soient dus à l'installation du paquet \textbf{procps}.
-	      Il vaut mieux en lancer 2 en même temps afin d'être sûr d'en avoir au moins un de fonctionnel.
+    \item Certains déploiements échouent.
+          Il semble que ces problèmes soient dus à l'installation du paquet \textbf{procps}.
+          Il vaut mieux en lancer 2 en même temps afin d'être sûr d'en avoir au moins un de fonctionnel.
     \item Améliorations du côté de biosphère-commons (option -e).
     \item Certains scripts sont sourcés avec une option (ce qui est valide en bash mais n'est pas portable).
     \item Paralléliser les scripts pour diminuer le temps de déploiement (en particulier pouvoir faire le maximum de choses avant d'attendre les signaux des autres composants).

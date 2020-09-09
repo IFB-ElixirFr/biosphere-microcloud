@@ -1,7 +1,7 @@
 \chapter{Mettre à jour des composants pour MicroCloud} \label{chap:creer_nouvelle_version}
 
 \begin{mycolorbox}
-	METTRE ICI LES COMMANDES POUR CRÉER DES RELEASES, COPIER DES BASES, etc.
+    METTRE ICI LES COMMANDES POUR CRÉER DES RELEASES, COPIER DES BASES, etc.
 \end{mycolorbox}
 
 Ce chapitre présente les commandes utilisées pour créer une nouvelle version
@@ -40,7 +40,7 @@ $ microscopeCopyOid.py --oid ${Oid} --output /env/cns/wwwext/html/agc/ftp/MicroC
 \end{lstlisting}
 
 \begin{mycolorbox}
-	Pour le moment seules les données concernant l'O\_id 31 peuvent être récupérées avec le script microscopeCopyOid.py car certains organismes ont besoin de tables spécifiques de la base GO\_SPE (typiquement la table acineto\_KO pour Acinetobacter baylyi).
+    Pour le moment seules les données concernant l'O\_id 31 peuvent être récupérées avec le script microscopeCopyOid.py car certains organismes ont besoin de tables spécifiques de la base GO\_SPE (typiquement la table acineto\_KO pour Acinetobacter baylyi).
 \end{mycolorbox}
 
 Ensuite, mettre à jour le lien symbolique pour qu'il pointe vers la nouvelle archive :
@@ -62,7 +62,7 @@ Actuellement l'environnement de MicroCloud ne permet d'utiliser que les modules 
 \newline
 
 \begin{mycolorbox}
-	Lors de tout ajout de nouveaux modules, il faut mettre à jour le fichier \path{microcloud.profile} et créer les variables d'environnement utilisées par les modules (voir \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/04_deployment.sh}).
+    Lors de tout ajout de nouveaux modules, il faut mettre à jour le fichier \path{microcloud.profile} et créer les variables d'environnement utilisées par les modules (voir \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/04_deployment.sh}).
 \end{mycolorbox}
 
 Puis sourcer le fichier \path{microcloud.profile} dans la VM master :
@@ -77,16 +77,16 @@ Dans cette section JBPMmicroscope peut faire référence à la base de données 
 
 Pour mettre à jour jbpmmicroscope, il faut avant tout récupérer le projet jbpmmicroscope depuis le dépôt SVN puis regénérer les fichiers suivants :
 \begin{itemize}
-	\item \script{jbpmmicroscope.jar}
-	\item \script{SystemActorsLauncher.jar}
-	\item \script{jbpmmicroscope-server.war}
+    \item \script{jbpmmicroscope.jar}
+    \item \script{SystemActorsLauncher.jar}
+    \item \script{jbpmmicroscope-server.war}
 \end{itemize}
 \bigskip
 
 Pour ce faire, il faut déjà mettre à jour le fichier \path{~/.m2/genosphere-settings.xml} :
 \begin{itemize}
-	\item Mettre à jour le local path
-	\item Supprimer/modifier le login et le mot de passe
+    \item Mettre à jour le local path
+    \item Supprimer/modifier le login et le mot de passe
 \end{itemize}
 \bigskip
 

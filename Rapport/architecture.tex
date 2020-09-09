@@ -7,25 +7,25 @@ Il y 6 machines virtuelles (VM) au total dont 5 conçues depuis Nuvla et
 1 VM permanente déployée sur le cloud \cloudInstance{ifb-prabi-girofle}.
 
 \begin{figure}[htp]
-	\centering
-	\includegraphics[width=\linewidth]{../Logical_Architecture}
-	\caption{Schéma de l'architecture de MicroCloud.}
-	\label{fig:architecture}
+    \centering
+    \includegraphics[width=\linewidth]{../Logical_Architecture}
+    \caption{Schéma de l'architecture de MicroCloud.}
+    \label{fig:architecture}
 \end{figure}
 
 Un des buts est de mimer ce qui est fait au Genoscope
 c'est-à-dire que:
 \begin{enumerate}
-	\item Les différents composants (serveur web, serveur de BD) tournent sur des machines séparées.
-	\item Les calculs tournent sur des machines séparées: l'architecture contient donc un cluster (basé sur SLURM).
+    \item Les différents composants (serveur web, serveur de BD) tournent sur des machines séparées.
+    \item Les calculs tournent sur des machines séparées: l'architecture contient donc un cluster (basé sur SLURM).
 \end{enumerate}
 Une des seules différences est que le serveur \component{jbpmmicroscope} tourne
 sur la machine frontale du cluster.
 
 Il y a 2 serveurs de bases de données dans MicroCloud:
 \begin{itemize}
-	\item Un serveur MySQL installé via Docker dans la VM MySQL.
-	\item Un serveur MySQL sur la VM permanente.
+    \item Un serveur MySQL installé via Docker dans la VM MySQL.
+    \item Un serveur MySQL sur la VM permanente.
 \end{itemize}
 
 \section {Installation et déploiement des VM}
@@ -42,11 +42,11 @@ en particulier la section
 
 Les sections suivantes présentent quelques détails sur les VM:
 \begin{itemize}
-	\item frontend voir section \ref{frontend}
-	\item mysql voir section \ref{mysql}
-	\item VM permanente voir section \ref{VMpermanente}
-	\item master et slave voir section \ref{master&slave}
-	\item nfsserver voir section \ref{nfsserver}
+    \item frontend voir section \ref{frontend}
+    \item mysql voir section \ref{mysql}
+    \item VM permanente voir section \ref{VMpermanente}
+    \item master et slave voir section \ref{master&slave}
+    \item nfsserver voir section \ref{nfsserver}
 \end{itemize}
 \bigskip
 
@@ -69,9 +69,9 @@ La VM frontend utilise un client mariaDB (et non pas MySQL du fait de conflits e
 
 
 \begin{mycolorbox}
-	Si le message d’erreur \textbf{256} s’affiche, cela signifie simplement qu’il n’y a pas d’organisme en base.
-	De ce fait, la plupart des onglets ainsi que le formulaire d’authentification sont inaccessibles.
-	Ceci ne doit pas arriver si le déploiement se passe bien car on on copie les données d'un organisme.
+    Si le message d’erreur \textbf{256} s’affiche, cela signifie simplement qu’il n’y a pas d’organisme en base.
+    De ce fait, la plupart des onglets ainsi que le formulaire d’authentification sont inaccessibles.
+    Ceci ne doit pas arriver si le déploiement se passe bien car on on copie les données d'un organisme.
 \end{mycolorbox}
 
 \subsection {VM mysql}\label{mysql}
@@ -117,10 +117,10 @@ $ ssh root@134.214.33.214
 
 Sur le serveur MySQL, il y a les schémas des bases DB et une partie des données de la base pour les tests (nous avons testés les onglets \textbf{Genome Browser}, \textbf{Identical Gene Names}) :
 \begin{itemize}
-	\item les bases ANTISMASHDB, CARDDB, COGDB, EGGNOGDB, ENZYMEDB, ESSDB, FIGFAMDB, INTERPRODATADB, KEGGDB, RHEADB, TAXONOMYDB, TIGRFAMDB, UNIFIREDB, UNIPROTKBDB, VIRULENCEDB, microcyc, DBWorkflow
-	\item les données (en partie) de la base UNIPROTKBDB pour les tests
-	\item les données de DBWORKFLOW
-	\item les données de l'organisme \textit{Acinetobacter} dans la base TAXONOMYDB (taxon id 202950)
+    \item les bases ANTISMASHDB, CARDDB, COGDB, EGGNOGDB, ENZYMEDB, ESSDB, FIGFAMDB, INTERPRODATADB, KEGGDB, RHEADB, TAXONOMYDB, TIGRFAMDB, UNIFIREDB, UNIPROTKBDB, VIRULENCEDB, microcyc, DBWorkflow
+    \item les données (en partie) de la base UNIPROTKBDB pour les tests
+    \item les données de DBWORKFLOW
+    \item les données de l'organisme \textit{Acinetobacter} dans la base TAXONOMYDB (taxon id 202950)
 \end{itemize}
 
 Le script \script{microscopeDBschema.py} du module MicroCloud a été utilisé pour créer les schémas.
