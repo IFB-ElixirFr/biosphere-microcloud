@@ -45,18 +45,18 @@ pour importer les données syntaxique d'un organisme.
 
 Pour créer une archive des données d'un organisme, utiliser le script \script{microscopeCopyOid.py} de la manière suivante :
 \begin{lstlisting}[style=bash]
-$ Oid=31
+$ Oid=\theOid{}
 $ microscopeCopyOid.py --oid ${Oid} --output /env/cns/wwwext/html/agc/ftp/MicroCloud/microscope_${Oid}.tar.gz
 \end{lstlisting}
 
 \begin{mycolorbox}
-    Pour le moment seules les données concernant l'O\_id 31 peuvent être récupérées avec le script microscopeCopyOid.py car certains organismes ont besoin de tables spécifiques de la base GO\_SPE (typiquement la table acineto\_KO pour Acinetobacter baylyi).
+    Pour le moment seules les données concernant l'O\_id \theOid{} peuvent être récupérées avec le script microscopeCopyOid.py car certains organismes ont besoin de tables spécifiques de la base GO\_SPE (typiquement la table acineto\_KO pour \theOrg{}).
     C'est cet organisme qui est installé dans MicroCloud.
 \end{mycolorbox}
 
 Ensuite, mettre à jour le lien symbolique pour qu'il pointe vers la nouvelle archive :
 \begin{lstlisting}[style=bash]
-$ Oid=31
+$ Oid=\theOid{}
 $ cd /env/cns/wwwext/html/agc/ftp/MicroCloud
 $ ln -s microscope_${Oid}.tar.gz microscope_${Oid}-latest.tar.gz
 \end{lstlisting}

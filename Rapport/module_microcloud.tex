@@ -6,7 +6,7 @@ C'est une version de développement basée sur \module[1.0]{micWEBdeploy}.
 Il est constitué des scripts suivants :
 \begin{description}
     \item[\script{microscopeRelease.py}] : copie le code du web, compile le code JavaScript (avec \script{microscopeCompileJS.sh}), copie les schémas de certaines bases et les données minimales de certaines bases.
-    \item[\script{microscopeCopyOid.py}] : permet de copier les données de l'organisme \textit{Acinetobacter baylyi} (O\_id=31)
+    \item[\script{microscopeCopyOid.py}] : permet de copier les données de l'organisme \theOrg{} (O\_id=\theOid)
     \item[\script{createModulesTarball.py}]: créé les archives des modules à importer dans MicroCloud.
 \end{description}
 
@@ -36,11 +36,11 @@ $ createModulesTarball.py --modules_list bagsub-2.4.3 AGCScriptToolMic-2.0 micGe
 \section{\script{microscopeCopyOid.py}}
 
 \begin{mycolorbox}
-    Pour le moment seules les données concernant l'O\_id 31 peuvent être récupérées avec le script microscopeCopyOid.py car certains organismes ont besoin de tables spécifiques de la base GO\_SPE (typiquement la table acineto\_KO pour Acinetobacter baylyi).
+    Pour le moment seules les données concernant l'O\_id \theOid{} peuvent être récupérées avec le script microscopeCopyOid.py car certains organismes ont besoin de tables spécifiques de la base GO\_SPE (typiquement la table acineto\_KO pour \theOrg{}).
 \end{mycolorbox}
 
 \begin{lstlisting}[style=bash]
-$ Oid=31
+$ Oid=\theOid{}
 $ microscopeCopyOid.py --oid ${Oid} --output /env/cns/wwwext/html/agc/ftp/MicroCloud/microscope_${Oid}.tar.gz
 \end{lstlisting}
 
@@ -66,7 +66,7 @@ Les scripts coté serveur importent et utilisent les fichiers générés par le 
 Les scripts concernant l'installation de MicroScope sont dans le dossier \textbf{frontend} \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master} :
 \begin{description}
     \item[\script{install\_microscope.sh}] Le frontend est basé sur Apache2, PHP7.1 et phpMyAdmin. L'installation est double : il faut d'abord configurer quelques bases (Apache2, PHP7.1 et phpMyAdmin) et monter le répertoire partagé après avoir configuré MicroScope.
-    \item[\script{import\_Oid.sh}] permet de créer un utilisateur et un schéma MySQL et d'insérer les données de l'Oid 31 (cela est nécessaire car le Web ne fonctionne pas sans données), et il permet aussi de copier les web\_data dans le répertoire approprié.
+    \item[\script{import\_Oid.sh}] permet de créer un utilisateur et un schéma MySQL et d'insérer les données de l'Oid \theOid{} (cela est nécessaire car le Web ne fonctionne pas sans données), et il permet aussi de copier les web\_data dans le répertoire approprié.
     \item[\script{create\_federated\_links.sh}] permet de créer des liens fédérés depuis la VM mysql vers la VM permanente.
 \end{description}
 \bigskip
