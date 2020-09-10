@@ -69,8 +69,8 @@ La VM frontend utilise un client mariaDB (et non pas MySQL du fait de conflits e
 
 
 \begin{mycolorbox}
-    Si le message d’erreur \textbf{256} s’affiche, cela signifie simplement qu’il n’y a pas d’organisme en base.
-    De ce fait, la plupart des onglets ainsi que le formulaire d’authentification sont inaccessibles.
+    Si le message d'erreur \textbf{256} s’affiche, cela signifie simplement qu’il n’y a pas d’organisme en base.
+    De ce fait, la plupart des onglets ainsi que le formulaire d'authentification sont inaccessibles.
     Ceci ne doit pas arriver si le déploiement se passe bien car on on copie les données d'un organisme.
 \end{mycolorbox}
 
@@ -144,7 +144,7 @@ $ LOAD DATA INFILE '/var/lib/mysql-files/$file.DB' INTO TABLE $table;
 
 \todo[inline]{Ajouter les notes sur jbpmmicroscope ici ? Notes sur conda et l'installation des modules ?}
 
-Le code d’installation de ces VM est dans le dépôt de biosphere-commons : \url{https://github.com/IFB-ElixirFr/biosphere-commons}.
+Le code d'installation de ces VM est dans le dépôt de biosphere-commons : \url{https://github.com/IFB-ElixirFr/biosphere-commons}.
 L'image de base est une image Ubuntu 18. Le code slipstream est basé sur les travaux de Jonathan Lorenzo et Bryan Brancotte. 
 
 Les composants slurm master et slave ont été copiés depuis l'appliance Slurm\_Cluster\_ubuntu18 voir \url{https://nuv.la/module/ifb/devzone/jlorenzo/cluster/Slurm_Cluster_ubuntu18}.
