@@ -6,7 +6,7 @@ C'est une version de développement basée sur \module[1.0]{micWEBdeploy}.
 Il est constitué des scripts suivants :
 \begin{description}
     \item[\script{microscopeRelease.py}] : copie le code du web, compile le code JavaScript (avec \script{microscopeCompileJS.sh}), copie les schémas de certaines bases et les données minimales de certaines bases.
-    \item[\script{microscopeCopyOid.py}] : permet de copier les données de l'organisme \theOrg{} (O\_id=\theOid)
+    \item[\script{microscopeCopyOid.py}] : permet de copier les données de l'organisme \theOrg{} (Oid=\theOid)
     \item[\script{createModulesTarball.py}]: créé les archives des modules à importer dans MicroCloud.
 \end{description}
 
@@ -36,7 +36,7 @@ $ createModulesTarball.py --modules_list bagsub-2.4.3 AGCScriptToolMic-2.0 micGe
 \section{\script{microscopeCopyOid.py}}
 
 \begin{mycolorbox}
-    Pour le moment seules les données concernant l'O\_id \theOid{} peuvent être récupérées avec le script microscopeCopyOid.py car certains organismes ont besoin de tables spécifiques de la base GO\_SPE (typiquement la table acineto\_KO pour \theOrg{}).
+    Pour le moment seules les données concernant l'Oid \theOid{} peuvent être récupérées avec le script microscopeCopyOid.py car certains organismes ont besoin de tables spécifiques de la base GO\_SPE (typiquement la table acineto\_KO pour \theOrg{}).
 \end{mycolorbox}
 
 \begin{lstlisting}[style=bash]
