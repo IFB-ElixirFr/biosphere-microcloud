@@ -6,7 +6,6 @@ par les scripts d'installation des VM pour déployer MicroScope.
 Ces opérations doivent être effectuées au Genoscope.
 Les détails techniques sont dans le~\autoref{chap:micwebdeploy}.
 Le répertoire d'export des archives et autres fichiers sur etna0 est \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/}.
-\bigskip
 
 Les composants nécessaires sont:
 \begin{itemize}
@@ -73,7 +72,6 @@ $ createModulesTarball.py --modules_list bagsub-2.4.3 AGCScriptToolMic-2.0 micGe
 \end{lstlisting}
 
 Actuellement l'environnement de MicroCloud ne permet d'utiliser que les modules \module[2.4.3]{bagsub}, \module[2.0]{AGCScriptToolMic}, \module[7.0.0]{micGenome}, \module[3.10.8]{micJBPMwrapper}, \module[2.0]{micPrestation} et \module[1.0]{micDirecton}.
-\newline
 
 \begin{mycolorbox}
     Lors de tout ajout de nouveaux modules, il faut modifier le script de l'étape Depolyment de la VM master
@@ -98,7 +96,6 @@ Il faut ajouter les sources (qui sont nécessaires pour le déploiement des work
 $ jar uf jbpmmicroscope-client/target/jbpmmicroscope.jar -C ./ src/
 $ jar uf jbpmmicroscope-client/target/jbpmmicroscope.jar -C ./ JBPMmicroscope
 \end{lstlisting}
-\bigskip
 
 Il faut compiler \component{jbpmmicroscope-server} avec le profil \texttt{config-microcloud}:
 \begin{lstlisting}[style=bash]
@@ -106,14 +103,11 @@ $ mvn -Pconfig-microcloud -s ~/.m2/genosphere-settings.xml package
 \end{lstlisting}
 Cette commande crée les fichiers \filename{SystemActorsLauncher.jar} et \filename{jbpmmicroscope-server.war}
 dans le dossier \path{jbpmmicroscope-server/target}.
-\bigskip
 
 Copier le .war et les .jar sur etna0 dans le répertoire \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/}.
 La VM master importe ces fichiers à l'aide de liens symboliques.
-\newline
 
 Le schéma de la base \DB{JBPMmicroscope} est créé automatiquement par hibernate (voir le paramètre \textbf{hbm2ddl.auto} dans \filename{hibernate.cfg.xml}) lors de la première exécution d'une commande \script{JBPMmicroscope}.
-\newline
 
 Les identifiants de connexion à la base \DB{JBPMmicroscope} (via hibernate) sont les suivants:
 \begin{description}
@@ -122,7 +116,6 @@ Les identifiants de connexion à la base \DB{JBPMmicroscope} (via hibernate) son
 \end{description}
 Ces identifiants peuvent être modifiés dans le composant master, ils correspondent aux paramètres \textbf{jbpm\_user} et \textbf{jbpm\_password}.
 Pour modifier ces identifiants, il faut modifier le fichier \path{hibernate.cfg.xml}, régénérer les .jar et le .war et les copier dans \path{/env/cns/wwwext/html/agc/ftp/MicroCloud}).\todo{Mettre dans partie technique}
-\newline
 
 \component{jbpmmicroscope} nécessite un serveur Tomcat pour fonctionner.
 Tomcat 9 est installé dans le composant master : \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat}.
@@ -137,7 +130,6 @@ Ces identifiants peuvent être modifiés dans le composant master, ils correspon
 \todo{Compléter cette partie + ajouter un lien au début}
 
 Il faut penser à mettre à jour les tables de la VM permanente en fonction des besoins. Pour cela, s'inspirer du script \script{microscopeCreateDBschemas.py}, par exemple, et utiliser les fichiers de données ainsi générés.
-\bigskip
 
 Pour copier les données, mieux vaut utiliser rsync et copier les données dans le répertoire \textbf{/var/lib/mysql-files/} de la VM permanente avant insertion en base :
 \begin{lstlisting}[style=bash]

@@ -15,7 +15,6 @@ Comme expliqué, ce module est très lié aux scripts de déploiement des VM.
 \section{\script{microscopeRelease.py}}
 
 Les schémas copiés sont : pkgdb, REFSEQDB, GO\_Conf, GO\_RES, GO\_CPD, PUB\_CPD et PRESTATIONDB.
-\newline
 
 Les données copiées sont : pkgdb (tables : Maintenance, Country, Amiga\_Params,
 Annotator pour A\_name='guest', Sequence\_Checkpoint\_Desc et Sid\_Config), GO\_RES (tables : ORGCLUST\_clustering\_param et ORGCLUST\_distance\_param.
@@ -26,7 +25,6 @@ Annotator pour A\_name='guest', Sequence\_Checkpoint\_Desc et Sid\_Config), GO\_
 
 Créé les liens symboliques dans \path{/env/cns/wwwext/html/agc/ftp/MicroCloud}.
 Créé le fichier \path{modules.txt} dans \path{/env/cns/wwwext/html/agc/ftp/MicroCloud}.
-\newline
 Puis, la VM master importe les modules listés dans modules.txt (voir \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/import_modules.sh}).
 
 \begin{lstlisting}[style=bash]
@@ -61,7 +59,6 @@ $ taxonomyDBCopyTaxId.py --tax_id 202950 --output /env/cns/wwwext/html/agc/ftp/M
 \section{Les scripts côté serveur}
 
 Les scripts coté serveur importent et utilisent les fichiers générés par le module \micWEBdeployVer.
-\bigskip
 
 Les scripts concernant l'installation de MicroScope sont dans le dossier \textbf{frontend} \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master} :
 \begin{description}
@@ -69,7 +66,6 @@ Les scripts concernant l'installation de MicroScope sont dans le dossier \textbf
     \item[\script{import\_Oid.sh}] permet de créer un utilisateur et un schéma MySQL et d'insérer les données de l'Oid \theOid{} (cela est nécessaire car le Web ne fonctionne pas sans données), et il permet aussi de copier les web\_data dans le répertoire approprié.
     \item[\script{create\_federated\_links.sh}] permet de créer des liens fédérés depuis la VM mysql vers la VM permanente.
 \end{description}
-\bigskip
 
 Les scripts concernant l'installation de jBPM sont dans le dossier \textbf{master} \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master}. Ces scripts sont décrits ci-dessous. Ils permettent de configurer l'environnement du moteur de workflows jBPM et de lancer un workflow simple (DIRECTON). L'ordonnancement des wokflows est ensuite géré à l'aide du cluster SLURM installé sur les VM master et slaves.
 

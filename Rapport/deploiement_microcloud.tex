@@ -16,7 +16,6 @@ En utilisant \textbf{Déploiement avancé}, on peut choisir le nombre de nœuds 
 Les déploiements se font sur le cloud \cloudInstance{ifb-prabi-girofle} sur lequel est installé la VM permanente.
 Un déploiement prend environ 40 minutes.
 
-\bigskip
 
 Il y a 2 points d'entrée du déploiement:
 \begin{enumerate}
@@ -59,7 +58,6 @@ Pour cela, il faut mettre à jour la base TAXONOMYDB de la VM permanente :
     \item en copiant les données de prod de TAXONOMYDB et pkgdb.O\_Taxonomy pour cet organisme
     \item ou en déployant les WF TAXONOMYDB et TAXONOMY
 \end{itemize}
-\bigskip
 
 Pour insérer un nouvel organisme, on utilise le module \module{micPrestation}.
 La procédure à suivre est la suivante :
@@ -101,7 +99,6 @@ Les workflows sont déployés sur la VM master.
 Les sources du moteur de workflow (\component{jbpmmicroscope}) sont dans le répertoire \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/jbpmmicroscope}.
 Le répertoire de travail Tomcat est le suivant : \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat}.
 Les modules sont localisés dans le répertoire : \path{/env/cns/proj/agc/module/products}
-\newline
 
 \begin{mycolorbox}
     Si les données ont été copiées depuis la prod et insérées telles quelles (sans \module{micPrestation}), il faut, dans la table pkgdb.Sequence, vérifier que le status des S\_id existants soit 'inFunctional' et non 'inProduction' pour que les WF prennent bien en compte les nouveaux S\_id.
