@@ -45,7 +45,7 @@ pour importer les données syntaxique d'un organisme.
 
 Pour créer une archive des données d'un organisme, utiliser le script \script{microscopeCopyOid.py} de la manière suivante :
 \begin{lstlisting}[style=bash]
-$ Oid=\theOid{}
+$ Oid=(*\theOid{}*)
 $ microscopeCopyOid.py --oid ${Oid} --output /env/cns/wwwext/html/agc/ftp/MicroCloud/microscope_${Oid}.tar.gz
 \end{lstlisting}
 
@@ -56,7 +56,7 @@ $ microscopeCopyOid.py --oid ${Oid} --output /env/cns/wwwext/html/agc/ftp/MicroC
 
 Ensuite, mettre à jour le lien symbolique pour qu'il pointe vers la nouvelle archive :
 \begin{lstlisting}[style=bash]
-$ Oid=\theOid{}
+$ Oid=(*\theOid{}*)
 $ cd /env/cns/wwwext/html/agc/ftp/MicroCloud
 $ ln -s microscope_${Oid}.tar.gz microscope_${Oid}-latest.tar.gz
 \end{lstlisting}
