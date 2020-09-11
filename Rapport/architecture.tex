@@ -147,7 +147,7 @@ $ LOAD DATA INFILE '/var/lib/mysql-files/$file.DB' INTO TABLE $table;
 Le code d'installation de ces VM est dans le dépôt de biosphere-commons : \url{https://github.com/IFB-ElixirFr/biosphere-commons}.
 L'image de base est une image Ubuntu 18. Le code slipstream est basé sur les travaux de Jonathan Lorenzo et Bryan Brancotte. 
 
-Les composants slurm master et slave ont été copiés depuis l'appliance Slurm\_Cluster\_ubuntu18 voir \url{https://nuv.la/module/ifb/devzone/jlorenzo/cluster/Slurm_Cluster_ubuntu18}.
+Les composants master et slave ont été copiés depuis l'appliance Slurm\_Cluster\_ubuntu18 voir \url{https://nuv.la/module/ifb/devzone/jlorenzo/cluster/Slurm_Cluster_ubuntu18}.
 
 Concernant la VM master, le code est dans le dossier master; voir
 \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/tree/master/master/}.
@@ -155,7 +155,7 @@ Le code du composant slipstream est dans le dossier master voir; \url{https://nu
 
 Pour la VM slave, voir les dossiers correspondants.\newline
 
-Nous avons installé le moteur de workflow jBPM couplé avec un cluster slurm sur la VM master. L'ordonnancement des wokflows est ensuite géré à l'aide du cluster slurm. La VM master étant considérée comme la machine maître et les VM slaves comme noeuds de calcul.
+Nous avons installé le moteur de workflow jBPM couplé avec un cluster SLURM sur la VM master. L'ordonnancement des wokflows est ensuite géré à l'aide du cluster SLURM. La VM master étant considérée comme la machine maître et les VM slaves comme noeuds de calcul.
 \bigskip
 
 Le serveur d'application Tomcat est installé (version tomcat-9.0.31 : \url{http://mirrors.ircam.fr/pub/apache/tomcat/tomcat-9/v9.0.31/bin/apache-tomcat-9.0.31.tar.gz}).
@@ -166,7 +166,7 @@ Nous avons également eu besoin d'installer Pegasus-mpi-cluster (version 4.9.2 :
 
 \bigskip
 Chaque workflow fait appel à différents modules qu'il faut installer au préalable sur la VM master. Le script \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/import_modules.sh} permet d'importer les archives des différents modules nécessaires au fonctionnement des workflows (WF DIRECTON principalement).
-Le lancement des workflows se fait à l'aide du module bagsub lui-même lancé par jBPM. Nous avons fait quelques modifications du module bagsub afin qu'il puisse être utilisé dans l'environnement fourni par la VM master. Le script \script{import\_modules.sh} modifie le module bagsub, en supprimant l'option ulimit qui ne fonctionne pas en Dash, et, en ajoutant le paramètre MCA btl\_tcp\_if\_exclude pour exclure les interfaces réseaux docker0 et lo qui peuvent engendrer des conflits lors du lancement de jobs slurm.
+Le lancement des workflows se fait à l'aide du module bagsub lui-même lancé par jBPM. Nous avons fait quelques modifications du module bagsub afin qu'il puisse être utilisé dans l'environnement fourni par la VM master. Le script \script{import\_modules.sh} modifie le module bagsub, en supprimant l'option ulimit qui ne fonctionne pas en Dash, et, en ajoutant le paramètre MCA btl\_tcp\_if\_exclude pour exclure les interfaces réseaux docker0 et lo qui peuvent engendrer des conflits lors du lancement de jobs SLURM.
 
 
 \subsection{VM nfsserver} \label{nfsserver}
