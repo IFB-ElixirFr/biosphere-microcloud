@@ -28,12 +28,14 @@ se sont avérées très délicates\todo{faire une section sur ça.}.
 Les principales limites dans l'architecture et la code de MicroScope sont:
 \begin{enumerate}
     \item \emph{Fonctionnement sans données:} La première limite est
-    qu'il est très difficile (voire impossible) de faire tourner MicroScope sans au moins une séquence.
-    Ceci est lié au fait que beaucoup de pages font appel à des fonctions qui utilisent la séquence stockée dans la session.
+          qu'il est très difficile (voire impossible) de faire tourner MicroScope sans au moins une séquence.
+          Ceci est lié au fait que beaucoup de pages font appel à des fonctions qui utilisent la séquence stockée dans la session.
     \item \emph{Frontières entre les composants peu claires:} Une difficulté pour l'installation est que MicroScope est organisé en couches (DB, web, worfklow) et non en modules.
-    Ainsi, si on installe \component{micJBPMwrapper}, on a tous les WF mais il faut alors créer toutes les bases.
-    On ne peut pas installer juste un WF.
+          Ainsi, si on installe \component{micJBPMwrapper}, on a tous les WF mais il faut alors créer toutes les bases.
+          On ne peut pas installer juste un WF.
     \item \emph{Dépendances:} MicroScope a de nombreuses dépendances mais elles ne sont pas listées.
+          De plus, certains composants ne sont pas publiés (\component{micGenome}, \component{micPrestation})
+          et ne sont pas facilement installables (\component{jbpmmicroscope}).
 \end{enumerate}
 
 \subsection{Identification de limites de l'architecture cloud} \label{subsec:limites_coud}
