@@ -28,7 +28,7 @@ Il y a 2 points d'entrée du déploiement:
           et \component{jbpmmicroscope} pour déployer les WF.
           Pour accéder aux modules, il faut sourcer le fichier \path{microcloud.profile} dans la VM master:
           \begin{lstlisting}[style=bash,gobble=14]
-              $ source /env/cns/proj/agc/module/profiles/microcloud.profile
+              source /env/cns/proj/agc/module/profiles/microcloud.profile
           \end{lstlisting}
             Le répertoire \path{/env/cns/} est identique à celui du Genoscope.
 \end{enumerate}
@@ -44,9 +44,9 @@ Une fois l'instance déployée, il faut créer un utilisateur admin.
 
 Pour cela, il faut se connecter en ssh à la frontale puis exécuter le script \script{create\_user.sh}:
 \begin{lstlisting}[style=Bash,gobble=4]
-    $ ssh centos@${IP_master}
-    $ cd \path{/var/tmp/slipstream/biosphere-microcloud/master}
-    $ ./create_user.sh LOGIN EMAIL admin
+    ssh centos@${IP_master}
+    cd \path{/var/tmp/slipstream/biosphere-microcloud/master}
+    ./create_user.sh LOGIN EMAIL admin
 \end{lstlisting}
 Le script demande le mot de passe à utiliser et crée l'utilisateur
 
@@ -66,7 +66,7 @@ La procédure à suivre est la suivante :
     \item Remplir le fichier Template\_Prestation.csv qui trouve dans le répertoire \path{/env/cns/proj/agc/module/products/micsyntactic/unix-noarch/lib}.
     \item Lancer la création de la prestation:
           \begin{lstlisting}[style=bash,gobble=14]
-              $ prestaBatch.py --csv Template_Prestation.csv -sd ${working_dir} -A ${Annotator_name} -T genome
+              prestaBatch.py --csv Template_Prestation.csv -sd ${working_dir} -A ${Annotator_name} -T genome
           \end{lstlisting}
           Il y a un exemple de fichier Template\_Prestation.csv dans le dossier prestation : \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/prestation}.
     \item Accepter la prestation:
@@ -83,7 +83,7 @@ La procédure à suivre est la suivante :
 
 Puis, pour insérer la nouvelle séquence en base, utiliser le module \module{micGenome}:
 \begin{lstlisting}[style=bash,gobble=4]
-    $ loadGenomeNS.sh -p ${PS_id} -o ${O_id}
+    loadGenomeNS.sh -p ${PS_id} -o ${O_id}
 \end{lstlisting}
 
 \begin{mycolorbox}
@@ -115,29 +115,29 @@ Les modules requis pour le bon déploiement de ce workflow sont les suivants: \m
 
 \begin{lstlisting}[style=bash]
 #### Deploy DIRECTON WF ####
-$ cd /env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat/
+cd /env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat/
 
 # Deploy WF
-$ JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl/BagSub/ -defNames DIRECTON
+JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl/BagSub/ -defNames DIRECTON
 
 # Deploy and start CRON
-$ JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl -defNames CRON_DIRECTON
+JBPMmicroscope deployProcess -dirXMLSrc ../jbpmmicroscope/src/main/process-definitions/jpdl -defNames CRON_DIRECTON
 JBPMmicroscope startCron -names CRON_DIRECTON
 
 # Check CRON and WF status
-$ JBPMmicroscope showProcessDefinitions
+JBPMmicroscope showProcessDefinitions
 
 # Force run
-$ JBPMmicroscope signalCron -names CRON_DIRECTON -signal forceRun; JBPMmicroscope signalProcess -pid 1
+JBPMmicroscope signalCron -names CRON_DIRECTON -signal forceRun; JBPMmicroscope signalProcess -pid 1
 
-$ JBPMmicroscope showProcessInstances
+JBPMmicroscope showProcessInstances
 
 # Take a look at running processes
-$ tomcat_logs
+tomcat_logs
 
 # relaunch WF if status is sendmail
-$ JBPMmicroscope relaunchAnalysis -pidCron 1 -pidWF 2 -signal forceRun
+JBPMmicroscope relaunchAnalysis -pidCron 1 -pidWF 2 -signal forceRun
 
 # Check tables pkgdb.Workflow_Jobs, pkgdb.Directon and pkgdb.GO_Directon_CPD
-$ mysqlagcdb
+mysqlagcdb
 \end{lstlisting}

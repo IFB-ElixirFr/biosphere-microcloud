@@ -20,21 +20,21 @@ Les composants nécessaires sont:
 La plupart de ces opérations utilisent le module \micWEBdeployVer.
 Pour le charger:
 \begin{lstlisting}[style=bash]
-$ module load micWEBdeploy/0-MicroCloud-1.0
+module load micWEBdeploy/0-MicroCloud-1.0
 \end{lstlisting}
 
 \section{Créer une nouvelle release du code web} \label{sec:nouvelle_version_web}
 
 Pour créer une nouvelle version du code du web et des bases de données, choisir la version de MicroScope à déployer puis lancer le script \script{microscopeRelease.py} :
 \begin{lstlisting}[style=bash]
-$ MICVERSION=3.14.0
-$ microscopeRelease.py --version ${MICVERSION} --output /env/cns/wwwext/html/agc/ftp/MicroCloud/microcloud-${MICVERSION}.tar.gz
+MICVERSION=3.14.0
+microscopeRelease.py --version ${MICVERSION} --output /env/cns/wwwext/html/agc/ftp/MicroCloud/microcloud-${MICVERSION}.tar.gz
 \end{lstlisting}
 
 Ensuite, mettre à jour le lien symbolique pour qu'il pointe vers la nouvelle archive :
 \begin{lstlisting}[style=bash]
-$ cd /env/cns/wwwext/html/agc/ftp/MicroCloud
-$ ln -s microcloud-${MICVERSION}.tar.gz microcloud-latest.tar.gz
+cd /env/cns/wwwext/html/agc/ftp/MicroCloud
+ln -s microcloud-${MICVERSION}.tar.gz microcloud-latest.tar.gz
 \end{lstlisting}
 
 \section{Copier les données d'un organisme} \label{sec:nouvelle_donne_organisme}
@@ -44,8 +44,8 @@ pour importer les données syntaxique d'un organisme.
 
 Pour créer une archive des données d'un organisme, utiliser le script \script{microscopeCopyOid.py} de la manière suivante :
 \begin{lstlisting}[style=bash]
-$ Oid=(*\theOid{}*)
-$ microscopeCopyOid.py --oid ${Oid} --output /env/cns/wwwext/html/agc/ftp/MicroCloud/microscope_${Oid}.tar.gz
+Oid=(*\theOid{}*)
+microscopeCopyOid.py --oid ${Oid} --output /env/cns/wwwext/html/agc/ftp/MicroCloud/microscope_${Oid}.tar.gz
 \end{lstlisting}
 
 \begin{mycolorbox}
@@ -55,9 +55,9 @@ $ microscopeCopyOid.py --oid ${Oid} --output /env/cns/wwwext/html/agc/ftp/MicroC
 
 Ensuite, mettre à jour le lien symbolique pour qu'il pointe vers la nouvelle archive :
 \begin{lstlisting}[style=bash]
-$ Oid=(*\theOid{}*)
-$ cd /env/cns/wwwext/html/agc/ftp/MicroCloud
-$ ln -s microscope_${Oid}.tar.gz microscope_${Oid}-latest.tar.gz
+Oid=(*\theOid{}*)
+cd /env/cns/wwwext/html/agc/ftp/MicroCloud
+ln -s microscope_${Oid}.tar.gz microscope_${Oid}-latest.tar.gz
 \end{lstlisting}
 
 \section{Mettre à jour la liste des modules} \label{sec:nouvelle_liste_modules}
@@ -68,7 +68,7 @@ Pour mettre à jour cette liste, il faut utiliser le script \script{createModule
 En premier lieu, faire la liste de tous les modules nécessaires à la création de la nouvelle instance MicroCloud et utiliser
 le script \script{createModulesTarball.py} pour générer les archives de ces modules:
 \begin{lstlisting}[style=bash]
-$ createModulesTarball.py --modules_list bagsub-2.4.3 AGCScriptToolMic-2.0 micGenome-7.0.0 micJBPMwrapper-3.10.8 micPrestation-2.0 micDirecton-1.0
+createModulesTarball.py --modules_list bagsub-2.4.3 AGCScriptToolMic-2.0 micGenome-7.0.0 micJBPMwrapper-3.10.8 micPrestation-2.0 micDirecton-1.0
 \end{lstlisting}
 
 Actuellement l'environnement de MicroCloud ne permet d'utiliser que les modules \module[2.4.3]{bagsub}, \module[2.0]{AGCScriptToolMic}, \module[7.0.0]{micGenome}, \module[3.10.8]{micJBPMwrapper}, \module[2.0]{micPrestation} et \module[1.0]{micDirecton}.
@@ -88,18 +88,18 @@ dans la page \href{https://intranet.genoscope.cns.fr/agc/redmine/projects/micros
 
 Une fois ceci fait, il faut compiler \component{jbpmmicroscope-client} avec le profil \texttt{config-microcloud}:
 \begin{lstlisting}[style=bash]
-$ mvn -Pconfig-microcloud -s ~/.m2/genosphere-settings.xml clean install
+mvn -Pconfig-microcloud -s ~/.m2/genosphere-settings.xml clean install
 \end{lstlisting}
 Cette commande crée le fichier \filename{jbpmmicroscope.jar} dans le dossier \path{jbpmmicroscope-client/target}.
 Il faut ajouter les sources (qui sont nécessaires pour le déploiement des workflows dans les VM) et le script \script{JBPMmicroscope}:
 \begin{lstlisting}[style=bash]
-$ jar uf jbpmmicroscope-client/target/jbpmmicroscope.jar -C ./ src/
-$ jar uf jbpmmicroscope-client/target/jbpmmicroscope.jar -C ./ JBPMmicroscope
+jar uf jbpmmicroscope-client/target/jbpmmicroscope.jar -C ./ src/
+jar uf jbpmmicroscope-client/target/jbpmmicroscope.jar -C ./ JBPMmicroscope
 \end{lstlisting}
 
 Il faut compiler \component{jbpmmicroscope-server} avec le profil \texttt{config-microcloud}:
 \begin{lstlisting}[style=bash]
-$ mvn -Pconfig-microcloud -s ~/.m2/genosphere-settings.xml package
+mvn -Pconfig-microcloud -s ~/.m2/genosphere-settings.xml package
 \end{lstlisting}
 Cette commande crée les fichiers \filename{SystemActorsLauncher.jar} et \filename{jbpmmicroscope-server.war}
 dans le dossier \path{jbpmmicroscope-server/target}.
@@ -132,6 +132,6 @@ Ces identifiants peuvent être modifiés dans le composant master, ils correspon
 Il faut penser à mettre à jour les tables de la VM permanente en fonction des besoins. Pour cela, s'inspirer du script \script{microscopeCreateDBschemas.py}, par exemple, et utiliser les fichiers de données ainsi générés.
 
 Pour copier les données, mieux vaut utiliser rsync et copier les données dans le répertoire \textbf{/var/lib/mysql-files/} de la VM permanente avant insertion en base :
-\begin{lstlisting}[style=bash]
-$ LOAD DATA INFILE '/var/lib/mysql-files/$file.DB' INTO TABLE $table;
+\begin{lstlisting}[style=SQL]
+LOAD DATA INFILE '/var/lib/mysql-files/$file.DB' INTO TABLE $table;
 \end{lstlisting}

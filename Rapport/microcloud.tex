@@ -8,6 +8,7 @@
 \usepackage{layout}
 \usepackage{color}
 \usepackage{tcolorbox}
+\usepackage{listingsutf8}
 \usepackage{pxfonts}
 \usepackage{indentfirst}
 \usepackage{hyperref}
@@ -30,7 +31,19 @@
 \urlstyle{same}
 
 % tcolorox
-\tcbuselibrary{listings,skins}
+\tcbuselibrary{skins}
+
+\newtcolorbox{mycolorbox}
+{
+  colback=red!5!white,
+  colframe=red!75!black,
+  sharp corners=uphill,
+  fonttitle=\bfseries,
+  title=\textsc{Attention}
+}
+
+% listings
+\lstset{numberblanklines=false}
 
 \lstdefinestyle{bash}{
   language=bash,
@@ -41,22 +54,33 @@
   breaklines=true,
   frame=trBL,
   escapeinside={(*}{*)}, % Allow to use LaTeX commands in code
+  % Use line number insert prompt
+  numbers=left,
+  xleftmargin=2em,
+  framexleftmargin=1em,
+  numbersep=5pt,
+  numberstyle=\bashpromptcmd,
 }
+
+\newcommand{\bashprompt}{\$}
+\newcommand\bashpromptcmd[1]{\ttfamily \bashprompt}
+
 
 \lstdefinestyle{SQL}{
   language=SQL,
+  morekeywords={LOAD, DATA, INFILE},
   breaklines=true,
-  frame=trBL
+  frame=trBL,
+  % Use line number insert prompt
+  numbers=left,
+  xleftmargin=2em,
+  framexleftmargin=1em,
+  numbersep=5pt,
+  numberstyle=\sqlpromptcmd,
 }
 
-\newtcolorbox{mycolorbox}
-{
-  colback=red!5!white,
-  colframe=red!75!black,
-  sharp corners=uphill,
-  fonttitle=\bfseries,
-  title=\textsc{Attention}
-}
+\newcommand{\sqlprompt}{>}
+\newcommand\sqlpromptcmd[1]{\ttfamily \sqlprompt}
 
 % Commands
 \newcommand{\filename}[1]{\textbf{#1}}

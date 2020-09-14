@@ -28,7 +28,7 @@ Créé le fichier \path{modules.txt} dans \path{/env/cns/wwwext/html/agc/ftp/Mic
 Puis, la VM master importe les modules listés dans modules.txt (voir \url{https://github.com/IFB-ElixirFr/biosphere-microcloud/blob/master/master/import_modules.sh}).
 
 \begin{lstlisting}[style=bash]
-$ createModulesTarball.py --modules_list bagsub-2.4.3 AGCScriptToolMic-2.0 micGenome-7.0.0 micJBPMwrapper-3.10.8 micPrestation-2.0 micDirecton-1.0
+createModulesTarball.py --modules_list bagsub-2.4.3 AGCScriptToolMic-2.0 micGenome-7.0.0 micJBPMwrapper-3.10.8 micPrestation-2.0 micDirecton-1.0
 \end{lstlisting}
 
 \section{\script{microscopeCopyOid.py}}
@@ -38,22 +38,22 @@ $ createModulesTarball.py --modules_list bagsub-2.4.3 AGCScriptToolMic-2.0 micGe
 \end{mycolorbox}
 
 \begin{lstlisting}[style=bash]
-$ Oid=(*\theOid{}*)
-$ microscopeCopyOid.py --oid ${Oid} --output /env/cns/wwwext/html/agc/ftp/MicroCloud/microscope_${Oid}.tar.gz
+Oid=(*\theOid{}*)
+microscopeCopyOid.py --oid ${Oid} --output /env/cns/wwwext/html/agc/ftp/MicroCloud/microscope_${Oid}.tar.gz
 \end{lstlisting}
 
 \section{\script{microscopeCreateDBschemas.py}}
 A permis de générer les .sql utilisés pour créer les schémas des bases de données dans la VM permanente.
 
 \begin{lstlisting}[style=bash]
-$ microscopeCreateDBschemas.py --output /env/cns/wwwext/html/agc/ftp/MicroCloud/DBschemas.tar.gz
+microscopeCreateDBschemas.py --output /env/cns/wwwext/html/agc/ftp/MicroCloud/DBschemas.tar.gz
 \end{lstlisting}
 
 \section{\script{taxonomyDBCopyTaxId.py}}
 Permet de copier les données de la base TAXONOMYDB pour un tax\_id donné.
 
 \begin{lstlisting}[style=bash]
-$ taxonomyDBCopyTaxId.py --tax_id 202950 --output /env/cns/wwwext/html/agc/ftp/MicroCloud/taxonomyDBCopyTaxId.tar.gz
+taxonomyDBCopyTaxId.py --tax_id 202950 --output /env/cns/wwwext/html/agc/ftp/MicroCloud/taxonomyDBCopyTaxId.tar.gz
 \end{lstlisting}
 
 \section{Les scripts côté serveur}

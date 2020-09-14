@@ -80,15 +80,15 @@ L'image de base est une image CentOS 7. La VM mysql possède un serveur MySQL in
 
 Pour se connecter à la VM mysql, il faut passer par le frontend :
 \begin{lstlisting}[style=bash]
-$ ssh -A centos@${IP_mysql} -J centos@${IP_frontend}
+ssh -A centos@${IP_mysql} -J centos@${IP_frontend}
 \end{lstlisting}
 
 Si le serveur ne répond pas, il faut aller voir si le docker n'a pas planté (cela arrive pour des requêtes SQL trop gourmandes en RAM).
 Pour relancer le docker :
 \begin{lstlisting}[style=bash]
-$ sudo su
-$ docker ps -a
-$ docker start ${ID_container}
+sudo su
+docker ps -a
+docker start ${ID_container}
 \end{lstlisting}
 
 \subsection {VM permanente}\label{VMpermanente}
@@ -103,7 +103,7 @@ Logiciels installés : serveur MySQL, rsync, phpMyAdmin (installé mais non conf
 
 Pour se connecter : 
 \begin{lstlisting}[style=bash]
-$ ssh root@134.214.33.214
+ssh root@134.214.33.214
 \end{lstlisting}
 
 Sur le serveur MySQL, il y a les schémas des bases DB et une partie des données de la base pour les tests (nous avons testés les onglets \textbf{Genome Browser}, \textbf{Identical Gene Names}) :
@@ -118,15 +118,15 @@ Le script \script{microscopeDBschema.py} du module MicroCloud a été utilisé p
 
 Pour se connecter au serveur MySQL :
 \begin{lstlisting}[style=bash]
-$ mysql -p{MOT_DE_PASSE_SERVEUR_MYSQL_VM_PERMANENTE}
+mysql -p{MOT_DE_PASSE_SERVEUR_MYSQL_VM_PERMANENTE}
 \end{lstlisting}
 
 Les mots de passe (serveur MySQL et phpMyAdmin) sont stockés dans le répertoire \textbf{/root} de la VM.
 
 Pour copier les données, mieux vaut utiliser rsync et copier les données dans le répertoire \textbf{/var/lib/mysql-files/} de la VM permanente avant insertion en base.
 
-\begin{lstlisting}[style=bash]
-$ LOAD DATA INFILE '/var/lib/mysql-files/$file.DB' INTO TABLE $table;
+\begin{lstlisting}[style=SQL]
+LOAD DATA INFILE '/var/lib/mysql-files/$file.DB' INTO TABLE $table;
 \end{lstlisting}
 
 \subsection{VM master et VM slave(s)} \label{master&slave}
