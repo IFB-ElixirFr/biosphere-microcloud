@@ -5,7 +5,7 @@ des fichiers contenant le code et les données qui seront utilisés
 par les scripts d'installation des VM pour déployer MicroScope.
 Ces opérations doivent être effectuées au Genoscope.
 Les détails techniques sont dans le~\autoref{chap:micwebdeploy}.
-Le répertoire d'export des archives et autres fichiers sur etna0 est \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/}.
+Le répertoire d'export des archives et autres fichiers sur \hostname{etna0} est \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/}.
 
 Les composants nécessaires sont:
 \begin{itemize}
@@ -104,7 +104,7 @@ mvn -Pconfig-microcloud -s ~/.m2/genosphere-settings.xml package
 Cette commande crée les fichiers \filename{SystemActorsLauncher.jar} et \filename{jbpmmicroscope-server.war}
 dans le dossier \path{jbpmmicroscope-server/target}.
 
-Copier le .war et les .jar sur etna0 dans le répertoire \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/}.
+Copier le .war et les .jar sur \hostname{etna0} dans le répertoire \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/}.
 La VM master importe ces fichiers à l'aide de liens symboliques.
 
 Le schéma de la base \DB{JBPMmicroscope} est créé automatiquement par hibernate (voir le paramètre \textbf{hbm2ddl.auto} dans \filename{hibernate.cfg.xml}) lors de la première exécution d'une commande \script{JBPMmicroscope}.
