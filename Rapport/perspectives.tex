@@ -7,7 +7,7 @@ Le projet a globalement atteint ses objectifs car il permet de déployer une ins
 De plus, le travail sur ce projet a permis d'identifier des limites (au niveau de l'architecture ou du code) dans MicroScope (cf.~\autoref{subsec:limites_microscope})
 et dans les architectures cloud (cf.~\autoref{subsec:limites_coud}).
 
-Un des effets de bord du projet est que nous avons travaillé avec et sur BioMAJ (cf.~\autoref{subsec:biomaj}).
+Un des effets de bord du projet est que nous avons travaillé avec et sur \project{BioMAJ} (cf.~\autoref{subsec:biomaj}).
 
 \subsection{Le prototype fonctionnel} \label{subsec:prototype}
 
@@ -53,20 +53,19 @@ Cependant, nous n'avons pas suffisamment de place pour télécharger toutes les 
 À l'heure actuelle, seule la banque UNIPROTKBDB est disponible.
 
 Une solution partielle est le stockage permanent et partagé mis en place par l'IFB
-qui est utilisé pour mettre à disposition les banques sur toutes les VM (ces banques sont mises à jour avec BioMAJ).
+qui est utilisé pour mettre à disposition les banques sur toutes les VM (ces banques sont mises à jour avec \project{BioMAJ}).
 On pourrait alors utiliser les WF de mise à jour des banques de MicroScope.
 Cependant ceci n'est pas encore disponible sur \cloudInstance{ifb-prabi-girofle} (sur lequel tourne la VM permanente).
 
-\subsection{Prise en main de BioMAJ et améliorations}\label{subsec:biomaj}
+\subsection{Prise en main de \project{BioMAJ} et améliorations}\label{subsec:biomaj}
 
-Un des objectifs du projet était d'utiliser \href{https://biomaj.genouest.org/}{BioMAJ}
-pour la mise à jour des banques dans le cloud.
+Un des objectifs du projet était d'utiliser \project{BioMAJ} pour la mise à jour des banques dans le cloud.
 
 Bien que cette partie n'ait pas été abordée, le projet nous a permis de prendre en main le logiciel
 ce qui est intéressant car il est utilisé dans le projet PanGBank.
 De plus, il envisagé en remplaçant de CABRI pour la copie des banques au Genoscope.
 
-Au cours du projet, nous avons ajouté plusieurs fonctionnalités à BioMAJ:
+Au cours du projet, nous avons ajouté plusieurs fonctionnalités à \project{BioMAJ}:
 \begin{itemize}
     \item Utilisation des hardlinks lors de la mise à jour d'une banque (ce qui est plus rapide et consomme moins de place).
     \item Ajout d'options SSL (pour configurer l'accès aux ressources FTPS/HTTPS).
