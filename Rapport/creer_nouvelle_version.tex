@@ -105,7 +105,7 @@ Cette commande crée les fichiers \filename{SystemActorsLauncher.jar} et \filena
 dans le dossier \path{jbpmmicroscope-server/target}.
 
 Copier le .war et les .jar sur \hostname{etna0} dans le répertoire \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/}.
-La VM master importe ces fichiers à l'aide de liens symboliques.
+La VM \SScomponent{master} importe ces fichiers à l'aide de liens symboliques.
 
 Le schéma de la base \DB{JBPMmicroscope} est créé automatiquement par hibernate (voir le paramètre \textbf{hbm2ddl.auto} dans \filename{hibernate.cfg.xml}) lors de la première exécution d'une commande \script{JBPMmicroscope}.
 

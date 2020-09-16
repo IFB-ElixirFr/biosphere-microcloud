@@ -98,10 +98,10 @@ Les workflows sont déployés sur la VM master.
 À ce jour nous n'avons pu tester que le workflow DIRECTON.
 Les sources du moteur de workflow (\component{jbpmmicroscope}) sont dans le répertoire \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/jbpmmicroscope}.
 Le répertoire de travail Tomcat est le suivant : \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat}.
-Les modules sont localisés dans le répertoire : \path{/env/cns/proj/agc/module/products}
+Les modules sont localisés dans le répertoire : \path{/env/cns/proj/agc/module/products}.
 
 \begin{mycolorbox}
-    Si les données ont été copiées depuis la prod et insérées telles quelles (sans \module{micPrestation}), il faut, dans la table pkgdb.Sequence, vérifier que le status des S\_id existants soit 'inFunctional' et non 'inProduction' pour que les WF prennent bien en compte les nouveaux S\_id.
+    Si les données ont été copiées depuis la prod et insérées telles quelles (sans \module{micPrestation}), il faut vérifier que le status des S\_id existants dans la table \DB{pkgdb.Sequenc}e soit 'inFunctional' et non 'inProduction' pour que les WF prennent bien en compte les nouveaux S\_id.
 \end{mycolorbox}
 
 \begin{lstlisting}[style=SQL]
