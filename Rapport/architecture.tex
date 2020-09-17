@@ -151,9 +151,15 @@ sont installées dans le docker.
 
 \subsection {VM permanente}\label{VMpermanente}
 
-La procédure d'installation est dans le fichier \textbf{Installation.md} du répertoire \textbf{/root}. La VM permanente sert au stockage des données des banques. Nous avons utilisé \textbf{rsync} pour l'import des données dans le serveur MySQL.
+C'est une VM OpenStack (\hostname{umr5558-microcloud.univ-lyon1.fr}, IP 134.214.33.214) du cloud \cloudInstance{ifb-prabi-girofle} disposant de 200 Go de stockage et 8 Go de RAM (elle est actuellement sous-dimensionnée par rapport à nos besoins).
+L'image de base est une image Debian 9.8.
 
-Logiciels installés : serveur MySQL, rsync, phpMyAdmin (installé mais non configuré).
+La machine permanente n'est accessible depuis l'extérieur qu'en SSH donc nous ne pouvons pas y accéder en MySQL (port 3306) depuis un autre cloud.
+La connexion se fait avec des clés SSH (seules les clés SSH de Mathieu Dubois ont été importés).
+
+La machine a été installée avec Sylvain Bonneval.
+La procédure d'installation est dans le fichier \filename{Installation.md} du répertoire \path{/root}.
+Logiciels installés : serveur MySQL (il n'est pas nécessaire de démarrer le serveur avec l'option \variable{--federated}), rsync, phpMyAdmin (installé mais non configuré).
 
 Pour se connecter :
 \begin{lstlisting}[style=bash]
