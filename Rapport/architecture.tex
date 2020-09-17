@@ -128,6 +128,8 @@ ssh -A centos@${IP_mysql} -J centos@${IP_frontend}
 \paragraph*{Installation de MySQL}
 
 Le serveur MySQL est installé via Docker.
+La seule subtilité est qu'il faut démarrer MySQL l'option \variable{-{}-federated} pour activer le moteur FEDERATED.
+
 Si le serveur ne répond pas, il faut aller voir si le docker n'a pas planté (cela arrive pour des requêtes SQL trop gourmandes en RAM).
 Pour relancer le docker :
 \begin{lstlisting}[style=bash]
@@ -159,7 +161,7 @@ La connexion se fait avec des clés SSH (seules les clés SSH de Mathieu Dubois 
 
 La machine a été installée avec Sylvain Bonneval.
 La procédure d'installation est dans le fichier \filename{Installation.md} du répertoire \path{/root}.
-Logiciels installés : serveur MySQL (il n'est pas nécessaire de démarrer le serveur avec l'option \variable{--federated}), rsync, phpMyAdmin (installé mais non configuré).
+Logiciels installés : serveur MySQL (il n'est pas nécessaire de démarrer le serveur avec l'option \variable{-{}-federated}), rsync, phpMyAdmin (installé mais non configuré).
 
 Pour se connecter :
 \begin{lstlisting}[style=bash]
