@@ -1,4 +1,4 @@
-\chapter{Architecture}
+\chapter{Installation et déploiement des VM} \label{chap:deploiement_VM}
 
 Dans ce chapitre, on ne fait pas toujours la distinction entre un composant (au sens de composant SlipStream)
 et une VM (qui est un composant déployé).
@@ -10,39 +10,8 @@ Le contexte devrait permettre d'éviter toute ambiguïté.
 
 \section{Vue d'ensemble}
 
-La vue d'ensemble de l'architecture est présentée dans la~\autoref{fig:architecture}.
 Il y 5 composants Nuvla et
 1 VM permanente déployée sur le cloud \cloudInstance{ifb-prabi-girofle}.
-
-\begin{figure}[htp]
-    \centering
-    \includegraphics[width=\linewidth]{../Logical_Architecture}
-    \caption{Schéma de l'architecture de MicroCloud.}
-    \label{fig:architecture}
-\end{figure}
-
-Un des buts est de mimer ce qui est fait au Genoscope
-c'est-à-dire que:
-\begin{enumerate}
-    \item Les différents composants (serveur web, serveur de BD, etc.) tournent sur des machines séparées.
-    \item Les calculs tournent sur des machines séparées: l'architecture contient donc un cluster (basé sur SLURM).
-\end{enumerate}
-Une des seules différences est que le serveur \component{jbpmmicroscope} tourne
-sur la machine frontale du cluster.
-
-Lors du déploiement, les VM téléchargent des fichiers (code et données) depuis le serveur web du Genoscope.
-Ces fichiers sont crées par le module \micWEBdeployVer{} (voir~\autoref{chap:micwebdeploy}).
-Le gros du travail du travail est fait dans les scripts de la phase Deployment (script \script{04\_Deployment.sh} de chaque composant SlipStream).
-Ceci a été fait pour simplifier les scripts d'installation et ne pas fixer les versions de MicroScope à ces étapes.
-
-Il y a 2 serveurs de bases de données dans MicroCloud\todo{Renvoyer à section choix techniques.}:
-\begin{itemize}
-    \item Un serveur MySQL installé via Docker dans la VM MySQL.
-    \item Un serveur MySQL sur la VM permanente.
-\end{itemize}
-
-\section {Installation et déploiement des VM}
-
 Le code des composants Nuvla est dans le dépôt \project{biosphere-microcloud}.
 Il y a un dossier par composant et un fichier \filename{README.md} dans chaque dossier qui explique des détails.
 Les principes du déploiement sont décrits sur le wiki du projet (voir la page
@@ -64,12 +33,12 @@ Les sections suivantes présentent quelques détails sur les VM:
 Comme expliqué, le code de chaque composant est dans un dossier éponyme dans le dépôt biosphere-microcloud.
 Dans les sections sus-citées, le nom des scripts est relatif à ce dossier (sauf mention contraire).
 
-\subsection {Composant \SScomponent{frontend}}\label{frontend}
+\section{Composant \SScomponent{frontend}}\label{frontend}
 
 La composant \SScomponent{frontend} permet de déployer la partie web de la plateforme MicroScope.
 L'image de base est une image CentOS 7.
 
-\paragraph*{Configuration}
+\subsection{Configuration générale}
 
 Le script \script{04\_Deployment.sh} réalise un certain nombre d'opérations avant l'installation de MicroScope:
 \begin{itemize}
@@ -86,7 +55,7 @@ Le script \script{04\_Deployment.sh} réalise un certain nombre d'opérations av
     La VM \SScomponent{frontend} utilise un client mariaDB (et non pas MySQL du fait de conflits existants entre le dépôt remi-php71 installé et le dépôt IUS qui fournit le client MySQL).
 \end{mycolorbox}
 
-\paragraph*{Installation de MicroScope}
+\subsection{Installation de MicroScope}
 
 Le script \script{install\_microscope.sh} réalise l'installation de MicroScope:
 \begin{itemize}
@@ -98,24 +67,24 @@ Le script \script{install\_microscope.sh} réalise l'installation de MicroScope:
           et des scripts dans \path{/var/www/binphp/} (variable \variable{BIN} dans la configuration de MicroScope).
 \end{itemize}
 
-\paragraph*{Import des données de l'organisme \theOrg{}}
+\subsection{Import des données de l'organisme \theOrg{}}
 
 Les données de \theOid{} sont copiées avec le script \script{import\_Oid.sh}.
 
 \begin{mycolorbox}
     Si lors de la connexion au serveur web le message d'erreur \textbf{256} s'affiche, cela signifie qu'il n'y a pas d'organisme en base.
     De ce fait, la plupart des onglets ainsi que le formulaire d'authentification sont inaccessibles.
-    Ceci ne doit pas arriver si le déploiement se passe bien car on on copie les données d'un organisme.
+    Ceci ne doit pas arriver si le déploiement se passe bien mais en cas de modifications des scripts cela peut arriver.
 \end{mycolorbox}
 
-\paragraph*{Création des liens FEDERATED}
+\subsection{Création des liens FEDERATED}
 
 Les liens FEDERATED vers la VM permanente (qui permettent d'accéder aux base représentant les banques) sont crées
 dans le script \script{create\_federated\_links.sh}.
 Le script crée automatique un lien avec toutes les BD présentes sur la VM permanente sauf les BD système (\DB{mysql}, \DB{information\_schema}, \DB{performance\_schema}, \DB{sys})
 et celles liées à \component{phpMyAdmin}.
 
-\subsection {Composant \SScomponent{mysql}}\label{mysql}
+\section{Composant \SScomponent{mysql}}\label{mysql}
 
 Le composant \SScomponent{mysql} est le serveur de base de données de l'instance.
 L'image de base est une image CentOS 7.
@@ -125,7 +94,7 @@ Comme cette VM se trouve sur le réseau privé, il faut passer par la VM fronten
 ssh -A centos@${IP_mysql} -J centos@${IP_frontend}
 \end{lstlisting}
 
-\paragraph*{Installation de MySQL}
+\subsection{Installation de MySQL}
 
 Le serveur MySQL est installé via Docker.
 La seule subtilité est qu'il faut démarrer MySQL l'option \variable{-{}-federated} pour activer le moteur FEDERATED.
@@ -138,7 +107,7 @@ docker ps -a
 docker start ${ID_container}
 \end{lstlisting}
 
-\paragraph*{Installation des fonctions UDF de MicroScope}
+\subsection{Installation des fonctions UDF de MicroScope}
 
 Les fonctions UDF nécessaires à MicroScope (\component{lib\_mysqludf\_sequtils})
 sont téléchargées depuis le Genoscope et
@@ -151,7 +120,7 @@ sont installées dans le docker.
     et que \component{lib\_mysqludf\_sequtils} évolue peu.
 \end{mycolorbox}
 
-\subsection {VM permanente}\label{VMpermanente}
+\section{VM permanente}\label{VMpermanente}
 
 C'est une VM OpenStack (\hostname{umr5558-microcloud.univ-lyon1.fr}, IP 134.214.33.214) du cloud \cloudInstance{ifb-prabi-girofle} disposant de 200 Go de stockage et 8 Go de RAM (elle est actuellement sous-dimensionnée par rapport à nos besoins).
 L'image de base est une image Debian 9.8.
@@ -168,7 +137,7 @@ Pour se connecter :
 ssh root@134.214.33.214
 \end{lstlisting}
 
-\paragraph*{Création des BD et copie des données}
+\subsection{Création des BD et copie des données}
 
 Le serveur MySQL contient les schémas des banques et les données nécessaires pour les tests (nous avons testés les onglets \textbf{Genome Browser}, \textbf{Identical Gene Names}):
 \begin{itemize}
@@ -187,9 +156,7 @@ Pour se connecter au serveur MySQL :
 mysql -p{MOT_DE_PASSE_SERVEUR_MYSQL_VM_PERMANENTE}
 \end{lstlisting}
 
-\subsection{Compoants \SScomponent{master} et \SScomponent{slave}} \label{master&slave}
-
-\todo[inline]{Ajouter les notes sur jbpmmicroscope ici ? Notes sur conda et l'installation des modules ? Plutôt dans la partie choix techniques.}
+\section{Compoants \SScomponent{master} et \SScomponent{slave}} \label{master&slave}
 
 Ces 2 composants permettent de créer un cluster basé sur SLURM sur lequel \component{jbpmmicroscope} soumet les jobs:
 \SScomponent{master} est la frontale et \SScomponent{slave} est un nœud de calcul.
@@ -199,12 +166,12 @@ Le code SlipStream est basé sur les travaux de Jonathan Lorenzo et Bryan Branco
     l'appliance \href{https://nuv.la/module/ifb/devzone/jlorenzo/cluster/Slurm_Cluster_ubuntu18}{\SScomponent{Slurm\_Cluster\_ubuntu18}}.
           L'image de base de ces composants est une image Ubuntu 18.04.
     \item Le code d'installation de ces composants a été copié depuis le dépôt \project{biosphere-commons}
-          puis modifié pour les besoins de MicroCloud\todo{Préciser çà}.
+          puis modifié pour les besoins de MicroCloud\todo{Préciser ça}.
 \end{itemize}
 Le composant \component{slave} peut être instancié plusieurs fois (2 par défaut).
 Ceci est choisi lors du déploiement (voir~\autoref{chap:deploiement}).
 
-\paragraph*{Généralités}
+\subsection{Généralités}
 
 Les composants \SScomponent{master} et \SScomponent{slave} montent le dossier partagé \path{/env/} (voir~\autoref{nfsserver}).
 Le composant \SScomponent{slave} est peu modifié par rapport aux scripts de J. Lorenzo et B. Brancotte.
@@ -212,15 +179,28 @@ En revanche, le composant \SScomponent{master} est plus complexe car
 c'est sur lui qu'on installe \component{jbpmmicroscope} (et donc \component{Tomcat})
 et les logiciels partagés entre la frontale et les nœuds de calcul.
 
-\paragraph*{Installation de \component{jbpmmicroscope}}
+Le composant \SScomponent{master} crée un alias du composant \SScomponent{mysql} sous le nom \hostname{mysqlagcdb.genoscope.cns.fr}.
+Ceci est utilisé pour l'installation de \component{jbpmmicroscope} (voir~\autoref{sec:installation_jbpmmicroscope}).
 
-\component{jbpmmicroscope} et le serveur d'application \href{http://mirrors.ircam.fr/pub/apache/tomcat/tomcat-9/v9.0.31/bin/apache-tomcat-9.0.31.tar.gz}{\component{Tomcat} version 9.0.31}
-sont installés par \script{install\_jbpm.sh} à partir des fichiers téléchargés depuis le Genoscope.
-Le script n'est pas très compliqué.
+\subsection{Installation de \component{jbpmmicroscope}}
 
-Pour accéder à Tomcat : http://\$IP\_master.
+Le script installe \script{install\_jbpm.sh}:
+\begin{enumerate}
+    \item le serveur d'application \href{http://mirrors.ircam.fr/pub/apache/tomcat/tomcat-9/v9.0.31/bin/apache-tomcat-9.0.31.tar.gz}{\component{Tomcat} version 9.0.31} dans \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat}.
+    Les identifiants tomcat sont les suivants:
+    \begin{description}
+        \item[login:] \variable{tomcat}
+        \item[password:] \variable{tomcat}
+    \end{description}
+    Ces identifiants peuvent être modifiés dans le composant master, ils correspondent aux paramètres \variable{tomcat\_user} et \variable{tomcat\_password}.
+    Pour accéder à Tomcat : http://\$IP\_master.
 
-\paragraph*{Installation de \component{pegasus-mpi-cluster}}
+    \item \component{jbpmmicroscope} est installé à partir des fichiers téléchargés depuis le Genoscope
+    dans path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/jbpmmicroscope}.
+    Pour les logins et les mots de passe, voir~\autoref{sec:installation_jbpmmicroscope}.
+\end{enumerate}
+
+\subsection{Installation de \component{pegasus-mpi-cluster}}
 
 \component{bagsub} s'appuie sur \component{pegasus-mpi-cluster}.
 Nous avons installé (\href{https://github.com/pegasus-isi/pegasus/archive/4.9.2.zip}{\component{pegasus-mpi-cluster} version 4.9.2}).
@@ -228,7 +208,7 @@ Le code téléchargé ne compile pas à cause car la librairie \component{libnum
 Comme celle-ci n'est pas nécessaire pour les architectures non-NUMA, nous modifions les fichiers \filename{Makefile}
 pour supprimer la dépendance à \component{libnuma}.
 
-\paragraph*{Installation des modules (dont \component{bagsub})}
+\subsection{Installation des modules (dont \component{bagsub})}
 
 Chaque workflow fait appel à différents modules qu'il faut installer au préalable sur la VM master.
 Le script \script{import\_modules.sh} permet d'importer les archives des différents modules nécessaires au fonctionnement des workflows (WF DIRECTON principalement).
@@ -238,7 +218,7 @@ on supprime l'option ulimit qui ne fonctionne pas en \component{dash} (le shell 
 et ajoute le paramètre MCA \variable{btl\_tcp\_if\_exclude} pour exclure les interfaces réseaux \hostname{docker0} et \hostname{lo} qui peuvent engendrer des conflits lors du lancement de jobs SLURM.
 
 
-\subsection{Composant \SScomponent{nfsserver}} \label{nfsserver}
+\section{Composant \SScomponent{nfsserver}} \label{nfsserver}
 
 Le composant \SScomponent{nfsserver} a été créé en s'inspirant du travail de Stéphane Delmotte.
 Il permet de fournir un dossier partagé entre les différentes VM.

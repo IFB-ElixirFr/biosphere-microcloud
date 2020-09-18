@@ -74,19 +74,20 @@ createModulesTarball.py --modules_list bagsub-2.4.3 AGCScriptToolMic-2.0 micGeno
 Actuellement l'environnement de MicroCloud ne permet d'utiliser que les modules \module[2.4.3]{bagsub}, \module[2.0]{AGCScriptToolMic}, \module[7.0.0]{micGenome}, \module[3.10.8]{micJBPMwrapper}, \module[2.0]{micPrestation} et \module[1.0]{micDirecton}.
 
 \begin{mycolorbox}
-    Lors de tout ajout de nouveaux modules, il faut modifier le script de l'étape Depolyment de la VM master
+    Lors de tout ajout de nouveaux modules, il faut modifier le script de l'étape Depolyment de la VM \SScomponent{master}
     pour faut ajouter les variables d'environnement nécessaires aux nouveaux modules
     dans le fichier \path{microcloud.profile}.
 \end{mycolorbox}
 
 \section{Mettre à jour \component{jbpmmicroscope}} \label{sec:nouvelle_version_jbpmmicroscope}
 
-MicroCloud utilise une version de \component{jbpmmicroscope} compilée avec des options spéciales.
+MicroCloud utilise une version de \component{jbpmmicroscope} compilée avec des options spéciales (voir ~\autoref{sec:installation_jbpmmicroscope}).
 
 La configuration d'un environnement de développement pour \component{jbpmmicroscope} est expliquée
 dans la page \href{https://intranet.genoscope.cns.fr/agc/redmine/projects/microscopeworkflow/wiki/JBPMprocedure}{[[JBPM procedure environnement de dev/declaration nouveau workflow]]}.
+Il faut utiliser la branche \path{config_microcloud} et non \path{trunk}.
 
-Une fois ceci fait, il faut compiler \component{jbpmmicroscope-client} avec le profil \texttt{config-microcloud}:
+Une fois ceci fait, il faut compiler \component{jbpmmicroscope-client} avec le profil \variable{config-microcloud}:
 \begin{lstlisting}[style=bash]
 mvn -Pconfig-microcloud -s ~/.m2/genosphere-settings.xml clean install
 \end{lstlisting}
@@ -106,25 +107,6 @@ dans le dossier \path{jbpmmicroscope-server/target}.
 
 Copier le .war et les .jar sur \hostname{etna0} dans le répertoire \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/}.
 La VM \SScomponent{master} importe ces fichiers à l'aide de liens symboliques.
-
-Le schéma de la base \DB{JBPMmicroscope} est créé automatiquement par hibernate (voir le paramètre \textbf{hbm2ddl.auto} dans \filename{hibernate.cfg.xml}) lors de la première exécution d'une commande \script{JBPMmicroscope}.
-
-Les identifiants de connexion à la base \DB{JBPMmicroscope} (via hibernate) sont les suivants:
-\begin{description}
-    \item[login:] \texttt{jbpm}
-    \item[password:] \texttt{jbpm}
-\end{description}
-Ces identifiants peuvent être modifiés dans le composant master, ils correspondent aux paramètres \textbf{jbpm\_user} et \textbf{jbpm\_password}.
-Pour modifier ces identifiants, il faut modifier le fichier \path{hibernate.cfg.xml}, régénérer les .jar et le .war et les copier dans \path{/env/cns/wwwext/html/agc/ftp/MicroCloud}).\todo{Mettre dans partie technique}
-
-\component{jbpmmicroscope} nécessite un serveur Tomcat pour fonctionner.
-Tomcat 9 est installé dans le composant master : \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat}.
-Les identifiants tomcat sont les suivants:
-\begin{description}
-    \item[login:] \texttt{tomcat}
-    \item[password:] \texttt{tomcat}
-\end{description}
-Ces identifiants peuvent être modifiés dans le composant master, ils correspondent aux paramètres \textbf{tomcat\_user} et \textbf{tomcat\_password}.
 
 \section{Mettre à jour la VM permanente}
 \todo{Compléter cette partie + ajouter un lien au début}

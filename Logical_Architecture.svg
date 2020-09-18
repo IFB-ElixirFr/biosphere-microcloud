@@ -11,8 +11,9 @@
     <tspan x="420" y="116">  - Apache</tspan>
     <tspan x="420" y="132">  - PHP</tspan>
   </text>
-  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="340" y="460">
-    <tspan x="340" y="460">MySQL server</tspan>
+  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="360" y="460">
+    <tspan x="360" y="460">mysql: instance</tspan>
+    <tspan x="360" y="476">SQL server</tspan>
   </text>
   <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="470" y="280">
     <tspan x="470" y="280"></tspan>
@@ -25,8 +26,8 @@
     <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="404.372,178.135 409.319,188.161 404.332,185.635 399.319,188.108 "/>
   </g>
   <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="200" y="220">
-    <tspan x="200" y="220">Permanent</tspan>
-    <tspan x="200" y="236">MySQL server</tspan>
+    <tspan x="200" y="220">Permanent VM:</tspan>
+    <tspan x="200" y="236">bank SQL server</tspan>
   </text>
   <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="320" y="291.881">
     <tspan x="320" y="291.881">MySQL</tspan>
@@ -297,12 +298,11 @@
     <polygon style="fill: #000000" points="448.718,404.348 458.594,399.107 456.216,404.166 458.836,409.104 "/>
     <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="448.718,404.348 458.594,399.107 456.216,404.166 458.836,409.104 "/>
   </g>
-  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="580" y="400">
-    <tspan x="580" y="400">NFS share</tspan>
-    <tspan x="580" y="416">  - web data</tspan>
-    <tspan x="580" y="432">  - software</tspan>
-    <tspan x="580" y="448">  - computation</tspan>
-    <tspan x="580" y="464">     results</tspan>
+  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="580" y="420">
+    <tspan x="580" y="420">nfsserver:</tspan>
+    <tspan x="580" y="436">NFS share (web data</tspan>
+    <tspan x="580" y="452">software, computation</tspan>
+    <tspan x="580" y="468">results)</tspan>
   </text>
   <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 20; stroke: #000000" x1="180" y1="260" x2="780" y2="260"/>
   <text font-size="20.32" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="180" y="55.2078">
@@ -321,11 +321,11 @@
     <tspan x="0" y="55.2078">genoscope</tspan>
   </text>
   <g>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 4; stroke: #000000" points="350.264,405.428 320,405.428 320,170.523 296.721,170.523 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 4; stroke: #000000" points="350.264,405.428 320,405.428 320,170.523 296.722,170.523 "/>
     <polygon style="fill: #000000" points="357.764,405.428 347.764,410.428 350.264,405.428 347.764,400.428 "/>
     <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="357.764,405.428 347.764,410.428 350.264,405.428 347.764,400.428 "/>
-    <polygon style="fill: #000000" points="289.221,170.523 299.221,165.523 296.721,170.523 299.221,175.523 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="289.221,170.523 299.221,165.523 296.721,170.523 299.221,175.523 "/>
+    <polygon style="fill: #000000" points="289.222,170.523 299.222,165.523 296.722,170.523 299.222,175.523 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="289.222,170.523 299.222,165.523 296.722,170.523 299.222,175.523 "/>
   </g>
   <g>
     <path style="fill: #0078aa" d="M 107.964 208.239 L 107.907,207.641 L 107.774,207.053 L 107.556,206.455 L 107.262,205.866 L 106.882,205.297 L 106.407,204.718 L 105.847,204.158 L 105.211,203.607 L 104.49,203.066 L 103.692,202.544 L 102.8,202.022 L 101.86,201.519 L 100.845,201.044 L 99.7722,200.589 L 98.6047,200.142 L 97.3991,199.715 L 96.1177,199.317 L 94.7793,198.946 L 93.384,198.595 L 91.9601,198.263 L 90.4604,197.959 L 88.9511,197.693 L 87.3659,197.437 L 85.7902,197.2 L 84.1386,197.019 L 82.4869,196.849 L 80.8163,196.725 L 79.1267,196.63 L 77.4086,196.545 L 75.7,196.488 L 73.9725,196.488 L 73.9725,196.488 L 72.2639,196.488 L 70.5363,196.545 L 68.8277,196.63 L 67.1381,196.725 L 65.4675,196.849 L 63.8159,197.019 L 62.1737,197.2 L 60.5695,197.437 L 59.0033,197.693 L 57.4846,197.959 L 56.0038,198.263 L 54.5705,198.595 L 53.1656,198.946 L 51.8462,199.317 L 50.5553,199.715 L 49.3593,200.142 L 48.1822,200.589 L 47.1096,201.044 L 46.0845,201.519 L 45.1448,202.022 L 44.262,202.544 L 43.4646,203.066 L 42.7432,203.607 L 42.1168,204.158 L 41.5472,204.718 L 41.0726,205.297 L 40.7024,205.866 L 40.3892,206.455 L 40.1804,207.053 L 40.038,207.641 L 40,208.239 L 40,208.239 L 40.038,208.828 L 40.1804,209.426 L 40.3892,210.014 L 40.7024,210.612 L 41.0726,211.191 L 41.5472,211.77 L 42.1168,212.33 L 42.7432,212.881 L 43.4646,213.422 L 44.262,213.935 L 45.1448,214.466 L 46.0845,214.969 L 47.1096,215.444 L 48.1822,215.89 L 49.3593,216.346 L 50.5553,216.773 L 51.8462,217.171 L 53.1656,217.542 L 54.5705,217.893 L 56.0038,218.225 L 57.4846,218.529 L 59.0033,218.794 L 60.5695,219.051 L 62.1737,219.279 L 63.8159,219.468 L 65.4675,219.63 L 67.1381,219.753 L 68.8277,219.867 L 70.5363,219.943 L 72.2639,219.991 L 73.9725,220 L 73.9725,220 L 75.7,219.991 L 77.4086,219.943 L 79.1267,219.867 L 80.8163,219.753 L 82.4869,219.63 L 84.1386,219.468 L 85.7902,219.279 L 87.3659,219.051 L 88.9511,218.794 L 90.4604,218.529 L 91.9601,218.225 L 93.384,217.893 L 94.7793,217.542 L 96.1177,217.171 L 97.3991,216.773 L 98.6047,216.346 L 99.7722,215.89 L 100.845,215.444 L 101.86,214.969 L 102.8,214.466 L 103.692,213.935 L 104.49,213.422 L 105.211,212.881 L 105.847,212.33 L 106.407,211.77 L 106.882,211.191 L 107.262,210.612 L 107.556,210.014 L 107.774,209.426 L 107.907,208.828 L 107.964,208.239z"/>
@@ -390,14 +390,14 @@
     </text>
   </g>
   <g>
-    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 93.8281 217.78 C 190.106,304.161 489.466,186.522 530.47,177.763"/>
-    <polygon style="fill: #000000" points="537.805,176.197 529.07,183.175 530.47,177.763 526.981,173.396 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="537.805,176.197 529.07,183.175 530.47,177.763 526.981,173.396 "/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00ff00" d="M 93.8281 217.78 C 190.106,304.161 489.466,186.522 530.47,177.763"/>
+    <polygon style="fill: #00ff00" points="537.805,176.197 529.07,183.175 530.47,177.763 526.981,173.396 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00ff00" points="537.805,176.197 529.07,183.175 530.47,177.763 526.981,173.396 "/>
   </g>
   <g>
-    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 94.2713 182.34 C 140.299,142.375 316.142,105.972 372.228,138.949"/>
-    <polygon style="fill: #000000" points="378.693,142.751 367.538,141.992 372.228,138.949 372.607,133.372 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="378.693,142.751 367.538,141.992 372.228,138.949 372.607,133.372 "/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00ff00" d="M 94.2712 182.34 C 140.299,142.375 316.142,105.972 372.228,138.949"/>
+    <polygon style="fill: #00ff00" points="378.693,142.751 367.538,141.992 372.228,138.949 372.607,133.372 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00ff00" points="378.693,142.751 367.538,141.992 372.228,138.949 372.607,133.372 "/>
   </g>
   <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00ff00" x="460" y="520" width="100" height="20"/>
   <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="580" y="520">
@@ -405,16 +405,16 @@
     <tspan x="580" y="536">(temporary VMs)</tspan>
   </text>
   <g>
-    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 460 600 C 426.028,600.034 520,600 550.264,600"/>
-    <polygon style="fill: #000000" points="557.764,600 547.764,605 550.264,600 547.764,595 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="557.764,600 547.764,605 550.264,600 547.764,595 "/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00ff00" d="M 460 600 C 426.028,600.034 520,600 550.264,600"/>
+    <polygon style="fill: #00ff00" points="557.764,600 547.764,605 550.264,600 547.764,595 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00ff00" points="557.764,600 547.764,605 550.264,600 547.764,595 "/>
   </g>
   <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="580" y="600">
     <tspan x="580" y="600">Download (HTTP)</tspan>
   </text>
   <g>
-    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 85.8377 219.28 C 171.865,359.314 216.819,441.307 350.435,415.601"/>
-    <polygon style="fill: #000000" points="357.799,414.184 348.924,420.983 350.435,415.601 347.035,411.163 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="357.799,414.184 348.924,420.983 350.435,415.601 347.035,411.163 "/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00ff00" d="M 85.8377 219.28 C 171.865,359.314 216.819,441.308 350.434,415.601"/>
+    <polygon style="fill: #00ff00" points="357.799,414.184 348.924,420.983 350.434,415.601 347.034,411.164 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00ff00" points="357.799,414.184 348.924,420.983 350.434,415.601 347.034,411.164 "/>
   </g>
 </svg>
