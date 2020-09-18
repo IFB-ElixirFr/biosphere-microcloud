@@ -60,7 +60,7 @@ mv ${phpmyadmin_config_file} ${phpmyadmin_config_file}.orig
 
 # Modify configuration file in PHP ('cause we are nuts)
 # Shell variables inside '${var}' are expanded
-# PHP variables must start with \$ 
+# PHP variables must start with \$
 cat <<EOF | php > ${phpmyadmin_config_file}
 <?php
 # Load configuration
@@ -137,7 +137,7 @@ tar -xvf microcloud.tar.gz
 
 dirname=microcloud
 
-# Change default contact email 
+# Change default contact email
 find ./${dirname} -type f -exec sed -i -e "s|mage@genoscope.cns.fr|root@localhost|" {} \;
 
 mysql_user=root

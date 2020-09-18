@@ -25,5 +25,5 @@ echo $PASS
 
 # Encrypt it in MD5
 MD5_PASS=$(echo -n $PASS | md5sum | awk '{print $1}')
-   
+
 $DBConnect ${MYAGCDB} -e "INSERT INTO Annotator(A_name, A_mail, A_pass, A_type) VALUES ('${login}', '${email}', '${MD5_PASS}', '${role}')"

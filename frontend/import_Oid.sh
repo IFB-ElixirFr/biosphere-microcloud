@@ -2,7 +2,7 @@
 
 ######################################
 # Title: import_Oid.sh
-# Description: This script will import MicroScope data into backend component for a chosen Oid 
+# Description: This script will import MicroScope data into backend component for a chosen Oid
 # Usage:$ ./import_Oid dirname Oid MYSQL_HOST MYSQL_USER MYSQL_PASSWORD
 # Date: 03/04/2019
 ######################################
@@ -13,7 +13,7 @@ MYSQL_HOST=$3
 MYSQL_USER=$4
 MYSQL_PASSWORD=$5
 
-# Get the latest database version 
+# Get the latest database version
 URL=https://www.genoscope.cns.fr/agc/ftp/MicroCloud/microscope_${Oid}-latest.tar.gz
 curl -o microscope_${Oid}.tar.gz $URL
 tar -xvf microscope_${Oid}.tar.gz

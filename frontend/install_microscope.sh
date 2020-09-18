@@ -17,7 +17,7 @@ $mysql_request -e "CREATE USER 'agc'@'%'";
 $mysql_request -e "GRANT ALL ON pkgdb.* TO 'agc'@'%'";
 $mysql_request -e "FLUSH PRIVILEGES";
 
-# Create databases 
+# Create databases
 $mysql_request -e "CREATE DATABASE GO_CPD"; # --databases (-B) option includes CREATE DATABASE and USE statements unfortunately --tables option overrides the --databases (-B) option
 $mysql_request -e "CREATE DATABASE PUB_CPD";
 $mysql_request -e "CREATE DATABASE PRESTATIONDB";
