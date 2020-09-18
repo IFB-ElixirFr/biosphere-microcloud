@@ -7,14 +7,14 @@ Ces opérations doivent être effectuées au Genoscope.
 Les détails techniques sont dans le~\autoref{chap:micwebdeploy}.
 Le répertoire d'export des archives et autres fichiers sur \hostname{etna0} est \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/}.
 
-Les composants nécessaires sont:
+Les composants sont:
 \begin{itemize}
     \item Le code web et les bases de données (schéma + données de base) de l'instance (voir~\autoref{sec:nouvelle_version_web})
-          qui sont installés par la VM frontend.
+          qui sont installés par la VM \SScomponent{frontend}.
     \item Les données d'un organisme (voir~\autoref{sec:nouvelle_donne_organisme})
-          qui sont aussi utilisées par la VM frontend.
-    \item Les modules à installer (voir~\autoref{sec:nouvelle_liste_modules}).
-    \item \component{jbpmmicroscope} (voir~\autoref{sec:nouvelle_version_jbpmmicroscope}).
+          qui sont aussi utilisées par la VM \SScomponent{frontend}.
+    \item Les modules à installer sur la VM \SScomponent{master} (voir~\autoref{sec:nouvelle_liste_modules}).
+    \item \component{jbpmmicroscope} qui est installé sur \SScomponent{master} (voir~\autoref{sec:nouvelle_version_jbpmmicroscope}).
 \end{itemize}
 
 La plupart de ces opérations utilisent le module \micWEBdeployVer.
@@ -23,9 +23,11 @@ Pour le charger:
 module load micWEBdeploy/0-MicroCloud-1.0
 \end{lstlisting}
 
+On peut aussi être amené à mettre à jour les BD sur la VM permanente (voir~\autoref{sec:maj_vm_permanente}).
+
 \section{Créer une nouvelle release du code web} \label{sec:nouvelle_version_web}
 
-Pour créer une nouvelle version du code du web et des bases de données, choisir la version de MicroScope à déployer puis lancer le script \script{microscopeRelease.py} :
+Pour créer une nouvelle version du code web et des bases de données, choisir la version de MicroScope à déployer puis lancer le script \script{microscopeRelease.py} :
 \begin{lstlisting}[style=bash]
 MICVERSION=3.14.0
 microscopeRelease.py --version ${MICVERSION} --output /env/cns/wwwext/html/agc/ftp/MicroCloud/microcloud-${MICVERSION}.tar.gz
@@ -108,12 +110,12 @@ dans le dossier \path{jbpmmicroscope-server/target}.
 Copier le .war et les .jar sur \hostname{etna0} dans le répertoire \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/}.
 La VM \SScomponent{master} importe ces fichiers à l'aide de liens symboliques.
 
-\section{Mettre à jour la VM permanente}
-\todo{Compléter cette partie + ajouter un lien au début}
+\section{Mettre à jour les bases sur la VM permanente} \label{sec:maj_vm_permanente}
 
-Il faut penser à mettre à jour les tables de la VM permanente en fonction des besoins. Pour cela, s'inspirer du script \script{microscopeCreateDBschemas.py}, par exemple, et utiliser les fichiers de données ainsi générés.
+Il faut penser à mettre à jour les bases et les tables de la VM permanente en fonction des besoins.
+Pour cela, s'inspirer du script \script{microscopeCreateDBschemas.py}, par exemple, et utiliser les fichiers de données ainsi générés.
 
-Pour copier les données, mieux vaut utiliser rsync et copier les données dans le répertoire \textbf{/var/lib/mysql-files/} de la VM permanente avant insertion en base :
+Pour copier les données, mieux vaut utiliser rsync et copier les données dans le répertoire \path{/var/lib/mysql-files/} de la VM permanente avant insertion en base :
 \begin{lstlisting}[style=SQL]
 LOAD DATA INFILE '/var/lib/mysql-files/$file.DB' INTO TABLE $table;
 \end{lstlisting}
