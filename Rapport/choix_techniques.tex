@@ -1,0 +1,154 @@
+\chapter{Choix techniques} \label{chap:choix_techniques}
+
+Ce chapitre détaille les principaux choix techniques.
+Après avoir présenté la vue d'ensemble de l'architecture, nous présentons les 3 difficultés majeures,
+l'installation de \component{jbpmmicroscope}, la mise à disposition des banques et
+l'installation des logiciels métier.
+
+\section{Vue d'ensemble}
+
+La vue d'ensemble de l'architecture est présentée dans la~\autoref{fig:architecture}.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=\linewidth]{../Logical_Architecture}
+    \caption{Schéma de l'architecture de MicroCloud.}
+    \label{fig:architecture}
+\end{figure}
+
+Un des buts est de mimer ce qui est fait au Genoscope
+c'est-à-dire que:
+\begin{enumerate}
+    \item Les différents composants (serveur web, serveur de BD, etc.) tournent sur des machines séparées.
+    \item Les calculs tournent sur des machines séparées: l'architecture contient donc un cluster (basé sur SLURM).
+    \item Les machines partagent un disque commun (qui est utilisé pour accéder aux données et aux logiciels).
+\end{enumerate}\vspace*{\baselineskip}
+
+Une des différences est que le serveur \component{jbpmmicroscope} tourne
+sur la machine frontale du cluster.
+Ceci a été fait pour diminuer légèrement le nombre de composants
+et car cela pourrait nécessiter d'autres modifications dans \component{jbpmmicroscope}.
+
+L'autre différence est l'utilisation d'une machine partagée pour fournir l'accès aux banques (voir~\autoref{sec:acces_banques}).
+Il y a donc 2 serveurs de bases de données dans MicroCloud:
+\begin{itemize}
+    \item Un serveur MySQL propre à chaque instance.
+    \item Un serveur MySQL partagé sur la VM permanente.
+\end{itemize}\vspace*{\baselineskip}
+
+Lors du déploiement, les VM téléchargent des fichiers (code et données) depuis le serveur web du Genoscope (voir~\autoref{chap:deploiement_VM}).
+Ces fichiers sont crées par le module \micWEBdeployVer{} (voir~\autoref{chap:micwebdeploy}).
+Le gros du travail du travail est fait dans les scripts de la phase Deployment (script \script{04\_Deployment.sh} de chaque composant SlipStream).
+Ceci a été fait pour simplifier les scripts d'installation (avant la phase de déploiement)
+et ne pas fixer les versions de MicroScope à ces étapes.
+
+\section{Installation de \component{jbpmmicroscope}} \label{sec:installation_jbpmmicroscope}
+
+\subsection{Défis}
+
+L'installation de \component{jbpmmicroscope} est très difficile pour plusieurs raisons:
+\begin{enumerate}
+    \item \emph{Manque de documentation.} Il n'a pas de documentation sur le projet donc tous les points suivants sont difficiles à modifier.
+    \item \emph{La configuration est dans le code.} La configuration du serveur SQL à utiliser est codée dans les fichiers jar et war lors de la compilation.
+           Ainsi, les différentes instances (\mageInstance{microscope}, \mageInstance{labscope}, \mageInstance{dietetic}, \mageInstance{coliscope}) sont compilées avec des profils maven spécifiques.
+           En théorie, il est possible de ne pas faire cela dans \component{Tomcat}.
+    \item \emph{Organisation du projet confuse.} Le projet est découpé en 3 sous-projets maven (\component{jbpmmicroscope-server}, \component{jbpmmicroscope-client} et \component{jbpmmicroscope-commons}\footnote{Nous laissons de côté \component{jbpmmicroscope-web-services} qui apparemment n'a jamais marché.});
+          cependant, personne ne connaît vraiment la distinction et le fichier XML qui décrit les WF est à un autre endroit (\path{src});
+          de plus, il semble que les sources de \component{jBPM 3.2.3} lui-même soient incluses dans le projet.
+    \item \emph{Utilisation de \component{jBPM 3.2.3}.} Cette version de \component{jBPM} est obsolète depuis longtemps.
+    \item \emph{Utilisation de XSLT 2.0.} La transformation du fichier XML qui décrit tous les WF se base sur XSLT 2.0;
+          or cette version de la norme est peu répandue.
+          Par exemple, le plugin \component{Orange Volt} utilisé dans nos procédures est obsolète depuis longtemps.
+\end{enumerate}
+
+\subsection{Revue des solutions}
+
+\subsubsection{Tentative d'installation de versions plus récentes de jBPM}
+
+Nous avons testé l'installation de versions plus récentes de \component{jBPM} (sans la surcouche \component{jbpmmicrosope}).
+Voir \href{https://intranet.genoscope.cns.fr/agc/redmine/documents/88}{les documents sur le projet Redmine}.
+Globalement, nous avons réussi à installer \component{jBPM} séparément mais cela n'aidait pas
+car la manière d'installer \component{jbpmmicroscope} par dessus n'est pas claire.
+
+\subsubsection{Reprise des développements}
+
+Nous avons envisagé la reprise des développements de \component{jbpmmicroscope} mais la quantité de travail est trop grande.
+
+\subsection{Choix techniques}
+
+Face aux problèmes, nous avons décidé de créer une branche spécifique (\path{config_microcloud})
+qui déclare une nouvelle configuration de compilation pour MicroCloud (appelée \variable{config-microcloud} - voir le dossier \path{src/main/config/config-microcloud})
+qui utilise les paramètres suivants:
+\begin{itemize}
+    \item Le serveur MySQL à utiliser est \hostname{mysqlagcdb.genoscope.cns.fr}.
+          Ceci fonctionne car la VM \SScomponent{master} déclare un alias du composant \SScomponent{mysql} sous le nom \hostname{mysqlagcdb.genoscope.cns.fr}
+          (voir~\autoref{master&slave}).
+    \item Les identifiants de connexion à la base \DB{JBPMmicroscope} sont les suivants:
+          \begin{description}
+              \item[login:] \variable{jbpm}
+              \item[password:] \variable{jbpm}
+          \end{description}
+    \item Le paramètre \variable{hbm2ddl.auto} dans \filename{hibernate.cfg.xml} crée automatiquement le schéma de la base \DB{JBPMmicroscope} lors de la première exécution de \script{JBPMmicroscope}.
+\end{itemize}\vspace*{\baselineskip}
+
+Pour rappel, la connexion à la base se fait via \component{hibernate}.
+
+Les instructions de compilations sont dans la~\autoref{sec:nouvelle_version_jbpmmicroscope}.
+Pour l'installation, voir~\autoref{master&slave}.
+
+\section{Mise à disposition des banques} \label{sec:acces_banques}
+
+\subsection{Défis}
+
+MicroScope utilise des bases de données SQL pour représenter diverses banques.
+Ces bases doivent être présentes par exemple pour afficher la fiche de gènes.
+Or la constitution de ces bases est très complexe:
+elle est basée sur CABRI (pour lé téléchargement)
+et sur des WF de MicroScope (pour l'extraction des données et l'insertion en base)
+dont certains sont automatiques (donc basés sur \component{jbpmmicroscope}) et d'autres manuels.
+
+\subsection{Revue des solutions}
+
+Vu les limites actuelles du cloud IFB (voir~\autoref{subsec:limites_coud}),
+la seule solution envisagée est de mettre à disposition les bases sur une machine permanente et
+d'utiliser le moteur de stockage FEDERATED (voir~\url{https://dev.mysql.com/doc/refman/5.7/en/federated-storage-engine.html} et \url{http://download.nust.na/pub6/mysql/tech-resources/articles/mysql-federated-storage.html}).
+Ce moteur permet d'accéder à des bases de données sur un serveur MySQL distant comme si elles étaient sur le serveur local.
+
+\subsection{Choix techniques}
+
+Les détails sur la VM permanente sont dans la~\autoref{VMpermanente}.
+Pour la création des liens, voir~\autoref{frontend}.
+
+En principe, on pourrait faire en sorte que la VM permanente mette à jour les banques:
+il faut installer CABRI (ou un équivalent pour télécharger les banques) et faire tourner les WF de mise à jour des banques.
+Nous n'avons pas abordé ces questions.
+
+\section{Installation des logiciels métier} \label{sec:installation_logiciels_metier}
+
+\subsection{Défis}
+
+MicroScope utilise de nombreux logiciels métier pour les WF.
+Ces dépendances sont gérées par le logiciel \component{Environment Modules}.
+Une des difficultés est que module \component{micJBPMwraper} qui est nécessaire pour \component{jbpmmicroscope}
+charge tous les modules métier.
+Ainsi, si on veut reproduire ceci, il faut installer tous les modules.
+
+\subsection{Revue des solutions}
+
+On peut bien sûr installer les logiciels dans des modules indépendants \frquote{manuellement}.
+Cependant, cela conduirait rapidement à un temps d'installation très long.
+
+À l'heure actuelle, \component{conda} ne semble pas totalement adapté à nos besoins.
+En effet, installer un environnement par WF est lourd (plusieurs centaines de Mo/environnement);
+l'autre possibilité est d'installer un environnement pour chaque groupe d'outils compatibles mais on doit gérer ça manuellement.
+
+\subsection{Choix techniques}
+
+Face aux limitations des approches étudiées, nous avons décidé de copier le contenu des modules nécessaires depuis \hostname{etna0}
+et de re-créer les variables de base exportées par les modules.
+Ceci inclut les modules développés dans le cadre de MicroScope comme \module{bagsub}, \module{micPrestation} et \module{micGenome}
+et les modules métier (\module{micDirecton}).
+Nous n'utilisons donc pas \component{Environment Modules}.
+
+
+Cette partie n'est pas très robuste.
