@@ -50,10 +50,10 @@ Oid=(*\theOid{}*)
 microscopeCopyOid.py --oid ${Oid} --output /env/cns/wwwext/html/agc/ftp/MicroCloud/microscope_${Oid}.tar.gz
 \end{lstlisting}
 
-\begin{mycolorbox}
+\begin{warningbox}
     Pour le moment seules les données concernant l'Oid \theOid{} peuvent être récupérées avec le script microscopeCopyOid.py car certains organismes ont besoin de tables spécifiques de la base GO\_SPE (typiquement la table acineto\_KO pour \theOrg{}).
     C'est cet organisme qui est installé dans MicroCloud.
-\end{mycolorbox}
+\end{warningbox}
 
 Ensuite, mettre à jour le lien symbolique pour qu'il pointe vers la nouvelle archive :
 \begin{lstlisting}[style=bash]
@@ -75,11 +75,11 @@ createModulesTarball.py --modules_list bagsub-2.4.3 AGCScriptToolMic-2.0 micGeno
 
 Actuellement l'environnement de MicroCloud ne permet d'utiliser que les modules \module[2.4.3]{bagsub}, \module[2.0]{AGCScriptToolMic}, \module[7.0.0]{micGenome}, \module[3.10.8]{micJBPMwrapper}, \module[2.0]{micPrestation} et \module[1.0]{micDirecton}.
 
-\begin{mycolorbox}
+\begin{warningbox}
     Lors de tout ajout de nouveaux modules, il faut modifier le script de l'étape Depolyment de la VM \SScomponent{master}
     pour faut ajouter les variables d'environnement nécessaires aux nouveaux modules
     dans le fichier \path{microcloud.profile}.
-\end{mycolorbox}
+\end{warningbox}
 
 \section{Mettre à jour \component{jbpmmicroscope}} \label{sec:nouvelle_version_jbpmmicroscope}
 

@@ -51,9 +51,9 @@ Le script \script{04\_Deployment.sh} réalise un certain nombre d'opérations av
     \item Montage du répertoire partagé.
 \end{itemize}
 
-\begin{mycolorbox}
+\begin{warningbox}
     La VM \SScomponent{frontend} utilise un client mariaDB (et non pas MySQL du fait de conflits existants entre le dépôt remi-php71 installé et le dépôt IUS qui fournit le client MySQL).
-\end{mycolorbox}
+\end{warningbox}
 
 \subsection{Installation de MicroScope}
 
@@ -71,11 +71,11 @@ Le script \script{install\_microscope.sh} réalise l'installation de MicroScope:
 
 Les données de \theOid{} sont copiées avec le script \script{import\_Oid.sh}.
 
-\begin{mycolorbox}
+\begin{warningbox}
     Si lors de la connexion au serveur web le message d'erreur \textbf{256} s'affiche, cela signifie qu'il n'y a pas d'organisme en base.
     De ce fait, la plupart des onglets ainsi que le formulaire d'authentification sont inaccessibles.
     Ceci ne doit pas arriver si le déploiement se passe bien mais en cas de modifications des scripts cela peut arriver.
-\end{mycolorbox}
+\end{warningbox}
 
 \subsection{Création des liens FEDERATED}
 
@@ -113,12 +113,12 @@ Les fonctions UDF nécessaires à MicroScope (\component{lib\_mysqludf\_sequtils
 sont téléchargées depuis le Genoscope et
 sont installées dans le docker.
 
-\begin{mycolorbox}
+\begin{warningbox}
     Contrairement à la plupart des autres composants, la version des fonctions UDF utilisée
     est fixée dans les scripts (\micUDFVersion) et n'est pas gérée par \micWEBdeployVer{} (voir~\autoref{chap:micwebdeploy}).
     Ceci est lié au fait que c'est le composant qui a été développé en premier
     et que \component{lib\_mysqludf\_sequtils} évolue peu.
-\end{mycolorbox}
+\end{warningbox}
 
 \section{VM permanente}\label{VMpermanente}
 

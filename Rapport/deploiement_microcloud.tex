@@ -86,10 +86,10 @@ Puis, pour insérer la nouvelle séquence en base, utiliser le module \module{mi
     loadGenomeNS.sh -p ${PS_id} -o ${O_id}
 \end{lstlisting}
 
-\begin{mycolorbox}
+\begin{warningbox}
     Les données des banques nécessaires pour le script \textbf{loadGenomeNS.sh} ne sont pas stockées dans la VM permanente actuellement (données des banques gérées par CABRI).
     Cette étape ne fonctionne donc pas.
-\end{mycolorbox}
+\end{warningbox}
 \todo[inline]{Quelles banques ? TAXONOMY ? Mettre à jour la référence dans les limites}
 
 \section{Déployer un WF} \label{sec:deployer_wf}
@@ -100,9 +100,9 @@ Les sources de \component{jbpmmicroscope} sont dans le répertoire \path{/env/cn
 Le répertoire de travail Tomcat est le suivant : \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat}.
 Les modules sont localisés dans le répertoire : \path{/env/cns/proj/agc/module/products}.
 
-\begin{mycolorbox}
+\begin{warningbox}
     Si les données ont été copiées depuis la prod et insérées telles quelles (sans \module{micPrestation}), il faut vérifier que le status des S\_id existants dans la table \DB{pkgdb.Sequenc}e soit 'inFunctional' et non 'inProduction' pour que les WF prennent bien en compte les nouveaux S\_id.
-\end{mycolorbox}
+\end{warningbox}
 
 \begin{lstlisting}[style=SQL]
 USE pkgdb;
