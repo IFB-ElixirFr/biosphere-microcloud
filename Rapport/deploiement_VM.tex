@@ -69,7 +69,7 @@ Le script \script{install\_microscope.sh} réalise l'installation de MicroScope:
 
 \subsection{Import des données de l'organisme \theOrg{}}
 
-Les données de \theOid{} sont copiées avec le script \script{import\_Oid.sh}.
+Les données de l'organisme \theOid{} sont copiées avec le script \script{import\_Oid.sh}.
 
 \begin{warningbox}
     Si lors de la connexion au serveur web le message d'erreur \textbf{256} s'affiche, cela signifie qu'il n'y a pas d'organisme en base.
@@ -79,7 +79,7 @@ Les données de \theOid{} sont copiées avec le script \script{import\_Oid.sh}.
 
 \subsection{Création des liens FEDERATED}
 
-Les liens FEDERATED vers la VM permanente (qui permettent d'accéder aux base représentant les banques) sont crées
+Les liens FEDERATED vers la VM permanente (qui permettent d'accéder aux base représentant les banques) sont créés
 dans le script \script{create\_federated\_links.sh}.
 Le script crée automatique un lien avec toutes les BD présentes sur la VM permanente sauf les BD système (\DB{mysql}, \DB{information\_schema}, \DB{performance\_schema}, \DB{sys})
 et celles liées à \component{phpMyAdmin}.
@@ -97,7 +97,7 @@ ssh -A centos@${IP_mysql} -J centos@${IP_frontend}
 \subsection{Installation de MySQL}
 
 Le serveur MySQL est installé via Docker.
-La seule subtilité est qu'il faut démarrer MySQL l'option \variable{-{}-federated} pour activer le moteur FEDERATED.
+La seule subtilité est qu'il faut démarrer MySQL avec l'option \variable{-{}-federated} pour activer le moteur FEDERATED.
 
 Si le serveur ne répond pas, il faut aller voir si le docker n'a pas planté (cela arrive pour des requêtes SQL trop gourmandes en RAM).
 Pour relancer le docker :
@@ -185,9 +185,9 @@ Ceci est utilisé pour l'installation de \component{jbpmmicroscope} (voir~\autor
 
 \subsection{Installation de \component{jbpmmicroscope}}
 
-Le script installe \script{install\_jbpm.sh}:
+Le script \script{install\_jbpm.sh} installe :
 \begin{enumerate}
-    \item le serveur d'application \href{http://mirrors.ircam.fr/pub/apache/tomcat/tomcat-9/v9.0.31/bin/apache-tomcat-9.0.31.tar.gz}{\component{Tomcat} version 9.0.31} dans \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat}.
+    \item Le serveur d'application \href{http://mirrors.ircam.fr/pub/apache/tomcat/tomcat-9/v9.0.31/bin/apache-tomcat-9.0.31.tar.gz}{\component{Tomcat} version 9.0.31} dans \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat}.
     Les identifiants tomcat sont les suivants:
     \begin{description}
         \item[login:] \variable{tomcat}
