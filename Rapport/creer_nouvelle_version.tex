@@ -116,7 +116,7 @@ Il faut penser à mettre à jour les bases et les tables de la VM permanente en 
 Pour cela, on peut s'inspirer du script \script{microscopeCreateDBschemas.py} (voir~\autoref{sec:microscopeCreateDBschemas})
 et utiliser les fichiers de données ainsi générés.
 
-Pour copier les données, mieux vaut utiliser rsync et copier les données dans le répertoire \path{/var/lib/mysql-files/} de la VM permanente avant insertion en base :
+Pour copier les données, on peut utiliser rsync et copier les données dans le répertoire \path{/var/lib/mysql-files/} de la VM permanente avant insertion en base :
 \begin{lstlisting}[style=SQL]
 LOAD DATA INFILE '/var/lib/mysql-files/$file.DB' INTO TABLE $table;
 \end{lstlisting}
