@@ -50,7 +50,7 @@ Pour cela, il faut se connecter en ssh à la frontale puis exécuter le script \
 \end{lstlisting}
 Le script demande le mot de passe à utiliser et crée l'utilisateur
 
-\section{Insérer un nouvel organisme (partie Syntactic)}
+\section{Insérer un nouvel organisme (partie Syntactic)} \label{sec:syntactic}
 
 La première étape est d'ajouter les données de taxonomie pour ce nouvel organisme.
 Pour cela, il faut mettre à jour la base TAXONOMYDB de la VM permanente :
@@ -87,10 +87,11 @@ Puis, pour insérer la nouvelle séquence en base, utiliser le module \module{mi
 \end{lstlisting}
 
 \begin{warningbox}
-    Les données des banques nécessaires pour le script \textbf{loadGenomeNS.sh} ne sont pas stockées dans la VM permanente actuellement (données des banques gérées par CABRI).
-    Cette étape ne fonctionne donc pas.
+    L'insertion des séquences via \script{loadGenomeNS.sh} nécessite que l'espèce soit présente dans la banque \DB{TAXONOMY} (qui est donc sur la VM partagée).
+    Ces données sont gérées par CABRI et \component{jbpmmicroscope}.
+    Comme ces composants ne sont installés sur la VM permanente, la base \DB{TAXONOMY} n'est pas mise à jour.
+    Cette étape ne fonctionne donc pas en l'état actuel.
 \end{warningbox}
-\todo[inline]{Quelles banques ? TAXONOMY ? Mettre à jour la référence dans les limites}
 
 \section{Déployer un WF} \label{sec:deployer_wf}
 
