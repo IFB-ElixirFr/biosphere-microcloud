@@ -160,13 +160,14 @@ mysql -p{MOT_DE_PASSE_SERVEUR_MYSQL_VM_PERMANENTE}
 
 Ces 2 composants permettent de créer un cluster basé sur SLURM sur lequel \component{jbpmmicroscope} soumet les jobs:
 \SScomponent{master} est la frontale et \SScomponent{slave} est un nœud de calcul.
-Le code SlipStream est basé sur les travaux de Jonathan Lorenzo et Bryan Brancotte:
 \begin{itemize}
-    \item Les composants \SScomponent{master} et \SScomponent{slave} ont été copiés depuis
-    l'appliance \href{https://nuv.la/module/ifb/devzone/jlorenzo/cluster/Slurm_Cluster_ubuntu18}{\SScomponent{Slurm\_Cluster\_ubuntu18}}.
+    \item Les composants SlipStream \SScomponent{master} et \SScomponent{slave} ont été copiés depuis
+    l'appliance \href{https://nuv.la/module/ifb/devzone/jlorenzo/cluster/Slurm_Cluster_ubuntu18}{\SScomponent{Slurm\_Cluster\_ubuntu18}}
+          (crée par Jonathan Lorenzo et Bryan Brancotte pour l'IFB).
           L'image de base de ces composants est une image Ubuntu 18.04.
-    \item Le code d'installation de ces composants a été copié depuis le dépôt \project{biosphere-commons}
-          puis modifié pour les besoins de MicroCloud\todo{Préciser ça}.
+    \item Le code d'installation de ces composants clone le dépôt \project{biosphere-commons} pour installer le cluster
+          comme cela est fait dans les composants originaux
+          et installe les parties spécifiques à MicroCloud (voir plus bas).
 \end{itemize}
 Le composant \component{slave} peut être instancié plusieurs fois (2 par défaut).
 Ceci est choisi lors du déploiement (voir~\autoref{chap:deploiement}).
