@@ -87,7 +87,7 @@
 % Commands
 \newcommand{\filename}[1]{\textbf{#1}}
 \newcommand{\script}[1]{\textbf{#1}}
-\newcommand{\module}[2][]{
+\newcommand{\module}[2][]{%
     \texttt{#2\ifthenelse{\isempty{#1}}%
         {}% if version is empty
         {/#1}% if version is not empty}}
