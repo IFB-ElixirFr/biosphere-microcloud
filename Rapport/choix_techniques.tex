@@ -38,7 +38,7 @@ Il y a donc 2 serveurs de bases de données dans MicroCloud:
 
 Lors du déploiement, les VM téléchargent des fichiers (code et données) depuis le serveur web du Genoscope (voir~\autoref{chap:deploiement_VM}).
 Ces fichiers sont crées par le module \micWEBdeployVer{} (voir~\autoref{chap:micwebdeploy}).
-Le gros du travail du travail est fait dans les scripts de la phase Deployment (script \script{04\_Deployment.sh} de chaque composant SlipStream).
+Le gros du travail est fait dans les scripts de la phase Deployment (script \script{04\_Deployment.sh} de chaque composant SlipStream).
 Ceci a été fait pour simplifier les scripts d'installation (avant la phase de déploiement)
 et ne pas fixer les versions de MicroScope à ces étapes.
 
@@ -103,7 +103,7 @@ Pour l'installation, voir~\autoref{master&slave}.
 MicroScope utilise des bases de données SQL pour représenter diverses banques.
 Ces bases doivent être présentes par exemple pour afficher la fiche de gènes.
 Or la constitution de ces bases est très complexe:
-elle est basée sur CABRI (pour lé téléchargement)
+elle est basée sur CABRI (pour le téléchargement)
 et sur des WF de MicroScope (pour l'extraction des données et l'insertion en base)
 dont certains sont automatiques (donc basés sur \component{jbpmmicroscope}) et d'autres manuels.
 
@@ -134,7 +134,7 @@ Nous n'avons pas abordé ces questions.
 
 MicroScope utilise de nombreux logiciels métier pour les WF.
 Ces dépendances sont gérées par le logiciel \component{Environment Modules}.
-Une des difficultés est que module \component{micJBPMwraper} qui est nécessaire pour \component{jbpmmicroscope}
+Une des difficultés est que le module \component{micJBPMwraper} qui est nécessaire pour \component{jbpmmicroscope}
 charge tous les modules métier.
 Ainsi, si on veut reproduire ceci, il faut installer tous les modules.
 
