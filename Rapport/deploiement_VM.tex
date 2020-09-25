@@ -172,6 +172,11 @@ Ces 2 composants permettent de créer un cluster basé sur SLURM sur lequel \com
 Le composant \component{slave} peut être instancié plusieurs fois (2 par défaut).
 Ceci est choisi lors du déploiement (voir~\autoref{chap:deploiement}).
 
+Le code utilise les fonctionnalités avancées de SlipStream pour permettre un redimensionnement à chaud
+(voir \href{https://intranet.genoscope.cns.fr/agc/redmine/projects/microcloud/wiki/Principes_de_fonctionnement_du_cloud_IFB}{[[Principes de fonctionnement du cloud IFB]]}).
+Ainsi, il y a des scripts pour les étapes \script{06\_on\_VM\_add.sh} et \script{07\_on\_VM\_remove.sh} (dans les 2 composants).
+Cependant, nous ne sommes pas sûrs que le redimensionnement à chaud fonctionne.
+
 \subsection{Généralités}
 
 Les composants \SScomponent{master} et \SScomponent{slave} montent le dossier partagé \path{/env/} (voir~\autoref{nfsserver}).
