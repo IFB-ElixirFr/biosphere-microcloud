@@ -1,7 +1,7 @@
 \chapter{Choix techniques} \label{chap:choix_techniques}
 
 Ce chapitre détaille les principaux choix techniques.
-Après avoir présenté la vue d'ensemble de l'architecture, nous présentons les 3 difficultés majeures,
+Après avoir présenté la vue d'ensemble de l'architecture, nous présentons les 3 difficultés majeures:
 l'installation de \component{jbpmmicroscope}, la mise à disposition des banques et
 l'installation des logiciels métier.
 
@@ -39,7 +39,7 @@ Il y a donc 2 serveurs de bases de données dans MicroCloud:
 Lors du déploiement, les VM téléchargent des fichiers (code et données) depuis le serveur web du Genoscope (voir~\autoref{chap:deploiement_VM}).
 Ces fichiers sont crées par le module \micWEBdeployVer{} (voir~\autoref{chap:micwebdeploy}).
 Le gros du travail est fait dans les scripts de la phase Deployment (script \script{04\_Deployment.sh} de chaque composant SlipStream).
-Ceci a été fait pour simplifier les scripts d'installation (avant la phase de déploiement)
+Ceci a été fait pour simplifier les scripts d'installation (c'est-à-dire avant la phase de déploiement)
 et ne pas fixer les versions de MicroScope à ces étapes.
 
 \section{Installation de \component{jbpmmicroscope}} \label{sec:installation_jbpmmicroscope}
@@ -52,12 +52,12 @@ L'installation de \component{jbpmmicroscope} est très difficile pour plusieurs 
     \item \emph{La configuration est dans le code.} La configuration du serveur SQL à utiliser est codée dans les fichiers jar et war lors de la compilation.
            Ainsi, les différentes instances (\mageInstance{microscope}, \mageInstance{labscope}, \mageInstance{dietetic}, \mageInstance{coliscope}) sont compilées avec des profils maven spécifiques.
            En théorie, il est possible de ne pas faire cela dans \component{Tomcat}.
-    \item \emph{Organisation du projet confuse.} Le projet est découpé en 3 sous-projets maven (\component{jbpmmicroscope-server}, \component{jbpmmicroscope-client} et \component{jbpmmicroscope-commons}\footnote{Nous laissons de côté \component{jbpmmicroscope-web-services} qui apparemment n'a jamais marché.});
-          cependant, personne ne connaît vraiment la distinction et le fichier XML qui décrit les WF est à un autre endroit (\path{src});
-          de plus, il semble que les sources de \component{jBPM 3.2.3} lui-même soient incluses dans le projet.
+    \item \emph{Organisation du projet confuse.} Le projet est découpé en 3 sous-projets maven (\component{jbpmmicroscope-server}, \component{jbpmmicroscope-client} et \component{jbpmmicroscope-commons}\footnote{Nous laissons de côté \component{jbpmmicroscope-web-services} qui apparemment n'a jamais marché.}).
+          Cependant, personne ne connaît vraiment la distinction et le fichier XML qui décrit les WF est à un autre endroit (\path{src}).
+          De plus, il semble que les sources de \component{jBPM 3.2.3} lui-même soient incluses dans le projet.
     \item \emph{Utilisation de \component{jBPM 3.2.3}.} Cette version de \component{jBPM} est obsolète depuis longtemps.
-    \item \emph{Utilisation de XSLT 2.0.} La transformation du fichier XML qui décrit tous les WF se base sur XSLT 2.0;
-          or cette version de la norme est peu répandue.
+    \item \emph{Utilisation de XSLT 2.0.} La transformation du fichier XML qui décrit tous les WF se base sur XSLT 2.0.
+          Or cette version de la norme est peu répandue.
           Par exemple, le plugin \component{Orange Volt} utilisé dans nos procédures est obsolète depuis longtemps.
 \end{enumerate}
 
@@ -112,11 +112,12 @@ Pour l'installation, voir~\autoref{master&slave}.
 \subsection{Défis}
 
 MicroScope utilise des bases de données SQL pour représenter diverses banques.
-Ces bases doivent être présentes par exemple pour afficher la fiche de gènes.
+Ces bases doivent être présentes par exemple pour afficher la fiche de gène.
 Or la constitution de ces bases est très complexe:
 elle est basée sur CABRI (pour le téléchargement)
 et sur des WF de MicroScope (pour l'extraction des données et l'insertion en base)
 dont certains sont automatiques (donc basés sur \component{jbpmmicroscope}) et d'autres manuels.
+De plus, le volume de données est important.
 
 \subsection{Revue des solutions}
 
@@ -127,7 +128,7 @@ Ce moteur permet d'accéder à des bases de données sur un serveur MySQL distan
 
 \begin{warningbox}
     Il semble que le moteur FEDERATED n'est plus en développement actif.
-    Cependant, il n'est pas prévu de le retirer pour l'instant.
+    Cependant, il n'est pas prévu de le retirer de MySQL pour l'instant.
 \end{warningbox}
 
 \subsection{Choix techniques}
@@ -165,6 +166,7 @@ et de re-créer les variables de base exportées par les modules.
 Ceci inclut les modules développés dans le cadre de MicroScope comme \module{bagsub}, \module{micPrestation} et \module{micGenome}
 et les modules métier (\module{micDirecton}).
 Nous n'utilisons donc pas \component{Environment Modules}.
+Voir les sections~\ref{sec:nouvelle_liste_modules} et \ref{subsec:installation_modules} pour ajouter de nouveaux modules.
 
 
 Cette partie n'est pas très robuste.

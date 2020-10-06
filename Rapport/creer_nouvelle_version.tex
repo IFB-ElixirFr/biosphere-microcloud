@@ -9,10 +9,9 @@ Le répertoire d'export des archives et autres fichiers sur \hostname{etna0} est
 
 Les composants sont:
 \begin{itemize}
-    \item Le code web et les bases de données (schéma + données de base) de l'instance (voir~\autoref{sec:nouvelle_version_web})
-          qui sont installés par la VM \SScomponent{frontend}.
-    \item Les données d'un organisme (voir~\autoref{sec:nouvelle_donne_organisme})
-          qui sont aussi utilisées par la VM \SScomponent{frontend}.
+    \item Le code web et les bases de données (schéma + données de base) de l'instance
+          qui sont installés par la VM \SScomponent{frontend}  (voir~\autoref{sec:nouvelle_version_web}).
+    \item Les données d'un organisme qui sont aussi utilisées par la VM \SScomponent{frontend}  (voir~\autoref{sec:nouvelle_donne_organisme}).
     \item Les modules à installer sur la VM \SScomponent{master} (voir~\autoref{sec:nouvelle_liste_modules}).
     \item \component{jbpmmicroscope} qui est installé sur \SScomponent{master} (voir~\autoref{sec:nouvelle_version_jbpmmicroscope}).
 \end{itemize}
@@ -51,7 +50,7 @@ microscopeCopyOid.py --oid ${Oid} --output /env/cns/wwwext/html/agc/ftp/MicroClo
 \end{lstlisting}
 
 \begin{warningbox}
-    Pour le moment seules les données concernant l'Oid \theOid{} peuvent être récupérées avec le script microscopeCopyOid.py car certains organismes ont besoin de tables spécifiques de la base GO\_SPE (typiquement la table acineto\_KO pour \theOrg{}).
+    Pour le moment seules les données concernant l'Oid \theOid{} peuvent être récupérées avec le script \script{microscopeCopyOid.py} car certains organismes ont besoin de tables spécifiques de la base GO\_SPE (typiquement la table acineto\_KO pour \theOrg{}).
     C'est cet organisme qui est installé dans MicroCloud.
 \end{warningbox}
 
@@ -78,7 +77,7 @@ Actuellement l'environnement de MicroCloud ne permet d'utiliser que les modules 
 \begin{warningbox}
     Lors de tout ajout de nouveaux modules, il faut modifier le script de l'étape Depolyment de la VM \SScomponent{master}
     pour faut ajouter les variables d'environnement nécessaires aux nouveaux modules
-    dans le fichier \path{microcloud.profile}.
+    dans le fichier \path{microcloud.profile} (voir~\autoref{subsec:installation_modules}).
 \end{warningbox}
 
 \section{Mettre à jour \component{jbpmmicroscope}} \label{sec:nouvelle_version_jbpmmicroscope}

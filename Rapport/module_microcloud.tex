@@ -30,15 +30,16 @@ Voir page wiki \href{https://intranet.genoscope.cns.fr/agc/redmine/projects/micr
 Ce script permet de copier les données d'un organisme pour les importer dans une instance MicroCloud (voir \script{import\_Oid.sh}).
 
 \begin{warningbox}
-    Pour le moment seules les données concernant l'Oid \theOid{} peuvent être récupérées avec le script microscopeCopyOid.py car certains organismes ont besoin de tables spécifiques de la base GO\_SPE (typiquement la table acineto\_KO pour \theOrg{}).
+    Pour le moment seules les données concernant l'Oid \theOid{} peuvent être récupérées avec le script \script{microscopeCopyOid.py} car certains organismes ont besoin de tables spécifiques de la base GO\_SPE (typiquement la table acineto\_KO pour \theOrg{}).
 \end{warningbox}
 
 \section{\script{createModulesTarball.py}}
 
-Ce script créé les archives des modules à importer dans MicroCloud:
+Ce script crée:
 \begin{itemize}
-    \item Créé les liens symboliques dans \path{/env/cns/wwwext/html/agc/ftp/MicroCloud}.
-    \item Créé le fichier \path{modules.txt} dans \path{/env/cns/wwwext/html/agc/ftp/MicroCloud}.
+    \item les archives des modules à importer dans MicroCloud;
+    \item les liens symboliques dans \path{/env/cns/wwwext/html/agc/ftp/MicroCloud};
+    \item le fichier \path{modules.txt} dans \path{/env/cns/wwwext/html/agc/ftp/MicroCloud}.
 \end{itemize}
 
 \section{\script{microscopeCreateDBschemas.py}}\label{sec:microscopeCreateDBschemas}

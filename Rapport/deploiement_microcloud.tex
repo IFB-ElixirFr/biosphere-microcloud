@@ -22,7 +22,7 @@ Il y a 2 points d'entrée du déploiement:
 \begin{enumerate}
     \item \emph{L'interface web}. L'URL de la plateforme est: \nolinkurl{https://${IP_frontend}/home/index.php} où \nolinkurl{${IP_frontend}}
           est l'IP de la machine frontend.
-          Cette URL est reporté dans l'interface RAINBio.
+          Cette URL est reportée dans l'interface RAINBio.
     \item \emph{La machine frontale du cluster}. On peut aussi se connecter en SSH à la machine frontale du cluster
           dont l'IP est aussi reportée dans l'interface de RAINBio.
           Cette machine comprend les modules nécessaire au travail avec une instance (\module{micGenome}, \module{micJBPMwrapper}, etc.)
@@ -46,7 +46,7 @@ Une fois l'instance déployée, il faut créer un utilisateur admin.
 Pour cela, il faut se connecter en ssh à la frontale puis exécuter le script \script{create\_user.sh}:
 \begin{lstlisting}[style=Bash,gobble=4]
     ssh centos@${IP_master}
-    cd \path{/var/tmp/slipstream/biosphere-microcloud/master}
+    cd /var/tmp/slipstream/biosphere-microcloud/master
     ./create_user.sh LOGIN EMAIL admin
 \end{lstlisting}
 Le script demande le mot de passe à utiliser et crée l'utilisateur
@@ -54,9 +54,9 @@ Le script demande le mot de passe à utiliser et crée l'utilisateur
 \section{Insérer un nouvel organisme (partie Syntactic)} \label{sec:syntactic}
 
 La première étape est d'ajouter les données de taxonomie pour ce nouvel organisme.
-Pour cela, il faut mettre à jour la base TAXONOMYDB de la VM permanente :
+Pour cela, il faut mettre à jour la base \DB{TAXONOMYDB} de la VM permanente :
 \begin{itemize}
-    \item en copiant les données de prod de TAXONOMYDB et pkgdb.O\_Taxonomy pour cet organisme
+    \item en copiant les données de prod de \DB{TAXONOMYDB} et \DB{pkgdb.O\_Taxonomy} pour cet organisme
     \item ou en déployant les WF TAXONOMYDB et TAXONOMY
 \end{itemize}
 
@@ -64,16 +64,16 @@ Pour insérer un nouvel organisme, on utilise le module \module{micPrestation}.
 La procédure à suivre est la suivante :
 \begin{enumerate}
     \item Télécharger un fasta et décompresser l'archive.
-    \item Remplir le fichier Template\_Prestation.csv qui trouve dans le répertoire \path{/env/cns/proj/agc/module/products/micsyntactic/unix-noarch/lib}.
+    \item Remplir le fichier \filename{Template\_Prestation.csv} qui trouve dans le répertoire \path{/env/cns/proj/agc/module/products/micsyntactic/unix-noarch/lib}.
     \item Lancer la création de la prestation:
           \begin{lstlisting}[style=bash,gobble=14]
               prestaBatch.py --csv Template_Prestation.csv -sd ${working_dir} -A ${Annotator_name} -T genome
           \end{lstlisting}
-          Il y a un exemple de fichier Template\_Prestation.csv dans le dossier prestation : \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/prestation}.
+          Il y a un exemple de fichier \filename{Template\_Prestation.csv} dans le dossier prestation : \path{/env/cns/wwwext/html/agc/ftp/MicroCloud/prestation}.
     \item Accepter la prestation:
           \begin{itemize}
               \item Depuis le web (avec l'utilisateur admin crée à la section précédente).
-              \item Pour valider la prestation sans passer par le web faire :
+              \item Pour valider la prestation sans passer par le web, se connecter au serveur SQL et utiliser les commandes :
                     \begin{lstlisting}[style=SQL,gobble=22]
                       USE PRESTATIONDB;
                       SELECT * FROM Prestation;
@@ -103,7 +103,7 @@ Le répertoire de travail Tomcat est le suivant : \path{/env/cns/proj/agc/tools/
 Les modules sont localisés dans le répertoire : \path{/env/cns/proj/agc/module/products}.
 
 \begin{warningbox}
-    Si les données ont été copiées depuis la prod et insérées telles quelles (sans \module{micPrestation}), il faut vérifier que le status des S\_id existants dans la table \DB{pkgdb.Sequenc}e soit 'inFunctional' et non 'inProduction' pour que les WF prennent bien en compte les nouveaux S\_id.
+    Si les données ont été copiées depuis la prod et insérées telles quelles (sans \module{micPrestation}), il faut vérifier que le statut des S\_id existants dans la table \DB{pkgdb.Sequence} soit 'inFunctional' et non 'inProduction' pour que les WF prennent bien en compte les nouveaux S\_id.
 \end{warningbox}
 
 \begin{lstlisting}[style=SQL]

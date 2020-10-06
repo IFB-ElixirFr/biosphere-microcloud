@@ -30,7 +30,7 @@ Les sections suivantes présentent quelques détails sur les VM:
     \item \SScomponent{master} et \SScomponent{slave} voir section \ref{master&slave}
     \item \SScomponent{nfsserver} voir section \ref{nfsserver}
 \end{itemize}
-Comme expliqué, le code de chaque composant est dans un dossier éponyme dans le dépôt biosphere-microcloud.
+Comme expliqué, le code de chaque composant est dans un dossier éponyme dans le dépôt \project{biosphere-microcloud}.
 Dans les sections sus-citées, le nom des scripts est relatif à ce dossier (sauf mention contraire).
 
 \section{Composant \SScomponent{frontend}}\label{frontend}
@@ -139,7 +139,7 @@ ssh root@134.214.33.214
 
 \subsection{Création des BD et copie des données}
 
-Le serveur MySQL contient les schémas des banques et les données nécessaires pour les tests (nous avons testés les onglets \textbf{Genome Browser}, \textbf{Identical Gene Names}):
+Le serveur MySQL contient les schémas des banques et les données nécessaires pour les tests (nous avons testé les onglets \textbf{Genome Browser}, \textbf{Identical Gene Names}):
 \begin{itemize}
     \item les schéma des bases \DB{ANTISMASHDB}, \DB{CARDDB}, \DB{COGDB}, \DB{EGGNOGDB}, \DB{ENZYMEDB}, \DB{ESSDB}, \DB{FIGFAMDB}, \DB{INTERPRODATADB},
           \DB{KEGGDB}, \DB{RHEADB}, \DB{TAXONOMYDB}, \DB{TIGRFAMDB}, \DB{UNIFIREDB}, \DB{UNIPROTKBDB}, \DB{VIRULENCEDB}, \DB{microcyc}\footnote{Bien que cette base contienne les résultats d'une instance elle est nécessaire à l'heure actuelle car elle contient aussi les données de référence.}
@@ -203,26 +203,30 @@ Le script \script{install\_jbpm.sh} installe :
 
     \item \component{jbpmmicroscope} est installé à partir des fichiers téléchargés depuis le Genoscope
     dans path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/jbpmmicroscope}.
-    Pour les logins et les mots de passe, voir~\autoref{sec:installation_jbpmmicroscope}.
+    Pour le login et le mot de passe, voir~\autoref{sec:installation_jbpmmicroscope}.
 \end{enumerate}
 
 \subsection{Installation de \component{pegasus-mpi-cluster}}
 
 \component{bagsub} s'appuie sur \component{pegasus-mpi-cluster}.
 Nous avons installé (\href{https://github.com/pegasus-isi/pegasus/archive/4.9.2.zip}{\component{pegasus-mpi-cluster} version 4.9.2}).
-Le code téléchargé ne compile pas à cause car la librairie \component{libnuma} n'est pas installée.
+Le code téléchargé ne compile pas car la librairie \component{libnuma} n'est pas installée.
 Comme celle-ci n'est pas nécessaire pour les architectures non-NUMA, nous modifions les fichiers \filename{Makefile}
 pour supprimer la dépendance à \component{libnuma}.
 
-\subsection{Installation des modules (dont \component{bagsub})}
+\subsection{Installation des modules (dont \component{bagsub})} \label{subsec:installation_modules}
 
-Chaque workflow fait appel à différents modules qu'il faut installer au préalable sur la VM master.
+Chaque workflow fait appel à différents modules qu'il faut installer au préalable sur la VM \SScomponent{master}.
 Le script \script{import\_modules.sh} permet d'importer les archives des différents modules nécessaires au fonctionnement des workflows (WF DIRECTON principalement).
 
 Le script \script{import\_modules.sh} fait quelques modifications du module \component{bagsub} afin qu'il puisse être utilisé dans l'environnement fourni par la VM \SScomponent{master}:
-on supprime l'option ulimit qui ne fonctionne pas en \component{dash} (le shell sous Ubuntu 18.04)
+on supprime l'appel à \script{ulimit} qui ne fonctionne pas en \component{dash} (le shell sous Ubuntu 18.04)
 et ajoute le paramètre MCA \variable{btl\_tcp\_if\_exclude} pour exclure les interfaces réseaux \hostname{docker0} et \hostname{lo} qui peuvent engendrer des conflits lors du lancement de jobs SLURM.
 
+Comme nous n'utilisons pas \component{Environment Module}, le script de déploiement crée
+un fichier de profil (\path{/env/cns/proj/agc/module/profiles/microcloud.profile})
+qui permet de modifier l'environnement pour accéder aux modules.
+Si l'on ajoute des modules, il faut penser à modifier ce fichier aussi.
 
 \section{Composant \SScomponent{nfsserver}} \label{nfsserver}
 

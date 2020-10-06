@@ -12,7 +12,6 @@ Un des effets de bord du projet est que nous avons travaillé avec et sur \proje
 \subsection{Le prototype fonctionnel} \label{subsec:prototype}
 
 Le projet permet de déployer une instance de MicroScope
-comprenant la partie web, les BD et les WF de calcul
 sur le cloud IFB.
 Le prototype permet faire tourner un WF simple (DIRECTON).
 Cependant, l'insertion des séquences est problématique.
@@ -25,22 +24,22 @@ se sont avérées très délicates (voir~\autoref{sec:installation_jbpmmicroscop
 
 \subsection{Identification de limites dans MicroScope} \label{subsec:limites_microscope}
 
-Les principales limites dans l'architecture et la code de MicroScope sont:
+Au cours du projet, nous avons rencontré des difficultés liées à l'architecture ou au code de MicroScope.
+Les principales limites rencontrées sont:
 \begin{enumerate}
-    \item \emph{Fonctionnement sans données:} La première limite est
-          qu'il est très difficile (voire impossible) de faire tourner MicroScope sans au moins une séquence.
+    \item \emph{Fonctionnement sans données.} La première difficulté est qu'il est très difficile (voire impossible) de faire tourner MicroScope sans au moins une séquence.
           Ceci est lié au fait que beaucoup de pages font appel à des fonctions qui utilisent la séquence stockée dans la session.
-    \item \emph{Frontières entre les composants peu claires:} Une difficulté pour l'installation est que MicroScope est organisé en couches (DB, web, worfklow) et non en modules.
+    \item \emph{Frontières entre les composants peu claires.} Une difficulté pour l'installation est que MicroScope est organisé en couches (DB, web, worfklow) et non en modules.
           Ainsi, si on installe \component{micJBPMwrapper}, on a tous les WF mais il faut alors créer toutes les bases.
           On ne peut pas installer juste un WF.
-    \item \emph{Dépendances:} MicroScope a de nombreuses dépendances mais elles ne sont pas listées.
+    \item \emph{Dépendances.} MicroScope a de nombreuses dépendances mais elles ne sont pas listées.
           De plus, certains composants ne sont pas publiés (\module{micGenome}, \module{micPrestation})
           et ne sont pas facilement installables (\component{jbpmmicroscope}).
 \end{enumerate}
 
 \subsection{Identification de limites de l'architecture cloud} \label{subsec:limites_coud}
 
-Le projet a aussi permis d'identifier un certains nombre de limites des architectures cloud.
+Le projet a aussi permis d'identifier un certain nombre de limites des architectures cloud.
 Ces limites concernent principalement le stockage.
 
 En effet, on ne veut pas reconstituer les banques pour chaque instance de MicroCloud.
@@ -89,7 +88,7 @@ Outre les limites évoquées plus haut, le prototype a plusieurs limites:
           De plus, si une nouvelle version de MicroScope change la procédure d'installation,
           il faut indépendamment mettre à jour le script d'installation dans \project{biosphere-microcloud}.
     \item Comme expliqué plus haut, MicroCloud ne tourne que le cloud \cloudInstance{ifb-prabi-girofle}.
-    \item Du fait que les banques sont mises-à-jour manuellement sur la VM permanente, on peut avoir un décalage entre la version de MicroScope déployée dans le cloud
+    \item Du fait que les banques sont mises à jour manuellement sur la VM permanente, on peut avoir un décalage entre la version de MicroScope déployée dans le cloud
           et la version des banques sur la VM.
 \end{itemize}
 
