@@ -17,7 +17,6 @@ En utilisant \textbf{Déploiement avancé}, on peut choisir le nombre de nœuds 
 Les déploiements se font sur le cloud \cloudInstance{ifb-prabi-girofle} sur lequel est installé la VM permanente.
 Un déploiement prend environ 40 minutes.
 
-
 Il y a 2 points d'entrée du déploiement:
 \begin{enumerate}
     \item \emph{L'interface web}. L'URL de la plateforme est: \nolinkurl{https://${IP_frontend}/home/index.php} où \nolinkurl{${IP_frontend}}
@@ -38,6 +37,12 @@ Cependant, l'instance fournie ne contient pas d'utilisateur
 et aucun WF n'est configuré sur l'instance.
 De plus, les logiciels métier des WF ne sont pas installés
 sauf pour DIRECTON.
+
+\begin{warningbox}
+    Si lors de la connexion au serveur web le message d'erreur \textbf{256} s'affiche, cela signifie qu'il n'y a pas d'organisme en base.
+    De ce fait, la plupart des onglets ainsi que le formulaire d'authentification sont inaccessibles.
+    Ceci ne doit pas arriver si le déploiement se passe bien mais en cas de modifications des scripts cela peut arriver.
+\end{warningbox}
 
 \section{Créer un nouvel utilisateur admin}
 
