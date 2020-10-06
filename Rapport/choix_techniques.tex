@@ -72,7 +72,18 @@ car la manière d'installer \component{jbpmmicroscope} par dessus n'est pas clai
 
 \subsubsection{Reprise des développements}
 
-Nous avons envisagé la reprise des développements de \component{jbpmmicroscope} mais la quantité de travail est trop grande.
+Nous avons envisagé la reprise des développements de \component{jbpmmicroscope}.
+En particulier, nous nous sommes intéressés à:
+\begin{itemize}
+    \item Mieux séparer le client et le serveur par exemple en utilisant les API du serveurs (ce qui permettrait de ne pas interagir directement avec la base de données).
+    \item Ne pas inscrire la configuration dans la documentation (en utilisant des mécanismes de configuration des serveurs d'application Java)
+          afin qu'un client puisse servir à plusieurs serveurs (en spécifiant lequel à chaque fois bien sûr).
+\end{itemize}
+
+Cependant, la quantité de travail est trop grande donc nous n'avons pas suivi cette approche.
+De plus, cela aurait sans doute nécessité d'utiliser une version plus récente de \component{jBPM}
+donc de re-écrire les workflows.
+Cependant, nous avons écrit nos réflexions dans la page wiki \href{https://intranet.genoscope.cns.fr/agc/redmine/projects/microscopeworkflow/wiki/Notes_jbpmmicroscope}{[[MicroScope Workflow:Notes\_jbpmmicroscope]]}.
 
 \subsection{Choix techniques}
 
