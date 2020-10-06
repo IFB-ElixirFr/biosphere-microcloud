@@ -27,7 +27,8 @@ c'est-à-dire que:
 Une des différences est que le serveur \component{jbpmmicroscope} tourne
 sur la machine frontale du cluster.
 Ceci a été fait pour diminuer légèrement le nombre de composants
-et car cela pourrait nécessiter d'autres modifications dans \component{jbpmmicroscope}.
+(car il faudrait faire un nouveau composant capable de soumettre des jobs sur \SScomponent{master}).
+De plus, il n'est pas exclu que cela aurait pu nécessiter d'autres modifications dans \component{jbpmmicroscope}.
 
 L'autre différence est l'utilisation d'une machine partagée pour fournir l'accès aux banques (voir~\autoref{sec:acces_banques}).
 Il y a donc 2 serveurs de bases de données dans MicroCloud:
@@ -75,8 +76,8 @@ car la manière d'installer \component{jbpmmicroscope} par dessus n'est pas clai
 Nous avons envisagé la reprise des développements de \component{jbpmmicroscope}.
 En particulier, nous nous sommes intéressés à:
 \begin{itemize}
-    \item Mieux séparer le client et le serveur par exemple en utilisant les API du serveurs (ce qui permettrait de ne pas interagir directement avec la base de données).
-    \item Ne pas inscrire la configuration dans la documentation (en utilisant des mécanismes de configuration des serveurs d'application Java)
+    \item Mieux séparer le client et le serveur par exemple en utilisant les API du serveur (bien que cela ne soit pas très clair).
+    \item Ne pas inscrire la configuration dans le code (en utilisant des mécanismes de configuration des serveurs d'application Java)
           afin qu'un client puisse servir à plusieurs serveurs (en spécifiant lequel à chaque fois bien sûr).
 \end{itemize}
 
@@ -99,9 +100,12 @@ qui utilise les paramètres suivants:
               \item[login:] \variable{jbpm}
               \item[password:] \variable{jbpm}
           \end{description}
+    \item Le répertoire de base des données (\variable{PROJECT\_LOCATION}) est \path{/env/cns/proj/agc/Data/Result/JBPMmicroscope}
+    \item Le répertoire d'installation (\variable{PROJECT\_LIBRARY}) est \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/lib}.
     \item Le paramètre \variable{hbm2ddl.auto} dans \filename{hibernate.cfg.xml} crée automatiquement le schéma de la base \DB{JBPMmicroscope} lors de la première exécution de \script{JBPMmicroscope}.
 \end{itemize}\vspace*{\baselineskip}
 
+Ces variables sont très proches de celles utilisées pour l'instance MicroScope.
 Pour rappel, la connexion à la base se fait via \component{hibernate}.
 
 Les instructions de compilations sont dans la~\autoref{sec:nouvelle_version_jbpmmicroscope}.
