@@ -140,9 +140,19 @@ Ce moteur permet d'accéder à des bases de données sur un serveur MySQL distan
 Les détails sur la VM permanente sont dans la~\autoref{VMpermanente}.
 Pour la création des liens, voir~\autoref{frontend}.
 
+La VM est actuellement sous-dimensionnée par rapport à nos besoins:
+nous n'avons pas suffisamment de place pour télécharger toutes les banques de MicroScope sur la VM permanente;
+À l'heure actuelle, seule la banque \DB{UNIPROTKBDB} est disponible.
+
 En principe, on pourrait faire en sorte que la VM permanente mette à jour les banques:
 il faut installer CABRI (ou un équivalent pour télécharger les banques) et faire tourner les WF de mise à jour des banques.
 Nous n'avons pas abordé ces questions.
+
+Une autre piste est l'utilisation du mécanisme de stockage permanent et partagé
+qui est utilisé pour mettre à disposition un certain nombre de banques (sous forme de fichiers)
+sur toutes les VM (ces banques sont mises à jour avec \project{BioMAJ}).
+On pourrait alors utiliser les WF de mise à jour des banques de MicroScope.
+Cependant ceci n'est pas encore disponible sur \cloudInstance{ifb-prabi-girofle} (sur lequel tourne la VM permanente).
 
 \section{Installation des logiciels métier} \label{sec:installation_logiciels_metier}
 

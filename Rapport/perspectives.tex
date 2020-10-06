@@ -16,6 +16,8 @@ sur le cloud IFB.
 Le prototype permet faire tourner un WF simple (DIRECTON).
 Cependant, l'insertion des séquences est problématique.
 Les instructions pour le déployer sont dans le~\autoref{chap:deploiement}.
+Pour des raisons techniques expliquées plus bas,
+MicroCloud ne peut être déployé que sur le cloud \cloudInstance{ifb-prabi-girofle}.
 
 Pour cela, nous avons réalisé une procédure d'installation de MicroScope.
 Ainsi, nous avons pu mieux comprendre les interactions entre les composants.
@@ -41,24 +43,27 @@ Les principales limites rencontrées sont:
 
 Le projet a aussi permis d'identifier un certain nombre de limites des architectures cloud.
 Ces limites concernent principalement le stockage.
+En effet, d'une part, le stockage disponible sur chaque VM est limité et
+d'autre part n'est pas permanent.
 
-En effet, on ne veut pas reconstituer les banques pour chaque instance de MicroCloud.
-Pour cela, nous  avons déployé une VM permanente (voir section \ref{sec:acces_banques}) dans le cloud \cloudInstance{ifb-prabi-girofle}
+Or MicroScope a besoin des données des banques (sous forme de fichiers et de bases SQL) pour fonctionner.
+D'une part, ceci représente plusieurs dizaines de Go
+et nécessite des traitements pouvant être longs.
+Ainsi, il n'est pas possible de constituer ces banques pour chaque déploiement.
+
+De plus, les données stockées dans une instance sont perdues lorsqu'on la supprime.
+
+Une solution partielle au premier problème passe par l'utilisation d'une VM permanente (voir section \ref{sec:acces_banques})
 qui héberge les BD MySQL représentant les banques.
 Pour des raisons techniques, seules les VM déployées dans le cloud \cloudInstance{ifb-prabi-girofle}
 peuvent accéder à cette VM.
 Ainsi MicroCloud ne peut être déployé que sur le cloud \cloudInstance{ifb-prabi-girofle}.
-Cependant, nous n'avons pas suffisamment de place pour télécharger toutes les banques de MicroScope sur la VM permanente.
-À l'heure actuelle, seule la banque UNIPROTKBDB est disponible.
 
-Une solution partielle est le stockage permanent et partagé mis en place par l'IFB
-qui est utilisé pour mettre à disposition les banques sur toutes les VM (ces banques sont mises à jour avec \project{BioMAJ}).
-On pourrait alors utiliser les WF de mise à jour des banques de MicroScope.
-Cependant ceci n'est pas encore disponible sur \cloudInstance{ifb-prabi-girofle} (sur lequel tourne la VM permanente).
+Le deuxième problème n'a pas été abordé.
 
 \begin{warningbox}
     L'ouverture de la VM est à la discrétion du directeur du PRABI (voir~\autoref{sec:contacts}).
-    Elle est à renouveler régulièrement (le dernier renouvellement d'une durée d'un an date du 2020-01-27).
+    Elle est à renouveler tous les ans (le dernier renouvellement d'une durée d'un an date du 2020-01-27).
 \end{warningbox}
 
 \subsection{Prise en main de \project{BioMAJ} et améliorations}\label{subsec:biomaj}
