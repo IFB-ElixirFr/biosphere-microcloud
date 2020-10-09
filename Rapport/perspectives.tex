@@ -121,8 +121,7 @@ D'un point de vue technique, les améliorations sont:
     \item Améliorations du côté de \project{biosphère-commons} (option -e).
     \item Certains scripts sont sourcés avec une option (ce qui est valide en bash mais n'est pas portable).
     \item Paralléliser les scripts pour diminuer le temps de déploiement (en particulier pouvoir faire le maximum de choses avant d'attendre les signaux des autres composants).
-    \item L'insertion de séquences ne fonctionne pas:
-          ceci est lié au fait que la banque \DB{TAXONOMYDB} n'est pas à jour sur la VM permanente (voir~\autoref{sec:syntactic}).
+    \item L'insertion de séquences ne fonctionne pas complètement (voir~\autoref{sec:syntactic}).
           Cependant, la copie d'un organisme reste possible (voir~\autoref{sec:nouvelle_donne_organisme}).
     \item Le module \module{micPrestation} (utilisé pour insérer des organismes sans faire de prestation)
           ne fonctionne pas suite aux modifications du schéma de TAXONOMYDB réalisée dans \href{https://intranet.genoscope.cns.fr/agc/redmine/versions/142}{MicroScope Web 3.14.0}.
