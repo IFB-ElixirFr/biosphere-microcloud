@@ -56,10 +56,10 @@ L'installation de \component{jbpmmicroscope} est très difficile pour plusieurs 
            Ainsi, les différentes instances (\mageInstance{microscope}, \mageInstance{labscope}, \mageInstance{dietetic}, \mageInstance{coliscope}) sont compilées avec des profils maven spécifiques.
            En théorie, il est possible de ne pas faire cela dans \component{Tomcat}.
     \item \emph{Organisation du projet confuse.} Le projet est découpé en 3 sous-projets maven (\component{jbpmmicroscope-server}, \component{jbpmmicroscope-client} et \component{jbpmmicroscope-commons}\footnote{Nous laissons de côté \component{jbpmmicroscope-web-services} qui apparemment n'a jamais marché.}).
-          Cependant, personne ne connaît vraiment la distinction et le fichier XML qui décrit les WF est à un autre endroit (\path{src}).
+          Cependant, la distinction est assez floue et le fichier XML qui décrit les WF est à un autre endroit (\path{src}).
           De plus, il semble que les sources de \component{jBPM 3.2.3} lui-même soient incluses dans le projet.
     \item \emph{Utilisation de \component{jBPM 3.2.3}.} Cette version de \component{jBPM} est obsolète depuis longtemps.
-    \item \emph{Utilisation de XSLT 2.0.} La transformation du fichier XML qui décrit tous les WF se base sur XSLT 2.0.
+    \item \emph{Utilisation de XSLT 2.0.} La transformation du fichier XML qui décrit tous les WF en langage JPDL se base sur XSLT 2.0.
           Or cette version de la norme est peu répandue.
           Par exemple, le plugin \component{Orange Volt} utilisé dans nos procédures est obsolète depuis longtemps.
 \end{enumerate}
@@ -85,18 +85,20 @@ En particulier, nous nous sommes intéressés à:
 
 Cependant, la quantité de travail est trop grande donc nous n'avons pas suivi cette approche.
 De plus, cela aurait sans doute nécessité d'utiliser une version plus récente de \component{jBPM}
-donc de re-écrire les workflows.
-Cependant, nous avons écrit nos réflexions dans la page wiki \href{https://intranet.genoscope.cns.fr/agc/redmine/projects/microscopeworkflow/wiki/Notes_jbpmmicroscope}{[[MicroScope Workflow:Notes\_jbpmmicroscope]]}.
+donc de re-écrire les workflows (en effet, \component{jBPM 3.2.3} utilise le langage JDPL pour la description des WF
+mais les versions récentes utilisent le langage BPMN).
+Nous avons écrit nos réflexions dans la page wiki \href{https://intranet.genoscope.cns.fr/agc/redmine/projects/microscopeworkflow/wiki/Notes_jbpmmicroscope}{[[MicroScope Workflow:Notes\_jbpmmicroscope]]}.
 
 \subsection{Choix techniques}
 
 Face aux problèmes, nous avons décidé de créer une branche spécifique (\path{config_microcloud})
-qui déclare une nouvelle configuration de compilation pour MicroCloud (appelée \variable{config-microcloud} - voir le dossier \path{src/main/config/config-microcloud})
-qui utilise les paramètres suivants:
+qui déclare une nouvelle configuration de compilation pour MicroCloud (appelée \variable{config-microcloud} - voir le dossier \path{src/main/config/config-microcloud}).
+L'idée est de compiler \component{jbpmmicroscope} au Genoscope donc avec des paramètres qui ne dépendent pas du déploiement ou adaptés au déploiement
+afin de simplifier l'installation des VM (car il n'est pas nécessaire d'installer tous les outils java pour compiler \component{jbpmmicroscope}).
+
+Les paramètres suivants:
 \begin{itemize}
     \item Le serveur MySQL à utiliser est \hostname{mysqlagcdb.genoscope.cns.fr}.
-          Ceci fonctionne car la VM \SScomponent{master} déclare un alias du composant \SScomponent{mysql} sous le nom \hostname{mysqlagcdb.genoscope.cns.fr}
-          (voir~\autoref{master&slave}).
     \item Les identifiants de connexion à la base \DB{JBPMmicroscope} sont les suivants:
           \begin{description}
               \item[login:] \variable{jbpm}
@@ -106,6 +108,9 @@ qui utilise les paramètres suivants:
     \item Le répertoire d'installation (\variable{PROJECT\_LIBRARY}) est \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/lib}.
     \item Le paramètre \variable{hbm2ddl.auto} dans \filename{hibernate.cfg.xml} crée automatiquement le schéma de la base \DB{JBPMmicroscope} lors de la première exécution de \script{JBPMmicroscope}.
 \end{itemize}\vspace*{\baselineskip}
+
+Ceci fonctionne car la VM \SScomponent{master} déclare un alias du composant \SScomponent{mysql} sous le nom \hostname{mysqlagcdb.genoscope.cns.fr}
+et crée les dossiers nécessaires (voir~\autoref{master&slave}).
 
 Ces variables sont très proches de celles utilisées pour l'instance MicroScope.
 Pour rappel, la connexion à la base se fait via \component{hibernate}.
@@ -186,4 +191,9 @@ Voir les sections~\ref{sec:nouvelle_liste_modules} et \ref{subsec:installation_m
 
 \begin{warningbox}
     Cette partie n'est pas très robuste.
+\end{warningbox}
+
+\begin{warningbox}
+    Le module \module{micDirecton} qui ne contenait qu'un seul script a été intégré dans
+    \href{https://intranet.genoscope.cns.fr/agc/redmine/versions/158}{\module[3.10.11]{micJBPMwrapper}}.
 \end{warningbox}
