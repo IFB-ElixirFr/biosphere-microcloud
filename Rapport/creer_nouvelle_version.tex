@@ -22,7 +22,7 @@ Pour le charger:
 module load micWEBdeploy/0-MicroCloud-1.0
 \end{lstlisting}
 
-On peut aussi être amené à mettre à jour les BD sur la VM permanente (voir~\autoref{sec:maj_vm_permanente}).
+Ce chapitre présente aussi la manière de mettre à jour les BD sur la VM permanente (voir~\autoref{sec:maj_vm_permanente}).
 
 \section{Créer une nouvelle release du code web} \label{sec:nouvelle_version_web}
 
@@ -50,7 +50,7 @@ microscopeCopyOid.py --oid ${Oid} --output /env/cns/wwwext/html/agc/ftp/MicroClo
 \end{lstlisting}
 
 \begin{warningbox}
-    Pour le moment seules les données concernant l'Oid \theOid{} peuvent être récupérées avec le script \script{microscopeCopyOid.py} car certains organismes ont besoin de tables spécifiques de la base GO\_SPE (typiquement la table acineto\_KO pour \theOrg{}).
+    Pour le moment seules les données concernant l'Oid \theOid{} peuvent être récupérées avec le script \script{microscopeCopyOid.py} car certains organismes ont besoin de tables spécifiques de la base \DB{GO\_SPE} (typiquement la table \DB{acineto\_KO} pour \theOrg{}).
     C'est cet organisme qui est installé dans MicroCloud.
 \end{warningbox}
 

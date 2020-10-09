@@ -22,6 +22,8 @@ c'est-à-dire que:
     \item Les différents composants (serveur web, serveur de BD, etc.) tournent sur des machines séparées.
     \item Les calculs tournent sur des machines séparées: l'architecture contient donc un cluster (basé sur SLURM).
     \item Les machines partagent un disque commun (qui est utilisé pour accéder aux données et aux logiciels).
+          Le répertoire \path{/env} est similaire au répertoire de même nom sur le cluster \hostname{etna}
+          afin de simplifier l'installation de MicroScope.
 \end{enumerate}\vspace*{\baselineskip}
 
 Une des différences est que le serveur \component{jbpmmicroscope} tourne
@@ -108,7 +110,7 @@ qui utilise les paramètres suivants:
 Ces variables sont très proches de celles utilisées pour l'instance MicroScope.
 Pour rappel, la connexion à la base se fait via \component{hibernate}.
 
-Les instructions de compilations sont dans la~\autoref{sec:nouvelle_version_jbpmmicroscope}.
+Les instructions de compilation sont dans la~\autoref{sec:nouvelle_version_jbpmmicroscope}.
 Pour l'installation, voir~\autoref{master&slave}.
 
 \section{Mise à disposition des banques} \label{sec:acces_banques}
@@ -142,7 +144,7 @@ Pour la création des liens, voir~\autoref{frontend}.
 
 La VM est actuellement sous-dimensionnée par rapport à nos besoins:
 nous n'avons pas suffisamment de place pour télécharger toutes les banques de MicroScope sur la VM permanente;
-À l'heure actuelle, seule la banque \DB{UNIPROTKBDB} est disponible.
+à l'heure actuelle, seule la banque \DB{UNIPROTKBDB} est disponible.
 
 En principe, on pourrait faire en sorte que la VM permanente mette à jour les banques:
 il faut installer CABRI (ou un équivalent pour télécharger les banques) et faire tourner les WF de mise à jour des banques.

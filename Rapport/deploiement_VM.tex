@@ -31,7 +31,7 @@ Les sections suivantes présentent quelques détails sur les VM:
     \item \SScomponent{nfsserver} voir section \ref{nfsserver}
 \end{itemize}
 Comme expliqué, le code de chaque composant est dans un dossier éponyme dans le dépôt \project{biosphere-microcloud}.
-Dans les sections sus-citées, le nom des scripts est relatif à ce dossier (sauf mention contraire).
+Dans les sections ci-dessous, le nom des scripts est relatif à ce dossier (sauf mention contraire).
 
 \section{Composant \SScomponent{frontend}}\label{frontend}
 
@@ -69,13 +69,13 @@ Le script \script{install\_microscope.sh} réalise l'installation de MicroScope:
 
 \subsection{Import des données de l'organisme \theOrg{}}
 
-Les données de l'organisme \theOid{} sont copiées avec le script \script{import\_Oid.sh}.
+Les données de l'organisme \theOid{} sont téléchargées et copiées avec le script \script{import\_Oid.sh}.
 
 \subsection{Création des liens FEDERATED}
 
 Les liens FEDERATED vers la VM permanente (qui permettent d'accéder aux base représentant les banques) sont créés
 dans le script \script{create\_federated\_links.sh}.
-Le script crée automatique un lien avec toutes les BD présentes sur la VM permanente sauf les BD système (\DB{mysql}, \DB{information\_schema}, \DB{performance\_schema}, \DB{sys})
+Le script crée automatiquement un lien avec toutes les BD présentes sur la VM permanente sauf les BD système (\DB{mysql}, \DB{information\_schema}, \DB{performance\_schema}, \DB{sys})
 et celles liées à \component{phpMyAdmin}.
 
 \section{Composant \SScomponent{mysql}}\label{mysql}
@@ -121,15 +121,15 @@ L'image de base est une image Debian 9.8.
 
 La machine permanente n'est accessible depuis l'extérieur qu'en SSH donc nous ne pouvons pas y accéder en MySQL (port 3306) depuis un autre cloud.
 La connexion se fait avec des clés SSH (seules les clés SSH de Mathieu Dubois ont été importés).
-
-La machine a été installée avec Sylvain Bonneval.
-La procédure d'installation est dans le fichier \filename{Installation.md} du répertoire \path{/root}.
-Logiciels installés : serveur MySQL (il n'est pas nécessaire de démarrer le serveur avec l'option \variable{-{}-federated}), rsync, phpMyAdmin (installé mais non configuré).
-
 Pour se connecter :
 \begin{lstlisting}[style=bash]
-ssh root@134.214.33.214
+    ssh root@134.214.33.214
 \end{lstlisting}
+
+La machine a été installée avec Sylvain Bonneval.
+La procédure d'installation est dans le fichier \filename{Installation.md} du répertoire \path{/root}
+(voir ce fichier pour le mot de passe MySQL).
+Logiciels installés : serveur MySQL (il n'est pas nécessaire de démarrer le serveur avec l'option \variable{-{}-federated}), rsync, phpMyAdmin (installé mais non configuré).
 
 \subsection{Création des BD et copie des données}
 
@@ -145,16 +145,11 @@ Le serveur MySQL contient les schémas des banques et les données nécessaires 
 
 Le script \script{microscopeDBschema.py} du module MicroCloud a été utilisé pour créer les schémas.
 
-Pour se connecter au serveur MySQL :
-\begin{lstlisting}[style=bash]
-mysql -p{MOT_DE_PASSE_SERVEUR_MYSQL_VM_PERMANENTE}
-\end{lstlisting}
-
 \section{Compoants \SScomponent{master} et \SScomponent{slave}} \label{master&slave}
 
 Ces 2 composants permettent de créer un cluster basé sur SLURM sur lequel \component{jbpmmicroscope} soumet les jobs:
-\SScomponent{master} est la frontale et \SScomponent{slave} est un nœud de calcul.
 \begin{itemize}
+    \item \SScomponent{master} est la frontale et \SScomponent{slave} est un nœud de calcul.
     \item Les composants SlipStream \SScomponent{master} et \SScomponent{slave} ont été copiés depuis
     l'appliance \href{https://nuv.la/module/ifb/devzone/jlorenzo/cluster/Slurm_Cluster_ubuntu18}{\SScomponent{Slurm\_Cluster\_ubuntu18}}
           (crée par Jonathan Lorenzo et Bryan Brancotte pour l'IFB).

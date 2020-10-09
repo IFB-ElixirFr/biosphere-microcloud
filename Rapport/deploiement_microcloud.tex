@@ -13,18 +13,18 @@ dans le projet Redmine).
 Pour la déployer, cliquer sur \textbf{Lancer}.
 En utilisant \textbf{Déploiement avancé}, on peut choisir le nombre de nœuds de calculs
 \footnote{En théorie, le cluster est redimensionnable à chaud (après le déploiement). Cependant, nous ne sommes pas sûrs que cela fonctionne. Voir~\autoref{master&slave}.}.
-
-Les déploiements se font sur le cloud \cloudInstance{ifb-prabi-girofle} sur lequel est installé la VM permanente.
+Comme expliqué, MicroCLoud ne peut être déployé que sur le cloud \cloudInstance{ifb-prabi-girofle} sur lequel est installé la VM permanente.
 Un déploiement prend environ 40 minutes.
 
-Il y a 2 points d'entrée du déploiement:
+Il y a 2 points d'entrée de l'instance:
 \begin{enumerate}
-    \item \emph{L'interface web}. L'URL de la plateforme est: \nolinkurl{https://${IP_frontend}/home/index.php} où \nolinkurl{${IP_frontend}}
-          est l'IP de la machine frontend.
+    \item \emph{L'interface web}. L'URL de la plateforme est de la forme \nolinkurl{https://${IP_frontend}/home/index.php} où \variable{\$\{IP\_frontend\}}
+          est l'IP de la machine \SScomponent{frontend}.
           Cette URL est reportée dans l'interface RAINBio.
-    \item \emph{La machine frontale du cluster}. On peut aussi se connecter en SSH à la machine frontale du cluster
+          On peut aussi se connecter en SSH à la machine  \SScomponent{frontend}.
+    \item \emph{La machine frontale du cluster}. On peut aussi se connecter en SSH à la machine frontale du cluster (\SScomponent{master})
           dont l'IP est aussi reportée dans l'interface de RAINBio.
-          Cette machine comprend les modules nécessaire au travail avec une instance (\module{micGenome}, \module{micJBPMwrapper}, etc.)
+          Cette machine comprend les modules nécessaires au travail avec une instance (\module{micGenome}, \module{micJBPMwrapper}, etc.)
           et \component{jbpmmicroscope} pour déployer les WF.
           Pour accéder aux modules, il faut sourcer le fichier \path{microcloud.profile} dans la VM master:
           \begin{lstlisting}[style=bash,gobble=14]
@@ -33,22 +33,20 @@ Il y a 2 points d'entrée du déploiement:
             Le répertoire \path{/env/} est identique à celui du Genoscope.
 \end{enumerate}
 L'instance fournie contient les données de \theOrg{}.
-Cependant, l'instance fournie ne contient pas d'utilisateur
-et aucun WF n'est configuré sur l'instance.
-De plus, les logiciels métier des WF ne sont pas installés
-sauf pour DIRECTON.
+Cependant, il n'y a pas d'utilisateur web et aucun WF n'y est configuré.
+De plus, les logiciels métier des WF ne sont pas installés sauf pour DIRECTON.
 
 \begin{warningbox}
     Si lors de la connexion au serveur web le message d'erreur \textbf{256} s'affiche, cela signifie qu'il n'y a pas d'organisme en base.
     De ce fait, la plupart des onglets ainsi que le formulaire d'authentification sont inaccessibles.
-    Ceci ne doit pas arriver si le déploiement se passe bien mais en cas de modifications des scripts cela peut arriver.
+    Ceci ne doit pas arriver si le déploiement se passe bien mais en cas de modification des scripts cela peut arriver.
 \end{warningbox}
 
 \section{Créer un nouvel utilisateur admin}
 
 Une fois l'instance déployée, il faut créer un utilisateur admin.
 
-Pour cela, il faut se connecter en ssh à la frontale puis exécuter le script \script{create\_user.sh}:
+Pour cela, il faut se connecter en SSH à \SScomponent{master} puis exécuter le script \script{create\_user.sh}:
 \begin{lstlisting}[style=Bash,gobble=4]
     ssh centos@${IP_master}
     cd /var/tmp/slipstream/biosphere-microcloud/master
@@ -107,7 +105,7 @@ Puis, pour insérer la nouvelle séquence en base, utiliser le module \module{mi
 
 \section{Déployer un WF} \label{sec:deployer_wf}
 
-Les workflows sont déployés sur la VM master.
+Les workflows sont déployés sur la VM \SScomponent{master}.
 À ce jour nous n'avons pu tester que le workflow DIRECTON.
 Les sources de \component{jbpmmicroscope} sont dans le répertoire \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/jbpmmicroscope}.
 Le répertoire de travail Tomcat est le suivant : \path{/env/cns/proj/agc/tools/COMMON/JBPMmicroscope/tomcat}.

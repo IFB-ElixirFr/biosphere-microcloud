@@ -5,7 +5,8 @@
 Le projet a globalement atteint ses objectifs car il permet de déployer une instance de MicroScope dans le cloud IFB (cf.~\autoref{subsec:prototype}).
 
 De plus, le travail sur ce projet a permis d'identifier des limites (au niveau de l'architecture ou du code) dans MicroScope (cf.~\autoref{subsec:limites_microscope})
-et dans les architectures cloud (cf.~\autoref{subsec:limites_coud}).
+et dans les architectures cloud (cf.~\autoref{subsec:limites_coud})
+qui complexifient l'installation de MicroScope.
 
 Un des effets de bord du projet est que nous avons travaillé avec et sur \project{BioMAJ} (cf.~\autoref{subsec:biomaj}).
 
@@ -14,7 +15,7 @@ Un des effets de bord du projet est que nous avons travaillé avec et sur \proje
 Le projet permet de déployer une instance de MicroScope
 sur le cloud IFB.
 Le prototype permet faire tourner un WF simple (DIRECTON).
-Cependant, l'insertion des séquences est problématique.
+Cependant, l'insertion des séquences est problématique (cf~\autoref{sec:syntactic}).
 Les instructions pour le déployer sont dans le~\autoref{chap:deploiement}.
 Pour des raisons techniques expliquées plus bas,
 MicroCloud ne peut être déployé que sur le cloud \cloudInstance{ifb-prabi-girofle}.
@@ -36,12 +37,13 @@ Les principales limites rencontrées sont:
           On ne peut pas installer juste un WF.
     \item \emph{Dépendances.} MicroScope a de nombreuses dépendances mais elles ne sont pas listées.
           De plus, certains composants ne sont pas publiés (\module{micGenome}, \module{micPrestation})
-          et ne sont pas facilement installables (\component{jbpmmicroscope}).
+          et/ou ne sont pas facilement installables (\component{jbpmmicroscope}).
 \end{enumerate}
 
 \subsection{Identification de limites de l'architecture cloud} \label{subsec:limites_coud}
 
-Le projet a aussi permis d'identifier un certain nombre de limites des architectures cloud.
+Le projet a aussi permis d'identifier un certain nombre de limites des architectures cloud
+qui complexifient l'installation de MicroScope.
 Ces limites concernent principalement le stockage.
 En effet, d'une part, le stockage disponible sur chaque VM est limité et
 d'autre part n'est pas permanent.
@@ -53,8 +55,8 @@ Ainsi, il n'est pas possible de constituer ces banques pour chaque déploiement.
 
 De plus, les données stockées dans une instance sont perdues lorsqu'on la supprime.
 
-Une solution partielle au premier problème passe par l'utilisation d'une VM permanente (voir section \ref{sec:acces_banques})
-qui héberge les BD MySQL représentant les banques.
+Une solution partielle au premier problème passe par l'utilisation d'une VM permanente
+qui héberge les BD MySQL représentant les banques (voir section \ref{sec:acces_banques}).
 Pour des raisons techniques, seules les VM déployées dans le cloud \cloudInstance{ifb-prabi-girofle}
 peuvent accéder à cette VM.
 Ainsi MicroCloud ne peut être déployé que sur le cloud \cloudInstance{ifb-prabi-girofle}.
@@ -101,7 +103,7 @@ Outre les limites évoquées plus haut, le prototype a plusieurs limites:
 
 Les principales améliorations au prototype sont:
 \begin{itemize}
-    \item Résoudre le problèmes des banques.
+    \item Résoudre le problème des banques.
           Ceci passe sans doute par l'amélioration de l'infrastructure de Biosphere.
 \end{itemize}
 
@@ -124,7 +126,7 @@ D'un point de vue technique, les améliorations sont:
           Cependant, la copie d'un organisme reste possible (voir~\autoref{sec:nouvelle_donne_organisme}).
     \item Le module \module{micPrestation} (utilisé pour insérer des organismes sans faire de prestation)
           ne fonctionne pas suite aux modifications du schéma de TAXONOMYDB réalisée dans \href{https://intranet.genoscope.cns.fr/agc/redmine/versions/142}{MicroScope Web 3.14.0}.
-          Il faudra modifier les scripts du module et supprimer les variables faisant référence aux colonnes O\_Gram, O\_genetic\_code et level.
+          Il faudra modifier les scripts du module et supprimer les références aux colonnes \DB{O\_Gram}, \DB{O\_genetic\_code} et \DB{level}.
 \end{itemize}
 
 Le code de déploiement des VM contient une liste d'améliorations (voir le fichier \filename{README.md} dans le répertoire de chaque composant sur le dépôt \project{biosphere-microcloud}).

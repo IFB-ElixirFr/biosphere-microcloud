@@ -8,8 +8,8 @@ Comme expliqué, ce module est très lié aux scripts de déploiement des VM.
 
 \section{\script{microscopeRelease.py}}
 
-Ce scripts crée une archive du code, du schéma et des données nécessaires pour le web
-qui sera utilisée par \script{install\_microscope.sh} pour l'installation sur \SScomponent{frontend} (voir ~\autoref{frontend}).
+Ce script crée une archive du code, du schéma et des données nécessaires pour le web
+qui sera utilisée par \script{install\_microscope.sh} pour l'installation sur \SScomponent{frontend} (voir~\autoref{frontend}).
 
 Le code web est extrait à partir du dépôt subversion.
 Le code Javascript est compilé avec \script{microscopeCompileJS.sh} pour ne pas devoir faire ça sur \SScomponent{frontend}.
@@ -30,7 +30,7 @@ Voir page wiki \href{https://intranet.genoscope.cns.fr/agc/redmine/projects/micr
 Ce script permet de copier les données d'un organisme pour les importer dans une instance MicroCloud (voir \script{import\_Oid.sh}).
 
 \begin{warningbox}
-    Pour le moment seules les données concernant l'Oid \theOid{} peuvent être récupérées avec le script \script{microscopeCopyOid.py} car certains organismes ont besoin de tables spécifiques de la base GO\_SPE (typiquement la table acineto\_KO pour \theOrg{}).
+    Pour le moment seules les données concernant l'Oid \theOid{} peuvent être récupérées avec le script \script{microscopeCopyOid.py} car certains organismes ont besoin de tables spécifiques de la base \DB{GO\_SPE} (typiquement la table \DB{acineto\_KO} pour \theOrg{}).
 \end{warningbox}
 
 \section{\script{createModulesTarball.py}}
