@@ -28,7 +28,7 @@ $mysql_request -e "SET GLOBAL sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO
 $mysql_request -e "SET SESSION sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'";
 
 # Create GO_SPE database
- $mysql_request -e "CREATE DATABASE GO_SPE";
+$mysql_request -e "CREATE DATABASE GO_SPE";
 
 # Import list of Sid
 data_dir="${Oid}/sql_bases/data"
