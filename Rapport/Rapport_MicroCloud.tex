@@ -144,6 +144,14 @@ et de leur implémentation ainsi qu'à fournir un guide utilisateur.
     L'IFB est en train d'étudier des solutions de remplacement comme Terraform Cloud mais il n'y a pas de délais annoncés pour le moment et cela dépendra des ressources humaines disponibles.
     Quelle que soit la solution retenue, le mode de fonctionnement basé sur des scripts dans un dépôt git restera le même.
 \end{warningbox}
+
+\begin{warningbox}
+    Le composant \component{mysql} utilise MySQL 5.7.
+    Ainsi, le projet a permis d'étudier la compatibilité de MicroScope
+    avec cette version MySQL.
+    Le script \script{frontend/import\_Oid.sh} configure le mode SQL (suppression de la variable \href{https://dev.mysql.com/doc/refman/5.7/en/sql-mode.html#sqlmode_only_full_group_by}{ONLY\_FULL\_GROUP\_BY}).
+    Ces opérations devraient être déplacées dans le composant \component{mysql}.
+\end{warningbox}
 \end{abstract}
 
 \part{Vue d'ensemble du projet}
